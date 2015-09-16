@@ -3,7 +3,6 @@
 package cal
 
 import (
-	"fmt"
 	"time"
 )
 
@@ -68,7 +67,6 @@ func (h *Holiday) Matches(date time.Time) bool {
 		}
 		if h.Weekday > 0 && h.Offset != 0 {
 			r := IsWeekdayN(date, h.Weekday, h.Offset)
-			fmt.Println(r, date, h.Weekday, h.Offset)
 			return r
 		}
 	} else if h.Offset > 0 {
