@@ -27,21 +27,21 @@ func IsWeekdayN(date time.Time, day time.Weekday, n int) bool {
 
 	if n > 0 {
 		return (date.Day()-1)/7 == (n - 1)
-	} else {
-		last := LastOfTheMonth(date)
-
-		for {
-			if last.Weekday() == day {
-				n++
-			}
-			if n == 0 {
-				break
-			}
-			last = last.AddDate(0, 0, -1)
-		}
-
-		return last.Day() == date.Day()
 	}
+
+	last := LastOfTheMonth(date)
+
+	for {
+		if last.Weekday() == day {
+			n++
+		}
+		if n == 0 {
+			break
+		}
+		last = last.AddDate(0, 0, -1)
+	}
+
+	return last.Day() == date.Day()
 }
 
 // Calendar represents a yearly calendar with a list of holidays.
