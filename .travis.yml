@@ -1,0 +1,26 @@
+language: go
+
+go:
+  - 1.4
+  - 1.5
+  - tip
+
+env:
+  global:
+    - PATH=$HOME/bin:$PATH
+    - HAX=$(mkdir -p $HOME/bin ; cp /bin/echo $HOME/bin/gvm ; mkdir -p $HOME/.gvm/scripts ; touch $HOME/.gvm/scripts/gvm)
+
+install:
+  - export GOPATH=/home/travis/gopath
+  - gimme ${TRAVIS_GO_VERSION}
+  - source ~/.gimme/envs/go${TRAVIS_GO_VERSION}.env
+  - go version
+  - go env
+
+script:
+  - go get -t -d ./...
+  - go get -u github.com/golang/lint/golint
+  - go get golang.org/x/tools/cmd/vet
+  - test -z "$(gofmt -l .)"
+  - go vet ./...
+  - go test ./...

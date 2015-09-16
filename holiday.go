@@ -3,8 +3,8 @@
 package cal
 
 import (
-	"time"
 	"fmt"
+	"time"
 )
 
 // ObservedRule represents a rule for observing a holiday that falls
