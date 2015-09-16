@@ -62,9 +62,9 @@ func TestWeekdayN(t *testing.T) {
 
 func TestHoliday(t *testing.T) {
 	c := NewCalendar()
-	c.AddHoliday(US_Memorial)
-	c.AddHoliday(US_Independence)
-	c.AddHoliday(US_Columbus)
+	c.AddHoliday(USMemorial)
+	c.AddHoliday(USIndependence)
+	c.AddHoliday(USColumbus)
 	c.AddHoliday(Holiday{Offset: 100})
 
 	tests := []struct {
@@ -90,9 +90,9 @@ func TestHoliday(t *testing.T) {
 
 func TestWorkdayNearest(t *testing.T) {
 	c := NewCalendar()
-	c.AddHoliday(US_NewYear)
-	c.AddHoliday(US_Independence)
-	c.AddHoliday(US_Christmas)
+	c.AddHoliday(USNewYear)
+	c.AddHoliday(USIndependence)
+	c.AddHoliday(USChristmas)
 
 	tests := []struct {
 		t    time.Time
@@ -118,9 +118,9 @@ func TestWorkdayNearest(t *testing.T) {
 func TestWorkdayExact(t *testing.T) {
 	c := NewCalendar()
 	c.Observed = ObservedExact
-	c.AddHoliday(US_NewYear)
-	c.AddHoliday(US_Independence)
-	c.AddHoliday(US_Christmas)
+	c.AddHoliday(USNewYear)
+	c.AddHoliday(USIndependence)
+	c.AddHoliday(USChristmas)
 
 	tests := []struct {
 		t    time.Time
@@ -146,9 +146,9 @@ func TestWorkdayExact(t *testing.T) {
 func TestWorkdayMonday(t *testing.T) {
 	c := NewCalendar()
 	c.Observed = ObservedMonday
-	c.AddHoliday(US_NewYear)
-	c.AddHoliday(US_Independence)
-	c.AddHoliday(US_Christmas)
+	c.AddHoliday(USNewYear)
+	c.AddHoliday(USIndependence)
+	c.AddHoliday(USChristmas)
 
 	tests := []struct {
 		t    time.Time
@@ -174,8 +174,8 @@ func TestWorkdayMonday(t *testing.T) {
 
 func TestWorkdays(t *testing.T) {
 	c := NewCalendar()
-	c.AddHoliday(US_NewYear)
-	c.AddHoliday(US_MLK)
+	c.AddHoliday(USNewYear)
+	c.AddHoliday(USMLK)
 
 	tests := []struct {
 		y    int
@@ -199,8 +199,8 @@ func TestWorkdays(t *testing.T) {
 
 func TestWorkdaysRemain(t *testing.T) {
 	c := NewCalendar()
-	c.AddHoliday(US_NewYear)
-	c.AddHoliday(US_MLK)
+	c.AddHoliday(USNewYear)
+	c.AddHoliday(USMLK)
 
 	tests := []struct {
 		t    time.Time
@@ -224,8 +224,8 @@ func TestWorkdaysRemain(t *testing.T) {
 
 func TestWorkdayN(t *testing.T) {
 	c := NewCalendar()
-	c.AddHoliday(US_NewYear)
-	c.AddHoliday(US_MLK)
+	c.AddHoliday(USNewYear)
+	c.AddHoliday(USMLK)
 
 	tests := []struct {
 		y    int

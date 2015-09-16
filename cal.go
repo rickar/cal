@@ -27,22 +27,21 @@ func IsWeekdayN(date time.Time, day time.Weekday, n int) bool {
 
 	if n > 0 {
 		return (date.Day()-1)/7 == (n - 1)
-	} else {
-		n = -n
-		last := time.Date(date.Year(), date.Month()+1,
-			1, 12, 0, 0, 0, date.Location())
-		lastCount := 0
-		for {
-			last = last.AddDate(0, 0, -1)
-			if last.Weekday() == day {
-				lastCount++
-			}
-			if lastCount == n || last.Month() != date.Month() {
-				break
-			}
-		}
-		return lastCount == n && last.Equal(date)
 	}
+
+	last := LastOfTheMonth(date)
+
+	for {
+		if last.Weekday() == day {
+			n++
+		}
+		if n == 0 {
+			break
+		}
+		last = last.AddDate(0, 0, -1)
+	}
+
+	return last.Day() == date.Day()
 }
 
 // Calendar represents a yearly calendar with a list of holidays.
@@ -70,12 +69,12 @@ func (c *Calendar) AddHoliday(h Holiday) {
 func (c *Calendar) IsHoliday(date time.Time) bool {
 	idx := date.Month()
 	for i := range c.holidays[idx] {
-		if c.holidays[idx][i].matches(date) {
+		if c.holidays[idx][i].Matches(date) {
 			return true
 		}
 	}
 	for i := range c.holidays[0] {
-		if c.holidays[0][i].matches(date) {
+		if c.holidays[0][i].Matches(date) {
 			return true
 		}
 	}
@@ -166,4 +165,29 @@ func (c *Calendar) WorkdayN(year int, month time.Month, n int) int {
 		}
 	}
 	return 0
+}
+
+// FirstOfTheMonth returns a date that occurs on the first of the month of the
+// supplied date. For example, if the supplied date is 6/13/2015 then this function
+// would return 6/1/2015 (at the same time as the former)
+func FirstOfTheMonth(d time.Time) time.Time {
+	if d.IsZero() {
+		return d
+	}
+
+	day := d.Day()
+	return d.AddDate(0, 0, 1-day)
+}
+
+// LastOfTheMonth returns a date that occurs on the last day of the month of the
+// supplied date. For example, if the supplied date is 6/13/2015 then this function
+// would return 6/30/2015 (at the same time as the former)
+func LastOfTheMonth(d time.Time) time.Time {
+	if d.IsZero() {
+		return d
+	}
+
+	day := FirstOfTheMonth(d)
+	day = day.AddDate(0, 1, -1)
+	return day
 }

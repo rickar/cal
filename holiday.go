@@ -10,24 +10,25 @@ import (
 // on a weekend.
 type ObservedRule int
 
+// Observence
 const (
 	ObservedNearest ObservedRule = iota // nearest weekday (Friday or Monday)
 	ObservedExact                       // the exact day only
 	ObservedMonday                      // Monday always
 )
 
+// United States holidays
 var (
-	// United States holidays
-	US_NewYear      = NewHoliday(time.January, 1)
-	US_MLK          = NewHolidayFloat(time.January, time.Monday, 3)
-	US_Presidents   = NewHolidayFloat(time.February, time.Monday, 3)
-	US_Memorial     = NewHolidayFloat(time.May, time.Monday, -1)
-	US_Independence = NewHoliday(time.July, 4)
-	US_Labor        = NewHolidayFloat(time.September, time.Monday, 1)
-	US_Columbus     = NewHolidayFloat(time.October, time.Monday, 2)
-	US_Veterans     = NewHoliday(time.November, 11)
-	US_Thanksgiving = NewHolidayFloat(time.November, time.Thursday, 4)
-	US_Christmas    = NewHoliday(time.December, 25)
+	USNewYear      = NewHoliday(time.January, 1)
+	USMLK          = NewHolidayFloat(time.January, time.Monday, 3)
+	USPresidents   = NewHolidayFloat(time.February, time.Monday, 3)
+	USMemorial     = NewHolidayFloat(time.May, time.Monday, -1)
+	USIndependence = NewHoliday(time.July, 4)
+	USLabor        = NewHolidayFloat(time.September, time.Monday, 1)
+	USColumbus     = NewHolidayFloat(time.October, time.Monday, 2)
+	USVeterans     = NewHoliday(time.November, 11)
+	USThanksgiving = NewHolidayFloat(time.November, time.Thursday, 4)
+	USChristmas    = NewHoliday(time.December, 25)
 )
 
 // Holiday holds information about the yearly occurrence of a holiday.
@@ -54,9 +55,9 @@ func NewHolidayFloat(month time.Month, weekday time.Weekday, offset int) Holiday
 	return Holiday{Month: month, Weekday: weekday, Offset: offset}
 }
 
-// matches determines whether the given date is the one referred to by the
+// Matches determines whether the given date is the one referred to by the
 // Holiday.
-func (h *Holiday) matches(date time.Time) bool {
+func (h *Holiday) Matches(date time.Time) bool {
 	if h.Month > 0 {
 		if date.Month() != h.Month {
 			return false
@@ -65,7 +66,8 @@ func (h *Holiday) matches(date time.Time) bool {
 			return date.Day() == h.Day
 		}
 		if h.Weekday > 0 && h.Offset != 0 {
-			return IsWeekdayN(date, h.Weekday, h.Offset)
+			r := IsWeekdayN(date, h.Weekday, h.Offset)
+			return r
 		}
 	} else if h.Offset > 0 {
 		return date.YearDay() == h.Offset
