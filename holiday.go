@@ -4,6 +4,7 @@ package cal
 
 import (
 	"time"
+	"fmt"
 )
 
 // ObservedRule represents a rule for observing a holiday that falls
@@ -54,9 +55,9 @@ func NewHolidayFloat(month time.Month, weekday time.Weekday, offset int) Holiday
 	return Holiday{Month: month, Weekday: weekday, Offset: offset}
 }
 
-// matches determines whether the given date is the one referred to by the
+// Matches determines whether the given date is the one referred to by the
 // Holiday.
-func (h *Holiday) matches(date time.Time) bool {
+func (h *Holiday) Matches(date time.Time) bool {
 	if h.Month > 0 {
 		if date.Month() != h.Month {
 			return false
@@ -65,7 +66,9 @@ func (h *Holiday) matches(date time.Time) bool {
 			return date.Day() == h.Day
 		}
 		if h.Weekday > 0 && h.Offset != 0 {
-			return IsWeekdayN(date, h.Weekday, h.Offset)
+			r := IsWeekdayN(date, h.Weekday, h.Offset)
+			fmt.Println(r, date, h.Weekday, h.Offset)
+			return r
 		}
 	} else if h.Offset > 0 {
 		return date.YearDay() == h.Offset
