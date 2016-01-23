@@ -41,7 +41,8 @@ func IsWeekdayN(date time.Time, day time.Weekday, n int) bool {
 				break
 			}
 		}
-		return lastCount == n && last.Equal(date)
+		return lastCount == n && last.Month() == date.Month() &&
+			last.Day() == date.Day()
 	}
 }
 

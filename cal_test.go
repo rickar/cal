@@ -67,11 +67,20 @@ func TestHoliday(t *testing.T) {
 	c.AddHoliday(US_Columbus)
 	c.AddHoliday(Holiday{Offset: 100})
 
+	tz, err := time.LoadLocation("America/New_York")
+	if err != nil {
+		t.Errorf("unable to load time zone: %v", err)
+	}
+
 	tests := []struct {
 		t    time.Time
 		want bool
 	}{
 		{time.Date(2014, 5, 26, 12, 0, 0, 0, time.UTC), true},
+		{time.Date(2014, 5, 26, 23, 59, 59, 0, time.UTC), true},
+		{time.Date(2014, 5, 26, 00, 0, 0, 0, time.UTC), true},
+		{time.Date(2014, 5, 26, 23, 59, 59, 0, tz), true},
+		{time.Date(2014, 5, 26, 00, 0, 0, 0, tz), true},
 		{time.Date(2014, 7, 4, 12, 0, 0, 0, time.UTC), true},
 		{time.Date(2014, 10, 13, 12, 0, 0, 0, time.UTC), true},
 		{time.Date(2014, 5, 25, 12, 0, 0, 0, time.UTC), false},
