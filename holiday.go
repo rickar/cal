@@ -28,6 +28,14 @@ var (
 	US_Veterans     = NewHoliday(time.November, 11)
 	US_Thanksgiving = NewHolidayFloat(time.November, time.Thursday, 4)
 	US_Christmas    = NewHoliday(time.December, 25)
+
+	// Target2 holidays
+	ECB_GoodFriday       = CalculateGoodFriday(time.Now().Year(), time.Now().Location())
+	ECB_EasterMonday     = CalculateEasterMonday(time.Now().Year(), time.Now().Location())
+	ECB_NewYearsDay      = NewHoliday(time.January, 1)
+	ECB_LabourDay        = NewHoliday(time.May, 1)
+	ECB_ChristmasDay     = NewHoliday(time.December, 25)
+	ECB_ChristmasHoliday = NewHoliday(time.December, 26)
 )
 
 // Holiday holds information about the yearly occurrence of a holiday.
@@ -41,6 +49,41 @@ type Holiday struct {
 	Weekday time.Weekday
 	Day     int
 	Offset  int
+}
+
+func CalculateGoodFriday(year int, loc *time.Location) Holiday {
+	easter := calculateEaster(year, loc)
+	//Go the the day before  yesterday
+	gf := easter.AddDate(0, 0, -2)
+	return Holiday{Month: gf.Month(), Day: gf.Day()}
+}
+
+func CalculateEasterMonday(year int, loc *time.Location) Holiday {
+	easter := calculateEaster(year, loc)
+	//Go the the day after easter
+	em := easter.AddDate(0, 0, +1)
+	return Holiday{Month: em.Month(), Day: em.Day()}
+}
+
+func calculateEaster(year int, loc *time.Location) time.Time {
+	y := year
+	a := y % 19
+	b := y / 100
+	c := y % 100
+	d := b / 4
+	e := b % 4
+	f := (b + 8) / 25
+	g := (b - f + 1) / 3
+	h := (19*a + b - d - g + 15) % 30
+	i := c / 4
+	k := c % 4
+	l := (32 + 2*e + 2*i - h - k) % 7
+	m := (a + 11*h + 22*l) / 451
+
+	month := (h + l - 7*m + 114) / 31
+	day := ((h + l - 7*m + 114) % 31) + 1
+
+	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, loc)
 }
 
 // NewHoliday creates a new Holiday instance for an exact day of a month.
