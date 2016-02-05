@@ -60,6 +60,80 @@ func TestWeekdayN(t *testing.T) {
 	}
 }
 
+func TestMonthStart(t *testing.T) {
+	tests := []struct {
+		t    time.Time
+		want time.Time
+	}{
+		{time.Date(2016, 1, 1, 0, 0, 0, 0, time.UTC), time.Date(2016, 1, 1, 0, 0, 0, 0, time.UTC)},
+		{time.Date(2016, 2, 15, 12, 0, 0, 0, time.UTC), time.Date(2016, 2, 1, 12, 0, 0, 0, time.UTC)},
+		{time.Date(2016, 3, 31, 23, 59, 59, 999999999, time.UTC), time.Date(2016, 3, 1, 23, 59, 59, 999999999, time.UTC)},
+	}
+
+	for _, test := range tests {
+		got := MonthStart(test.t)
+		if got != test.want {
+			t.Errorf("got: %s; want: %s (%s)", got, test.want, test.t)
+		}
+	}
+}
+
+func TestMonthEnd(t *testing.T) {
+	tests := []struct {
+		t    time.Time
+		want time.Time
+	}{
+		{time.Date(2016, 1, 1, 0, 0, 0, 0, time.UTC), time.Date(2016, 1, 31, 0, 0, 0, 0, time.UTC)},
+		{time.Date(2016, 2, 15, 12, 0, 0, 0, time.UTC), time.Date(2016, 2, 29, 12, 0, 0, 0, time.UTC)},
+		{time.Date(2016, 3, 31, 23, 59, 59, 999999999, time.UTC), time.Date(2016, 3, 31, 23, 59, 59, 999999999, time.UTC)},
+	}
+
+	for _, test := range tests {
+		got := MonthEnd(test.t)
+		if got != test.want {
+			t.Errorf("got: %s; want: %s (%s)", got, test.want, test.t)
+		}
+	}
+}
+
+func TestJulianDayNumber(t *testing.T) {
+	tests := []struct {
+		t    time.Time
+		want int
+	}{
+		{time.Date(1970, 1, 1, 0, 0, 0, 0, time.UTC), 2440587},
+		{time.Date(2000, 1, 1, 15, 0, 0, 0, time.UTC), 2451545},
+		{time.Date(2016, 2, 29, 12, 0, 0, 0, time.UTC), 2457448},
+		{time.Date(2016, 3, 31, 23, 59, 59, 999999999, time.UTC), 2457479},
+	}
+
+	for _, test := range tests {
+		got := JulianDayNumber(test.t)
+		if got != test.want {
+			t.Errorf("got: %d; want: %d (%s)", got, test.want, test.t)
+		}
+	}
+}
+
+func TestJulianDate(t *testing.T) {
+	tests := []struct {
+		t    time.Time
+		want float32
+	}{
+		{time.Date(1970, 1, 1, 0, 0, 0, 0, time.UTC), 2440587.5},
+		{time.Date(2000, 1, 1, 15, 0, 0, 0, time.UTC), 2451545.125},
+		{time.Date(2016, 2, 29, 12, 0, 0, 0, time.UTC), 2457448.0},
+		{time.Date(2016, 3, 31, 23, 59, 59, 999999999, time.UTC), 2457479.5},
+	}
+
+	for _, test := range tests {
+		got := JulianDate(test.t)
+		if got != test.want {
+			t.Errorf("got: %f; want: %f (%s)", got, test.want, test.t)
+		}
+	}
+}
+
 func TestCalculateEaster(t *testing.T) {
 	tests := []struct {
 		t    time.Time
