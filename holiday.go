@@ -30,42 +30,53 @@ var (
 	US_Christmas    = NewHoliday(time.December, 25)
 
 	// Target2 holidays
-	ECB_GoodFriday       = CalculateGoodFriday(time.Now().Year(), time.Now().Location())
-	ECB_EasterMonday     = CalculateEasterMonday(time.Now().Year(), time.Now().Location())
+	ECB_GoodFriday       = NewHolidayFunc(calculateGoodFriday)
+	ECB_EasterMonday     = NewHolidayFunc(calculateEasterMonday)
 	ECB_NewYearsDay      = NewHoliday(time.January, 1)
 	ECB_LabourDay        = NewHoliday(time.May, 1)
 	ECB_ChristmasDay     = NewHoliday(time.December, 25)
 	ECB_ChristmasHoliday = NewHoliday(time.December, 26)
 )
 
+// HolidayFn calculates the occurrence of a holiday for the given year.
+// This is useful for holidays like Easter that depend on complex rules.
+type HolidayFn func(year int, loc *time.Location) (month time.Month, day int)
+
 // Holiday holds information about the yearly occurrence of a holiday.
 //
-// A valid Holiday consists of:
+// A valid Holiday consists of one of the following:
 // - Month and Day (such as March 14 for Pi Day)
 // - Month, Weekday, and Offset (such as the second Monday of October for Columbus Day)
 // - Offset (such as the 183rd day of the year for the start of the second half)
+// - Func (to calculate the holiday)
 type Holiday struct {
 	Month   time.Month
 	Weekday time.Weekday
 	Day     int
 	Offset  int
+	Func    HolidayFn
+
+	// last values used to calculate month and day with Func
+	lastYear int
+	lastLoc  *time.Location
 }
 
-func CalculateGoodFriday(year int, loc *time.Location) Holiday {
+func calculateGoodFriday(year int, loc *time.Location) (time.Month, int) {
 	easter := calculateEaster(year, loc)
-	//Go the the day before  yesterday
+	//Go the the day before yesterday
 	gf := easter.AddDate(0, 0, -2)
-	return Holiday{Month: gf.Month(), Day: gf.Day()}
+	return gf.Month(), gf.Day()
 }
 
-func CalculateEasterMonday(year int, loc *time.Location) Holiday {
+func calculateEasterMonday(year int, loc *time.Location) (time.Month, int) {
 	easter := calculateEaster(year, loc)
-	//Go the the day after easter
+	//Go the the day after Easter
 	em := easter.AddDate(0, 0, +1)
-	return Holiday{Month: em.Month(), Day: em.Day()}
+	return em.Month(), em.Day()
 }
 
 func calculateEaster(year int, loc *time.Location) time.Time {
+	// Meeus/Jones/Butcher algorithm
 	y := year
 	a := y % 19
 	b := y / 100
@@ -97,9 +108,22 @@ func NewHolidayFloat(month time.Month, weekday time.Weekday, offset int) Holiday
 	return Holiday{Month: month, Weekday: weekday, Offset: offset}
 }
 
+// NewHolidayFunc creates a new Holiday instance that uses a function to
+// calculate the day and month.
+func NewHolidayFunc(fn HolidayFn) Holiday {
+	return Holiday{Func: fn}
+}
+
 // matches determines whether the given date is the one referred to by the
 // Holiday.
 func (h *Holiday) matches(date time.Time) bool {
+
+	if h.Func != nil && (date.Year() != h.lastYear || date.Location() != h.lastLoc) {
+		h.Month, h.Day = h.Func(date.Year(), date.Location())
+		h.lastYear = date.Year()
+		h.lastLoc = date.Location()
+	}
+
 	if h.Month > 0 {
 		if date.Month() != h.Month {
 			return false

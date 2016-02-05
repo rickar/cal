@@ -60,30 +60,6 @@ func TestWeekdayN(t *testing.T) {
 	}
 }
 
-func TestCalculateCurrentEasterHolidays(t *testing.T) {
-	c := NewCalendar()
-	c.AddHoliday(ECB_GoodFriday)
-	c.AddHoliday(ECB_EasterMonday)
-
-	now := time.Now()
-	gf := CalculateGoodFriday(now.Year(), now.Location())
-	em := CalculateEasterMonday(now.Year(), now.Location())
-	tests := []struct {
-		t    time.Time
-		want bool
-	}{
-		{time.Date(now.Year(), gf.Month, gf.Day, 0, 0, 0, 0, now.Location()), true},
-		{time.Date(now.Year(), em.Month, em.Day, 0, 0, 0, 0, now.Location()), true},
-	}
-
-	for _, test := range tests {
-		got := c.IsHoliday(test.t)
-		if got != test.want {
-			t.Errorf("got: %t; want: %t (%s)", got, test.want, test.t)
-		}
-	}
-}
-
 func TestCalculateEaster(t *testing.T) {
 	tests := []struct {
 		t    time.Time
@@ -107,6 +83,9 @@ func TestCalculateEaster(t *testing.T) {
 }
 
 func TestCalculateGoodFriday(t *testing.T) {
+	c := NewCalendar()
+	c.AddHoliday(ECB_GoodFriday)
+
 	tests := []struct {
 		t    time.Time
 		want bool
@@ -120,9 +99,7 @@ func TestCalculateGoodFriday(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		gf := CalculateGoodFriday(test.t.Year(), test.t.Location())
-		//CalculateGoodFriday returns a result of type Holiday
-		got := (test.t.Day() == gf.Day && test.t.Month() == gf.Month)
+		got := c.IsHoliday(test.t)
 		if got != test.want {
 			t.Errorf("got: %t; want: %t (%s)", got, test.want, test.t)
 		}
@@ -130,6 +107,9 @@ func TestCalculateGoodFriday(t *testing.T) {
 }
 
 func TestCalculateEasterMonday(t *testing.T) {
+	c := NewCalendar()
+	c.AddHoliday(ECB_EasterMonday)
+
 	tests := []struct {
 		t    time.Time
 		want bool
@@ -143,9 +123,7 @@ func TestCalculateEasterMonday(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		gf := CalculateEasterMonday(test.t.Year(), test.t.Location())
-		//CalculateGoodFriday returns a result of type Holiday
-		got := (test.t.Day() == gf.Day && test.t.Month() == gf.Month)
+		got := c.IsHoliday(test.t)
 		if got != test.want {
 			t.Errorf("got: %t; want: %t (%s)", got, test.want, test.t)
 		}
