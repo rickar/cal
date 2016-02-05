@@ -60,6 +60,98 @@ func TestWeekdayN(t *testing.T) {
 	}
 }
 
+func TestCalculateCurrentEasterHolidays(t *testing.T) {
+	c := NewCalendar()
+	c.AddHoliday(ECB_GoodFriday)
+	c.AddHoliday(ECB_EasterMonday)
+
+	now := time.Now()
+	gf := CalculateGoodFriday(now.Year(), now.Location())
+	em := CalculateEasterMonday(now.Year(), now.Location())
+	tests := []struct {
+		t    time.Time
+		want bool
+	}{
+		{time.Date(now.Year(), gf.Month, gf.Day, 0, 0, 0, 0, now.Location()), true},
+		{time.Date(now.Year(), em.Month, em.Day, 0, 0, 0, 0, now.Location()), true},
+	}
+
+	for _, test := range tests {
+		got := c.IsHoliday(test.t)
+		if got != test.want {
+			t.Errorf("got: %t; want: %t (%s)", got, test.want, test.t)
+		}
+	}
+}
+
+func TestCalculateEaster(t *testing.T) {
+	tests := []struct {
+		t    time.Time
+		want bool
+	}{
+		{time.Date(2016, 3, 27, 0, 0, 0, 0, time.UTC), true},
+		{time.Date(2017, 4, 16, 0, 0, 0, 0, time.UTC), true},
+		{time.Date(2018, 4, 1, 0, 0, 0, 0, time.UTC), true},
+		{time.Date(2019, 4, 21, 0, 0, 0, 0, time.UTC), true},
+		{time.Date(2020, 4, 12, 0, 0, 0, 0, time.UTC), true},
+		{time.Date(2021, 4, 4, 0, 0, 0, 0, time.UTC), true},
+	}
+
+	for _, test := range tests {
+		easter := calculateEaster(test.t.Year(), test.t.Location())
+		got := (test.t == easter)
+		if got != test.want {
+			t.Errorf("got: %t; want: %t (%s)", got, test.want, test.t)
+		}
+	}
+}
+
+func TestCalculateGoodFriday(t *testing.T) {
+	tests := []struct {
+		t    time.Time
+		want bool
+	}{
+		{time.Date(2016, 3, 25, 0, 0, 0, 0, time.UTC), true},
+		{time.Date(2017, 4, 14, 0, 0, 0, 0, time.UTC), true},
+		{time.Date(2018, 3, 30, 0, 0, 0, 0, time.UTC), true},
+		{time.Date(2019, 4, 19, 0, 0, 0, 0, time.UTC), true},
+		{time.Date(2020, 4, 10, 0, 0, 0, 0, time.UTC), true},
+		{time.Date(2021, 4, 2, 0, 0, 0, 0, time.UTC), true},
+	}
+
+	for _, test := range tests {
+		gf := CalculateGoodFriday(test.t.Year(), test.t.Location())
+		//CalculateGoodFriday returns a result of type Holiday
+		got := (test.t.Day() == gf.Day && test.t.Month() == gf.Month)
+		if got != test.want {
+			t.Errorf("got: %t; want: %t (%s)", got, test.want, test.t)
+		}
+	}
+}
+
+func TestCalculateEasterMonday(t *testing.T) {
+	tests := []struct {
+		t    time.Time
+		want bool
+	}{
+		{time.Date(2016, 3, 28, 0, 0, 0, 0, time.UTC), true},
+		{time.Date(2017, 4, 17, 0, 0, 0, 0, time.UTC), true},
+		{time.Date(2018, 4, 2, 0, 0, 0, 0, time.UTC), true},
+		{time.Date(2019, 4, 22, 0, 0, 0, 0, time.UTC), true},
+		{time.Date(2020, 4, 13, 0, 0, 0, 0, time.UTC), true},
+		{time.Date(2021, 4, 5, 0, 0, 0, 0, time.UTC), true},
+	}
+
+	for _, test := range tests {
+		gf := CalculateEasterMonday(test.t.Year(), test.t.Location())
+		//CalculateGoodFriday returns a result of type Holiday
+		got := (test.t.Day() == gf.Day && test.t.Month() == gf.Month)
+		if got != test.want {
+			t.Errorf("got: %t; want: %t (%s)", got, test.want, test.t)
+		}
+	}
+}
+
 func TestHoliday(t *testing.T) {
 	c := NewCalendar()
 	c.AddHoliday(US_Memorial)
