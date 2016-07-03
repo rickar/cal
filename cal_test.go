@@ -402,3 +402,82 @@ func TestWorkdayN(t *testing.T) {
 		}
 	}
 }
+
+func TestGermanHolidays(t *testing.T) {
+	c := NewCalendar()
+	c.Observed = ObservedExact
+	AddGermanHolidays(c)
+
+	tests := []struct {
+		t    time.Time
+		want bool
+	}{
+		{time.Date(2016, 1, 1, 12, 0, 0, 0, time.UTC), true},   // Neujahr
+		{time.Date(2016, 3, 25, 12, 0, 0, 0, time.UTC), true},  // Karfreitag
+		{time.Date(2016, 3, 28, 12, 0, 0, 0, time.UTC), true},  // Ostermontag
+		{time.Date(2016, 5, 1, 12, 0, 0, 0, time.UTC), true},   // Tag der Arbeit
+		{time.Date(2016, 5, 5, 12, 0, 0, 0, time.UTC), true},   // Himmelfahrt
+		{time.Date(2000, 6, 1, 12, 0, 0, 0, time.UTC), true},   // Himmelfahrt
+		{time.Date(2016, 5, 16, 12, 0, 0, 0, time.UTC), true},  // Pfingstmontag
+		{time.Date(2000, 6, 12, 12, 0, 0, 0, time.UTC), true},  // Pfingstmontag
+		{time.Date(2016, 10, 3, 12, 0, 0, 0, time.UTC), true},  // Tag der deutschen Einheit
+		{time.Date(2016, 12, 25, 12, 0, 0, 0, time.UTC), true}, // 1. Weihnachtstag
+		{time.Date(2016, 12, 26, 12, 0, 0, 0, time.UTC), true}, // 2. Weihnachtstag
+	}
+
+	for _, test := range tests {
+		got := c.IsHoliday(test.t)
+		if got != test.want {
+			t.Errorf("got: %t; want: %t (%s)", got, test.want, test.t)
+		}
+	}
+}
+
+func TestCountWorkdays(t *testing.T) {
+	c := NewCalendar()
+	c.Observed = ObservedExact
+	c.AddHoliday(US_NewYear)
+
+	/*
+	      Dezember 2015
+	   Mo Di Mi Do Fr Sa So
+	   14 15 16 17 18 19 20
+	   21 22 23 24 25 26 27
+	   28 29 30 31
+
+	       Januar 2016
+	   Mo Di Mi Do Fr Sa So
+	                1  2  3
+	    4  5  6  7  8  9 10
+	*/
+
+	yearend := time.Date(2015, 12, 31, 12, 0, 0, 0, time.UTC)
+	newyear := time.Date(2016, 1, 1, 12, 0, 0, 0, time.UTC)
+	fifth := time.Date(2016, 1, 5, 12, 0, 0, 0, time.UTC)
+
+	tests := []struct {
+		t    time.Time
+		u    time.Time
+		want int64
+	}{
+		{
+			time.Date(2015, 12, 17, 12, 0, 0, 0, time.UTC),
+			time.Date(2015, 12, 20, 12, 0, 0, 0, time.UTC),
+			2,
+		},
+		{newyear, newyear, 0},
+		{yearend, newyear, 1},
+		{yearend, fifth, 3},
+	}
+
+	for _, test := range tests {
+		got := c.CountWorkdays(test.t, test.u)
+		if got != test.want {
+			t.Errorf("got: %v; want: %v (%s-%s)", got, test.want, test.t, test.u)
+		}
+		got = c.CountWorkdays(test.u, test.t)
+		if got != -test.want {
+			t.Errorf("got: %v; want: %v (%s-%s)", got, -test.want, test.u, test.t)
+		}
+	}
+}

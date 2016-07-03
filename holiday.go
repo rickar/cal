@@ -36,6 +36,17 @@ var (
 	ECB_LabourDay        = NewHoliday(time.May, 1)
 	ECB_ChristmasDay     = NewHoliday(time.December, 25)
 	ECB_ChristmasHoliday = NewHoliday(time.December, 26)
+
+	// Holidays in Germany
+	DE_Neujahr                = US_NewYear
+	DE_KarFreitag             = NewHolidayFunc(calculateGoodFriday)
+	DE_Ostermontag            = NewHolidayFunc(calculateEasterMonday)
+	DE_TagderArbeit           = NewHoliday(time.May, 1)
+	DE_Himmelfahrt            = NewHolidayFunc(calculateHimmelfahrt)
+	DE_Pfingstmontag          = NewHolidayFunc(calculatePfingstMontag)
+	DE_TagderDeutschenEinheit = NewHoliday(time.October, 3)
+	DE_ErsterWeihnachtstag    = ECB_ChristmasDay
+	DE_ZweiterWeihnachtstag   = ECB_ChristmasHoliday
 )
 
 // HolidayFn calculates the occurrence of a holiday for the given year.
@@ -97,6 +108,20 @@ func calculateEaster(year int, loc *time.Location) time.Time {
 	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, loc)
 }
 
+func calculateHimmelfahrt(year int, loc *time.Location) (time.Month, int) {
+	easter := calculateEaster(year, loc)
+	//Go the the day after Easter
+	em := easter.AddDate(0, 0, +39)
+	return em.Month(), em.Day()
+}
+
+func calculatePfingstMontag(year int, loc *time.Location) (time.Month, int) {
+	easter := calculateEaster(year, loc)
+	//Go the the day after Easter
+	em := easter.AddDate(0, 0, +50)
+	return em.Month(), em.Day()
+}
+
 // NewHoliday creates a new Holiday instance for an exact day of a month.
 func NewHoliday(month time.Month, day int) Holiday {
 	return Holiday{Month: month, Day: day}
@@ -138,4 +163,16 @@ func (h *Holiday) matches(date time.Time) bool {
 		return date.YearDay() == h.Offset
 	}
 	return false
+}
+
+func AddGermanHolidays(c *Calendar) {
+	c.AddHoliday(DE_Neujahr)
+	c.AddHoliday(DE_KarFreitag)
+	c.AddHoliday(DE_Ostermontag)
+	c.AddHoliday(DE_TagderArbeit)
+	c.AddHoliday(DE_Himmelfahrt)
+	c.AddHoliday(DE_Pfingstmontag)
+	c.AddHoliday(DE_TagderDeutschenEinheit)
+	c.AddHoliday(DE_ErsterWeihnachtstag)
+	c.AddHoliday(DE_ZweiterWeihnachtstag)
 }

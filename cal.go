@@ -2,9 +2,7 @@
 
 package cal
 
-import (
-	"time"
-)
+import "time"
 
 // IsWeekend reports whether the given date falls on a weekend.
 func IsWeekend(date time.Time) bool {
@@ -208,4 +206,23 @@ func (c *Calendar) WorkdayN(year int, month time.Month, n int) int {
 		}
 	}
 	return 0
+}
+
+func (c *Calendar) CountWorkdays(start, end time.Time) int64 {
+	factor := 1
+	if end.Before(start) {
+		factor = -1
+		start, end = end, start
+	}
+	result := 0
+	var i time.Time
+	for i = start; i.Before(end); i = i.AddDate(0, 0, 1) {
+		if c.IsWorkday(i) {
+			result++
+		}
+	}
+	if i.Equal(end) && c.IsWorkday(end) {
+		result++
+	}
+	return int64(factor * result)
 }
