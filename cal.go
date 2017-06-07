@@ -25,23 +25,24 @@ func IsWeekdayN(date time.Time, day time.Weekday, n int) bool {
 
 	if n > 0 {
 		return (date.Day()-1)/7 == (n - 1)
-	} else {
-		n = -n
-		last := time.Date(date.Year(), date.Month()+1,
-			1, 12, 0, 0, 0, date.Location())
-		lastCount := 0
-		for {
-			last = last.AddDate(0, 0, -1)
-			if last.Weekday() == day {
-				lastCount++
-			}
-			if lastCount == n || last.Month() != date.Month() {
-				break
-			}
-		}
-		return lastCount == n && last.Month() == date.Month() &&
-			last.Day() == date.Day()
 	}
+
+	n = -n
+	last := time.Date(date.Year(), date.Month()+1,
+		1, 12, 0, 0, 0, date.Location())
+	lastCount := 0
+	for {
+		last = last.AddDate(0, 0, -1)
+		if last.Weekday() == day {
+			lastCount++
+		}
+		if lastCount == n || last.Month() != date.Month() {
+			break
+		}
+	}
+	return lastCount == n && last.Month() == date.Month() &&
+		last.Day() == date.Day()
+
 }
 
 // MonthStart reports the starting day of the month in t. The time portion is
@@ -69,7 +70,7 @@ func JulianDayNumber(t time.Time) int {
 
 	jdn := utc.Day() + (153*m+2)/5 + 365*y + y/4 - y/100 + y/400 - 32045
 	if utc.Hour() < 12 {
-		jdn -= 1
+		jdn--
 	}
 	return jdn
 }
@@ -79,7 +80,7 @@ func JulianDate(t time.Time) float32 {
 	utc := t.UTC()
 	jdn := JulianDayNumber(t)
 	if utc.Hour() < 12 {
-		jdn += 1
+		jdn++
 	}
 	return float32(jdn) + (float32(utc.Hour())-12.0)/24.0 +
 		float32(utc.Minute())/1440.0 + float32(utc.Second())/86400.0
@@ -208,6 +209,7 @@ func (c *Calendar) WorkdayN(year int, month time.Month, n int) int {
 	return 0
 }
 
+//CountWorkdays return amount of workdays between start and end dates
 func (c *Calendar) CountWorkdays(start, end time.Time) int64 {
 	factor := 1
 	if end.Before(start) {

@@ -10,6 +10,7 @@ import (
 // on a weekend.
 type ObservedRule int
 
+//ObservedRule are the specific ObservedRules
 const (
 	ObservedNearest ObservedRule = iota // nearest weekday (Friday or Monday)
 	ObservedExact                       // the exact day only
@@ -47,6 +48,17 @@ var (
 	DE_TagderDeutschenEinheit = NewHoliday(time.October, 3)
 	DE_ErsterWeihnachtstag    = ECB_ChristmasDay
 	DE_ZweiterWeihnachtstag   = ECB_ChristmasHoliday
+
+	// Holidays in the Netherlands
+	NLNieuwjaar       = US_NewYear
+	NLGoedeVrijdag    = ECB_GoodFriday
+	NLPaasMaandag     = ECB_EasterMonday
+	NLKoningsDag      = NewHolidayFunc(calculateKoningsDag)
+	NLBevrijdingsDag  = NewHoliday(time.May, 5)
+	NLHemelvaart      = DE_Himmelfahrt
+	NLPinksterMaandag = DE_Pfingstmontag
+	NLEersteKerstdag  = ECB_ChristmasDay
+	NLTweedeKerstdag  = ECB_ChristmasHoliday
 )
 
 // HolidayFn calculates the occurrence of a holiday for the given year.
@@ -122,6 +134,15 @@ func calculatePfingstMontag(year int, loc *time.Location) (time.Month, int) {
 	return em.Month(), em.Day()
 }
 
+//KoningsDag (kingsday) is April 27th, 26th if the 27th is a Sunday
+func calculateKoningsDag(year int, loc *time.Location) (time.Month, int) {
+	koningsDag := time.Date(year, time.April, 27, 0, 0, 0, 0, loc)
+	if koningsDag.Weekday() == time.Sunday {
+		koningsDag = koningsDag.AddDate(0, 0, -1)
+	}
+	return koningsDag.Month(), koningsDag.Day()
+}
+
 // NewHoliday creates a new Holiday instance for an exact day of a month.
 func NewHoliday(month time.Month, day int) Holiday {
 	return Holiday{Month: month, Day: day}
@@ -165,6 +186,7 @@ func (h *Holiday) matches(date time.Time) bool {
 	return false
 }
 
+//AddGermanHolidays adds all German Holdays to Calendar
 func AddGermanHolidays(c *Calendar) {
 	c.AddHoliday(DE_Neujahr)
 	c.AddHoliday(DE_KarFreitag)
@@ -175,4 +197,17 @@ func AddGermanHolidays(c *Calendar) {
 	c.AddHoliday(DE_TagderDeutschenEinheit)
 	c.AddHoliday(DE_ErsterWeihnachtstag)
 	c.AddHoliday(DE_ZweiterWeihnachtstag)
+}
+
+//AddDutchHolidays adds all Dutch Holdays to Calendar
+func AddDutchHolidays(c *Calendar) {
+	c.AddHoliday(NLNieuwjaar)
+	c.AddHoliday(NLGoedeVrijdag)
+	c.AddHoliday(NLPaasMaandag)
+	c.AddHoliday(NLKoningsDag)
+	c.AddHoliday(NLBevrijdingsDag)
+	c.AddHoliday(NLHemelvaart)
+	c.AddHoliday(NLPinksterMaandag)
+	c.AddHoliday(NLEersteKerstdag)
+	c.AddHoliday(NLTweedeKerstdag)
 }
