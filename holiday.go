@@ -59,6 +59,16 @@ var (
 	NLPinksterMaandag = DE_Pfingstmontag
 	NLEersteKerstdag  = ECB_ChristmasDay
 	NLTweedeKerstdag  = ECB_ChristmasHoliday
+
+	// Holidays in Great Britain
+	GB_NewYear       = NewHolidayFunc(calculateNewYearsHoliday)
+	GB_GoodFriday    = ECB_GoodFriday
+	GB_EasterMonday  = ECB_EasterMonday
+	GB_EarlyMay      = NewHolidayFloat(time.May, time.Monday, 1)
+	GB_SpringHoliday = NewHolidayFloat(time.May, time.Monday, -1)
+	GB_SummerHoliday = NewHolidayFloat(time.August, time.Monday, -1)
+	GB_ChristmasDay  = ECB_ChristmasDay
+	GB_BoxingDay     = ECB_ChristmasHoliday
 )
 
 // HolidayFn calculates the occurrence of a holiday for the given year.
@@ -143,6 +153,18 @@ func calculateKoningsDag(year int, loc *time.Location) (time.Month, int) {
 	return koningsDag.Month(), koningsDag.Day()
 }
 
+// NewYearsDay is the 1st of January unless the 1st is a Saturday or Sunday in which case it occurs on the following Monday.
+func calculateNewYearsHoliday(year int, loc *time.Location) (time.Month, int) {
+	day := time.Date(year, time.January, 1, 0, 0, 0, 0, loc)
+	switch day.Weekday() {
+	case time.Saturday:
+		day = day.AddDate(0, 0, 2)
+	case time.Sunday:
+		day = day.AddDate(0, 0, 1)
+	}
+	return time.January, day.Day()
+}
+
 // NewHoliday creates a new Holiday instance for an exact day of a month.
 func NewHoliday(month time.Month, day int) Holiday {
 	return Holiday{Month: month, Day: day}
@@ -210,4 +232,16 @@ func AddDutchHolidays(c *Calendar) {
 	c.AddHoliday(NLPinksterMaandag)
 	c.AddHoliday(NLEersteKerstdag)
 	c.AddHoliday(NLTweedeKerstdag)
+}
+
+// AddBritishHolidays add all British holidays to Calender
+func AddBritishHolidays(c *Calendar) {
+	c.AddHoliday(GB_NewYear)
+	c.AddHoliday(GB_GoodFriday)
+	c.AddHoliday(GB_EasterMonday)
+	c.AddHoliday(GB_EarlyMay)
+	c.AddHoliday(GB_SpringHoliday)
+	c.AddHoliday(GB_SummerHoliday)
+	c.AddHoliday(GB_ChristmasDay)
+	c.AddHoliday(GB_BoxingDay)
 }
