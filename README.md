@@ -28,6 +28,9 @@ func main() {
 	c.AddHoliday(cal.US_Thanksgiving)
 	c.AddHoliday(cal.US_Christmas)
 
+	// optionally change the default of a Mon - Fri work week
+	c.SetWorkday(time.Saturday, true)
+
 	t := time.Now()
 
 	// run different batch processing jobs based on the day
