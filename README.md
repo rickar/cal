@@ -30,6 +30,11 @@ func main() {
 
 	// optionally change the default of a Mon - Fri work week
 	c.SetWorkday(time.Saturday, true)
+	
+	// optionally change the holiday calculation behavior
+	// (the default is US-style where weekend holidays are 
+	// observed on the closest weekday)
+	c.Observed = cal.ObservedExact
 
 	t := time.Now()
 
