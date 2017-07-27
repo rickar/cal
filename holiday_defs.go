@@ -16,32 +16,6 @@ var (
 )
 
 var (
-	// Holidays in Germany
-	DE_Neujahr                = NewYear
-	DE_KarFreitag             = GoodFriday
-	DE_Ostermontag            = EasterMonday
-	DE_TagderArbeit           = NewHoliday(time.May, 1)
-	DE_Himmelfahrt            = NewHolidayFunc(calculateHimmelfahrt)
-	DE_Pfingstmontag          = NewHolidayFunc(calculatePfingstMontag)
-	DE_TagderDeutschenEinheit = NewHoliday(time.October, 3)
-	DE_ErsterWeihnachtstag    = Christmas
-	DE_ZweiterWeihnachtstag   = Christmas2
-)
-
-// AddGermanHolidays adds all German holidays to the Calendar
-func AddGermanHolidays(c *Calendar) {
-	c.AddHoliday(DE_Neujahr)
-	c.AddHoliday(DE_KarFreitag)
-	c.AddHoliday(DE_Ostermontag)
-	c.AddHoliday(DE_TagderArbeit)
-	c.AddHoliday(DE_Himmelfahrt)
-	c.AddHoliday(DE_Pfingstmontag)
-	c.AddHoliday(DE_TagderDeutschenEinheit)
-	c.AddHoliday(DE_ErsterWeihnachtstag)
-	c.AddHoliday(DE_ZweiterWeihnachtstag)
-}
-
-var (
 	// European Central Bank Target2 holidays
 	ECB_GoodFriday       = GoodFriday
 	ECB_EasterMonday     = EasterMonday
@@ -92,7 +66,7 @@ var (
 	NL_PaasMaandag     = EasterMonday
 	NL_KoningsDag      = NewHolidayFunc(calculateKoningsDag)
 	NL_BevrijdingsDag  = NewHoliday(time.May, 5)
-	NL_Hemelvaart      = DE_Himmelfahrt
+	NL_Hemelvaart      = DE_ChristiHimmelfahrt
 	NL_PinksterMaandag = DE_Pfingstmontag
 	NL_EersteKerstdag  = Christmas
 	NL_TweedeKerstdag  = Christmas2
@@ -172,20 +146,6 @@ func calculateEasterMonday(year int, loc *time.Location) (time.Month, int) {
 	easter := calculateEaster(year, loc)
 	// the day after Easter Sunday
 	em := easter.AddDate(0, 0, +1)
-	return em.Month(), em.Day()
-}
-
-func calculateHimmelfahrt(year int, loc *time.Location) (time.Month, int) {
-	easter := calculateEaster(year, loc)
-	// 39 days after Easter Sunday
-	em := easter.AddDate(0, 0, +39)
-	return em.Month(), em.Day()
-}
-
-func calculatePfingstMontag(year int, loc *time.Location) (time.Month, int) {
-	easter := calculateEaster(year, loc)
-	// 50 days after Easter Sunday
-	em := easter.AddDate(0, 0, +50)
 	return em.Month(), em.Day()
 }
 
