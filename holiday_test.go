@@ -77,36 +77,6 @@ func TestCalculateEasterMonday(t *testing.T) {
 	}
 }
 
-func TestGermanHolidays(t *testing.T) {
-	c := NewCalendar()
-	c.Observed = ObservedExact
-	AddGermanHolidays(c)
-
-	tests := []struct {
-		t    time.Time
-		want bool
-	}{
-		{time.Date(2016, 1, 1, 12, 0, 0, 0, time.UTC), true},   // Neujahr
-		{time.Date(2016, 3, 25, 12, 0, 0, 0, time.UTC), true},  // Karfreitag
-		{time.Date(2016, 3, 28, 12, 0, 0, 0, time.UTC), true},  // Ostermontag
-		{time.Date(2016, 5, 1, 12, 0, 0, 0, time.UTC), true},   // Tag der Arbeit
-		{time.Date(2016, 5, 5, 12, 0, 0, 0, time.UTC), true},   // Himmelfahrt
-		{time.Date(2000, 6, 1, 12, 0, 0, 0, time.UTC), true},   // Himmelfahrt
-		{time.Date(2016, 5, 16, 12, 0, 0, 0, time.UTC), true},  // Pfingstmontag
-		{time.Date(2000, 6, 12, 12, 0, 0, 0, time.UTC), true},  // Pfingstmontag
-		{time.Date(2016, 10, 3, 12, 0, 0, 0, time.UTC), true},  // Tag der deutschen Einheit
-		{time.Date(2016, 12, 25, 12, 0, 0, 0, time.UTC), true}, // 1. Weihnachtstag
-		{time.Date(2016, 12, 26, 12, 0, 0, 0, time.UTC), true}, // 2. Weihnachtstag
-	}
-
-	for _, test := range tests {
-		got := c.IsHoliday(test.t)
-		if got != test.want {
-			t.Errorf("got: %t; want: %t (%s)", got, test.want, test.t)
-		}
-	}
-}
-
 func TestDutchHolidays(t *testing.T) {
 	c := NewCalendar()
 	c.Observed = ObservedExact
