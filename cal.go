@@ -241,3 +241,25 @@ func (c *Calendar) CountWorkdays(start, end time.Time) int64 {
 	}
 	return int64(factor * result)
 }
+
+// AddWorkDuration returns start time plus d woking duration
+func (c *Calendar) AddWorkDuration(start time.Time, d time.Duration) time.Time {
+	const day = 24 * time.Hour
+	s := start
+	for {
+		for !c.IsWorkday(s) {
+			s = s.Add(day)
+		}
+
+		if d >= day {
+			s = s.Add(day)
+			d = d - day
+		} else if d > 0 {
+			s = s.Add(d)
+			d = 0
+		} else {
+			break
+		}
+	}
+	return s
+}
