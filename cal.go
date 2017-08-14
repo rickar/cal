@@ -242,8 +242,8 @@ func (c *Calendar) CountWorkdays(start, end time.Time) int64 {
 	return int64(factor * result)
 }
 
-// AddWorkDuration returns start time plus d woking duration
-func (c *Calendar) AddWorkDuration(start time.Time, d time.Duration) time.Time {
+// AddSkipNonWorkdays returns start time plus d woking duration
+func (c *Calendar) AddSkipNonWorkdays(start time.Time, d time.Duration) time.Time {
 	const day = 24 * time.Hour
 	s := start
 	for {

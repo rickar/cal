@@ -430,7 +430,7 @@ func TestCountWorkdays(t *testing.T) {
 	}
 }
 
-func TestAddWorkDuration(t *testing.T) {
+func TestAddSkipNonWorkdays(t *testing.T) {
 	c := NewCalendar()
 
 	tests := []struct {
@@ -508,8 +508,8 @@ func TestAddWorkDuration(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := c.AddWorkDuration(tt.start, tt.d); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Calendar.AddWorkDuration() = %v, want %v", got, tt.want)
+			if got := c.AddSkipNonWorkdays(tt.start, tt.d); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Calendar.AddSkipNonWorkdays() = %v, want %v", got, tt.want)
 			}
 		})
 	}
