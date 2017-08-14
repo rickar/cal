@@ -381,6 +381,35 @@ func TestWorkdayN(t *testing.T) {
 	}
 }
 
+func TestWorkdaysFrom(t *testing.T) {
+	c := NewCalendar()
+	c.AddHoliday(US_NewYear)
+	c.AddHoliday(US_MLK)
+
+	tests := []struct {
+		d    time.Time
+		o    int
+		want time.Time
+	}{
+		{time.Date(2016, time.January, 5, 12, 0, 0, 0, time.UTC), 0, time.Date(2016, time.January, 5, 12, 0, 0, 0, time.UTC)},
+		{time.Date(2016, time.January, 5, 12, 0, 0, 0, time.UTC), 1, time.Date(2016, time.January, 6, 12, 0, 0, 0, time.UTC)},
+		{time.Date(2016, time.January, 5, 12, 0, 0, 0, time.UTC), -1, time.Date(2016, time.January, 4, 12, 0, 0, 0, time.UTC)},
+		{time.Date(2016, time.January, 15, 12, 0, 0, 0, time.UTC), 1, time.Date(2016, time.January, 19, 12, 0, 0, 0, time.UTC)},
+		{time.Date(2016, time.January, 15, 12, 0, 0, 0, time.UTC), -12, time.Date(2015, time.December, 29, 12, 0, 0, 0, time.UTC)},
+		{time.Date(2016, time.January, 18, 12, 0, 0, 0, time.UTC), 1, time.Date(2016, time.January, 19, 12, 0, 0, 0, time.UTC)},
+		{time.Date(2016, time.January, 18, 12, 0, 0, 0, time.UTC), -1, time.Date(2016, time.January, 15, 12, 0, 0, 0, time.UTC)},
+		{time.Date(2016, time.January, 1, 12, 0, 0, 0, time.UTC), 366, time.Date(2017, time.June, 1, 12, 0, 0, 0, time.UTC)},
+		{time.Date(2016, time.January, 1, 12, 0, 0, 0, time.UTC), -366, time.Date(2014, time.August, 5, 12, 0, 0, 0, time.UTC)},
+	}
+
+	for _, test := range tests {
+		got := c.WorkdaysFrom(test.d, test.o)
+		if got != test.want {
+			t.Errorf("got: %s; want: %s (%s %d)", got, test.want, test.d, test.o)
+		}
+	}
+}
+
 func TestCountWorkdays(t *testing.T) {
 	c := NewCalendar()
 	c.Observed = ObservedExact

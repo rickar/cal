@@ -222,6 +222,37 @@ func (c *Calendar) WorkdayN(year int, month time.Month, n int) int {
 	return 0
 }
 
+// WorkdaysFrom reports the date of a workday that is offset days
+// away from start.
+//
+// If n > 0, then the date returned is start + offset workdays.
+// If n == 0, then the date is returned unchanged.
+// If n < 0, then the date returned is start - offset workdays.
+func (c *Calendar) WorkdaysFrom(start time.Time, offset int) time.Time {
+	date := start
+	var add int
+
+	if offset == 0 {
+		return start
+	}
+
+	if offset > 0 {
+		add = 1
+	} else {
+		add = -1
+		offset = -offset
+	}
+
+	for ndays := 0; ndays < offset; {
+		date = date.AddDate(0, 0, add)
+		if c.IsWorkday(date) {
+			ndays++
+		}
+	}
+
+	return date
+}
+
 //CountWorkdays return amount of workdays between start and end dates
 func (c *Calendar) CountWorkdays(start, end time.Time) int64 {
 	factor := 1
