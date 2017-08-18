@@ -168,6 +168,7 @@ func TestHoliday(t *testing.T) {
 	c.AddHoliday(US_Independence)
 	c.AddHoliday(US_Columbus)
 	c.AddHoliday(Holiday{Offset: 100})
+	c.AddHoliday(Holiday{Day: 24, Month: time.November, Year: 2016})
 
 	tz, err := time.LoadLocation("America/New_York")
 	if err != nil {
@@ -189,6 +190,8 @@ func TestHoliday(t *testing.T) {
 		{time.Date(2014, 5, 27, 12, 0, 0, 0, time.UTC), false},
 		{time.Date(2014, 1, 1, 12, 0, 0, 0, time.UTC), false},
 		{time.Date(2014, 4, 10, 12, 0, 0, 0, time.UTC), true},
+		{time.Date(2016, 11, 24, 12, 0, 0, 0, time.UTC), true},
+		{time.Date(2017, 11, 24, 12, 0, 0, 0, time.UTC), false},
 	}
 
 	for _, test := range tests {
@@ -232,6 +235,7 @@ func TestWorkdayExact(t *testing.T) {
 	c.AddHoliday(US_NewYear)
 	c.AddHoliday(US_Independence)
 	c.AddHoliday(US_Christmas)
+	c.AddHoliday(Holiday{Day: 24, Month: time.November, Year: 2016})
 
 	tests := []struct {
 		t    time.Time
@@ -244,6 +248,8 @@ func TestWorkdayExact(t *testing.T) {
 		{time.Date(2015, 7, 4, 12, 0, 0, 0, time.UTC), false},
 		{time.Date(2015, 7, 5, 12, 0, 0, 0, time.UTC), false},
 		{time.Date(2015, 7, 6, 12, 0, 0, 0, time.UTC), true},
+		{time.Date(2016, 11, 24, 12, 0, 0, 0, time.UTC), false},
+		{time.Date(2017, 11, 24, 12, 0, 0, 0, time.UTC), true},
 	}
 
 	for _, test := range tests {
