@@ -19,6 +19,7 @@ var (
 	DE_MariaHimmelfahrt       = NewHoliday(time.August, 15)
 	DE_TagderDeutschenEinheit = NewHoliday(time.October, 3)
 	DE_Reformationstag        = NewHoliday(time.October, 31)
+	DE_Reformationstag2017    = NewHolidayExact(time.October, 31, 2017)
 	DE_Allerheiligen          = NewHoliday(time.November, 1)
 	DE_BußUndBettag           = NewHolidayFunc(calculateBußUndBettag)
 	DE_ErsterWeihnachtstag    = Christmas
@@ -48,11 +49,13 @@ func AddGermanyStateHolidays(c *Calendar, state string) {
 		c.AddHoliday(DE_HeiligeDreiKoenige)
 		c.AddHoliday(DE_Fronleichnam)
 		c.AddHoliday(DE_Allerheiligen)
+		c.AddHoliday(DE_Reformationstag2017)
 	case "BY": // Bayern
 		c.AddHoliday(DE_HeiligeDreiKoenige)
 		c.AddHoliday(DE_Fronleichnam)
 		c.AddHoliday(DE_MariaHimmelfahrt)
 		c.AddHoliday(DE_Allerheiligen)
+		c.AddHoliday(DE_Reformationstag2017)
 	case "HE": // Hessen
 		c.AddHoliday(DE_Fronleichnam)
 	case "MV": // Mecklenburg-Vorpommern
@@ -60,9 +63,11 @@ func AddGermanyStateHolidays(c *Calendar, state string) {
 	case "NW": // Nordrhein-Westfalen
 		c.AddHoliday(DE_Fronleichnam)
 		c.AddHoliday(DE_Allerheiligen)
+		c.AddHoliday(DE_Reformationstag2017)
 	case "RP": // Rheinland-Pfalz
 		c.AddHoliday(DE_Fronleichnam)
 		c.AddHoliday(DE_Allerheiligen)
+		c.AddHoliday(DE_Reformationstag2017)
 	case "SA": // Sachsen
 		c.AddHoliday(DE_Fronleichnam)
 		c.AddHoliday(DE_Reformationstag)
@@ -71,6 +76,7 @@ func AddGermanyStateHolidays(c *Calendar, state string) {
 		c.AddHoliday(DE_Fronleichnam)
 		c.AddHoliday(DE_Allerheiligen)
 		c.AddHoliday(DE_MariaHimmelfahrt)
+		c.AddHoliday(DE_Reformationstag2017)
 	case "ST": // Sachen-Anhalt
 		c.AddHoliday(DE_HeiligeDreiKoenige)
 		c.AddHoliday(DE_Reformationstag)
