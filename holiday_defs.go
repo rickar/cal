@@ -6,8 +6,8 @@ import (
 	"time"
 )
 
+// Common holidays
 var (
-	// Common holidays
 	NewYear      = NewHoliday(time.January, 1)
 	GoodFriday   = NewHolidayFunc(calculateGoodFriday)
 	EasterMonday = NewHolidayFunc(calculateEasterMonday)
@@ -15,102 +15,110 @@ var (
 	Christmas2   = NewHoliday(time.December, 26)
 )
 
+// European Central Bank Target2 holidays
 var (
-	// European Central Bank Target2 holidays
-	ECB_GoodFriday       = GoodFriday
-	ECB_EasterMonday     = EasterMonday
-	ECB_NewYearsDay      = NewYear
-	ECB_LabourDay        = NewHoliday(time.May, 1)
-	ECB_ChristmasDay     = Christmas
-	ECB_ChristmasHoliday = Christmas2
+	ECBGoodFriday       = GoodFriday
+	ECBEasterMonday     = EasterMonday
+	ECBNewYearsDay      = NewYear
+	ECBLabourDay        = NewHoliday(time.May, 1)
+	ECBChristmasDay     = Christmas
+	ECBChristmasHoliday = Christmas2
 )
 
 // AddEcbHolidays adds all ECB Target2 holidays to the calendar
 func AddEcbHolidays(c *Calendar) {
-	c.AddHoliday(ECB_GoodFriday)
-	c.AddHoliday(ECB_EasterMonday)
-	c.AddHoliday(ECB_NewYearsDay)
-	c.AddHoliday(ECB_LabourDay)
-	c.AddHoliday(ECB_ChristmasDay)
-	c.AddHoliday(ECB_ChristmasHoliday)
+	c.AddHoliday(
+		ECBGoodFriday,
+		ECBEasterMonday,
+		ECBNewYearsDay,
+		ECBLabourDay,
+		ECBChristmasDay,
+		ECBChristmasHoliday,
+	)
 }
 
+// British holidays
 var (
-	// Holidays in Great Britain
-	GB_NewYear       = NewHolidayFunc(calculateNewYearsHoliday)
-	GB_GoodFriday    = GoodFriday
-	GB_EasterMonday  = EasterMonday
-	GB_EarlyMay      = NewHolidayFloat(time.May, time.Monday, 1)
-	GB_SpringHoliday = NewHolidayFloat(time.May, time.Monday, -1)
-	GB_SummerHoliday = NewHolidayFloat(time.August, time.Monday, -1)
-	GB_ChristmasDay  = Christmas
-	GB_BoxingDay     = Christmas2
+	GBNewYear       = NewHolidayFunc(calculateNewYearsHoliday)
+	GBGoodFriday    = GoodFriday
+	GBEasterMonday  = EasterMonday
+	GBEarlyMay      = NewHolidayFloat(time.May, time.Monday, 1)
+	GBSpringHoliday = NewHolidayFloat(time.May, time.Monday, -1)
+	GBSummerHoliday = NewHolidayFloat(time.August, time.Monday, -1)
+	GBChristmasDay  = Christmas
+	GBBoxingDay     = Christmas2
 )
 
 // AddBritishHolidays adds all British holidays to the Calender
 func AddBritishHolidays(c *Calendar) {
-	c.AddHoliday(GB_NewYear)
-	c.AddHoliday(GB_GoodFriday)
-	c.AddHoliday(GB_EasterMonday)
-	c.AddHoliday(GB_EarlyMay)
-	c.AddHoliday(GB_SpringHoliday)
-	c.AddHoliday(GB_SummerHoliday)
-	c.AddHoliday(GB_ChristmasDay)
-	c.AddHoliday(GB_BoxingDay)
+	c.AddHoliday(
+		GBNewYear,
+		GBGoodFriday,
+		GBEasterMonday,
+		GBEarlyMay,
+		GBSpringHoliday,
+		GBSummerHoliday,
+		GBChristmasDay,
+		GBBoxingDay,
+	)
 }
 
+// Dutch holidays
 var (
-	// Holidays in the Netherlands
-	NL_Nieuwjaar       = NewYear
-	NL_GoedeVrijdag    = GoodFriday
-	NL_PaasMaandag     = EasterMonday
-	NL_KoningsDag      = NewHolidayFunc(calculateKoningsDag)
-	NL_BevrijdingsDag  = NewHoliday(time.May, 5)
-	NL_Hemelvaart      = DE_ChristiHimmelfahrt
-	NL_PinksterMaandag = DE_Pfingstmontag
-	NL_EersteKerstdag  = Christmas
-	NL_TweedeKerstdag  = Christmas2
+	NLNieuwjaar       = NewYear
+	NLGoedeVrijdag    = GoodFriday
+	NLPaasMaandag     = EasterMonday
+	NLKoningsDag      = NewHolidayFunc(calculateKoningsDag)
+	NLBevrijdingsDag  = NewHoliday(time.May, 5)
+	NLHemelvaart      = DEChristiHimmelfahrt
+	NLPinksterMaandag = DEPfingstmontag
+	NLEersteKerstdag  = Christmas
+	NLTweedeKerstdag  = Christmas2
 )
 
 // AddDutchHolidays adds all Dutch holidays to the Calendar
 func AddDutchHolidays(c *Calendar) {
-	c.AddHoliday(NL_Nieuwjaar)
-	c.AddHoliday(NL_GoedeVrijdag)
-	c.AddHoliday(NL_PaasMaandag)
-	c.AddHoliday(NL_KoningsDag)
-	c.AddHoliday(NL_BevrijdingsDag)
-	c.AddHoliday(NL_Hemelvaart)
-	c.AddHoliday(NL_PinksterMaandag)
-	c.AddHoliday(NL_EersteKerstdag)
-	c.AddHoliday(NL_TweedeKerstdag)
+	c.AddHoliday(
+		NLNieuwjaar,
+		NLGoedeVrijdag,
+		NLPaasMaandag,
+		NLKoningsDag,
+		NLBevrijdingsDag,
+		NLHemelvaart,
+		NLPinksterMaandag,
+		NLEersteKerstdag,
+		NLTweedeKerstdag,
+	)
 }
 
+// US holidays
 var (
-	// United States holidays
-	US_NewYear      = NewYear
-	US_MLK          = NewHolidayFloat(time.January, time.Monday, 3)
-	US_Presidents   = NewHolidayFloat(time.February, time.Monday, 3)
-	US_Memorial     = NewHolidayFloat(time.May, time.Monday, -1)
-	US_Independence = NewHoliday(time.July, 4)
-	US_Labor        = NewHolidayFloat(time.September, time.Monday, 1)
-	US_Columbus     = NewHolidayFloat(time.October, time.Monday, 2)
-	US_Veterans     = NewHoliday(time.November, 11)
-	US_Thanksgiving = NewHolidayFloat(time.November, time.Thursday, 4)
-	US_Christmas    = Christmas
+	USNewYear      = NewYear
+	USMLK          = NewHolidayFloat(time.January, time.Monday, 3)
+	USPresidents   = NewHolidayFloat(time.February, time.Monday, 3)
+	USMemorial     = NewHolidayFloat(time.May, time.Monday, -1)
+	USIndependence = NewHoliday(time.July, 4)
+	USLabor        = NewHolidayFloat(time.September, time.Monday, 1)
+	USColumbus     = NewHolidayFloat(time.October, time.Monday, 2)
+	USVeterans     = NewHoliday(time.November, 11)
+	USThanksgiving = NewHolidayFloat(time.November, time.Thursday, 4)
+	USChristmas    = Christmas
 )
 
 // AddUsHolidays adds all US holidays to the Calendar
 func AddUsHolidays(cal *Calendar) {
-	cal.AddHoliday(US_NewYear)
-	cal.AddHoliday(US_MLK)
-	cal.AddHoliday(US_Presidents)
-	cal.AddHoliday(US_Memorial)
-	cal.AddHoliday(US_Independence)
-	cal.AddHoliday(US_Labor)
-	cal.AddHoliday(US_Columbus)
-	cal.AddHoliday(US_Veterans)
-	cal.AddHoliday(US_Thanksgiving)
-	cal.AddHoliday(US_Christmas)
+	cal.AddHoliday(
+		USNewYear,
+		USMLK,
+		USPresidents,
+		USMemorial,
+		USIndependence,
+		USLabor,
+		USColumbus,
+		USVeterans,
+		USThanksgiving,
+		USChristmas,
+	)
 }
 
 func calculateEaster(year int, loc *time.Location) time.Time {

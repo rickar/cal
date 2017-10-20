@@ -7,7 +7,7 @@ Holiday instances can be exact days, floating days such as the 3rd Monday of
 the month, yearly offsets such as the 100th day of the year, or the result of
 custom function executions for complex rules.
 
-The Calendar type provides functions for calculating workdays and dealing 
+The Calendar type provides functions for calculating workdays and dealing
 with holidays that are observed on alternate days when they fall on weekends.
 
 Here is a simple usage example of a cron job that runs once per day:
@@ -24,15 +24,17 @@ func main() {
 	c := cal.NewCalendar()
 
 	// add holidays for the business
-	c.AddHoliday(cal.US_Independence)
-	c.AddHoliday(cal.US_Thanksgiving)
-	c.AddHoliday(cal.US_Christmas)
+	c.AddHoliday(
+		cal.USIndependence,
+		cal.USThanksgiving,
+		cal.USChristmas,
+	)
 
 	// optionally change the default of a Mon - Fri work week
 	c.SetWorkday(time.Saturday, true)
-	
+
 	// optionally change the holiday calculation behavior
-	// (the default is US-style where weekend holidays are 
+	// (the default is US-style where weekend holidays are
 	// observed on the closest weekday)
 	c.Observed = cal.ObservedExact
 

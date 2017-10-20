@@ -109,11 +109,13 @@ func NewCalendar() *Calendar {
 }
 
 // AddHoliday adds a holiday to the calendar's list.
-func (c *Calendar) AddHoliday(h Holiday) {
-	c.holidays[h.Month] = append(c.holidays[h.Month], h)
+func (c *Calendar) AddHoliday(h ...Holiday) {
+	for _, hd := range h {
+		c.holidays[hd.Month] = append(c.holidays[hd.Month], hd)
+	}
 }
 
-// Changes the given day's status as a standard working day
+// SetWorkday changes the given day's status as a standard working day
 func (c *Calendar) SetWorkday(day time.Weekday, workday bool) {
 	c.workday[day] = workday
 }
