@@ -10,7 +10,7 @@ import (
 // on a weekend.
 type ObservedRule int
 
-//ObservedRule are the specific ObservedRules
+// ObservedRule are the specific ObservedRules
 const (
 	ObservedNearest ObservedRule = iota // nearest weekday (Friday or Monday)
 	ObservedExact                       // the exact day only
@@ -47,7 +47,7 @@ func NewHoliday(month time.Month, day int) Holiday {
 	return Holiday{Month: month, Day: day}
 }
 
-// NewHolidayExacts creates a new Holiday instance for an exact day of a month and year.
+// NewHolidayExact creates a new Holiday instance for an exact day of a month and year.
 func NewHolidayExact(month time.Month, day int, year int) Holiday {
 	return Holiday{Month: month, Day: day, Year: year}
 }

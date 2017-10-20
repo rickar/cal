@@ -4,85 +4,106 @@ package cal
 
 import "time"
 
+// Holidays in Germany
 var (
-	// Holidays in Germany
-	DE_Neujahr                = NewYear
-	DE_HeiligeDreiKoenige     = NewHoliday(time.January, 6)
-	DE_KarFreitag             = GoodFriday
-	DE_Ostersonntag           = NewHolidayFunc(calculateOstersonntag)
-	DE_Ostermontag            = EasterMonday
-	DE_TagderArbeit           = NewHoliday(time.May, 1)
-	DE_ChristiHimmelfahrt     = NewHolidayFunc(calculateHimmelfahrt)
-	DE_Pfingstsonntag         = NewHolidayFunc(calculatePfingstSonntag)
-	DE_Pfingstmontag          = NewHolidayFunc(calculatePfingstMontag)
-	DE_Fronleichnam           = NewHolidayFunc(calculateFronleichnam)
-	DE_MariaHimmelfahrt       = NewHoliday(time.August, 15)
-	DE_TagderDeutschenEinheit = NewHoliday(time.October, 3)
-	DE_Reformationstag        = NewHoliday(time.October, 31)
-	DE_Reformationstag2017    = NewHolidayExact(time.October, 31, 2017)
-	DE_Allerheiligen          = NewHoliday(time.November, 1)
-	DE_BußUndBettag           = NewHolidayFunc(calculateBußUndBettag)
-	DE_ErsterWeihnachtstag    = Christmas
-	DE_ZweiterWeihnachtstag   = Christmas2
+	DENeujahr                = NewYear
+	DEHeiligeDreiKoenige     = NewHoliday(time.January, 6)
+	DEKarFreitag             = GoodFriday
+	DEOstersonntag           = NewHolidayFunc(calculateOstersonntag)
+	DEOstermontag            = EasterMonday
+	DETagderArbeit           = NewHoliday(time.May, 1)
+	DEChristiHimmelfahrt     = NewHolidayFunc(calculateHimmelfahrt)
+	DEPfingstsonntag         = NewHolidayFunc(calculatePfingstSonntag)
+	DEPfingstmontag          = NewHolidayFunc(calculatePfingstMontag)
+	DEFronleichnam           = NewHolidayFunc(calculateFronleichnam)
+	DEMariaHimmelfahrt       = NewHoliday(time.August, 15)
+	DETagderDeutschenEinheit = NewHoliday(time.October, 3)
+	DEReformationstag        = NewHoliday(time.October, 31)
+	DEReformationstag2017    = NewHolidayExact(time.October, 31, 2017)
+	DEAllerheiligen          = NewHoliday(time.November, 1)
+	DEBußUndBettag           = NewHolidayFunc(calculateBußUndBettag)
+	DEErsterWeihnachtstag    = Christmas
+	DEZweiterWeihnachtstag   = Christmas2
 )
 
 // AddGermanHolidays adds all German holidays to the Calendar
 func AddGermanHolidays(c *Calendar) {
-	c.AddHoliday(DE_Neujahr)
-	c.AddHoliday(DE_KarFreitag)
-	c.AddHoliday(DE_Ostermontag)
-	c.AddHoliday(DE_TagderArbeit)
-	c.AddHoliday(DE_ChristiHimmelfahrt)
-	c.AddHoliday(DE_Pfingstmontag)
-	c.AddHoliday(DE_TagderDeutschenEinheit)
-	c.AddHoliday(DE_ErsterWeihnachtstag)
-	c.AddHoliday(DE_ZweiterWeihnachtstag)
+	c.AddHoliday(
+		DENeujahr,
+		DEKarFreitag,
+		DEOstermontag,
+		DETagderArbeit,
+		DEChristiHimmelfahrt,
+		DEPfingstmontag,
+		DETagderDeutschenEinheit,
+		DEErsterWeihnachtstag,
+		DEZweiterWeihnachtstag,
+	)
 }
 
+// AddGermanyStateHolidays adds german state holidays to the calendar
 func AddGermanyStateHolidays(c *Calendar, state string) {
 	switch state {
 	case "BB": // Brandenburg
-		c.AddHoliday(DE_Ostersonntag)
-		c.AddHoliday(DE_Pfingstsonntag)
-		c.AddHoliday(DE_Reformationstag)
+		c.AddHoliday(
+			DEOstersonntag,
+			DEPfingstsonntag,
+			DEReformationstag,
+		)
 	case "BW": // Baden-Württemberg
-		c.AddHoliday(DE_HeiligeDreiKoenige)
-		c.AddHoliday(DE_Fronleichnam)
-		c.AddHoliday(DE_Allerheiligen)
-		c.AddHoliday(DE_Reformationstag2017)
+		c.AddHoliday(
+			DEHeiligeDreiKoenige,
+			DEFronleichnam,
+			DEAllerheiligen,
+			DEReformationstag2017,
+		)
 	case "BY": // Bayern
-		c.AddHoliday(DE_HeiligeDreiKoenige)
-		c.AddHoliday(DE_Fronleichnam)
-		c.AddHoliday(DE_MariaHimmelfahrt)
-		c.AddHoliday(DE_Allerheiligen)
-		c.AddHoliday(DE_Reformationstag2017)
+		c.AddHoliday(
+			DEHeiligeDreiKoenige,
+			DEFronleichnam,
+			DEMariaHimmelfahrt,
+			DEAllerheiligen,
+			DEReformationstag2017,
+		)
 	case "HE": // Hessen
-		c.AddHoliday(DE_Fronleichnam)
+		c.AddHoliday(DEFronleichnam)
 	case "MV": // Mecklenburg-Vorpommern
-		c.AddHoliday(DE_Reformationstag)
+		c.AddHoliday(DEReformationstag)
 	case "NW": // Nordrhein-Westfalen
-		c.AddHoliday(DE_Fronleichnam)
-		c.AddHoliday(DE_Allerheiligen)
-		c.AddHoliday(DE_Reformationstag2017)
+		c.AddHoliday(
+			DEFronleichnam,
+			DEAllerheiligen,
+			DEReformationstag2017,
+		)
 	case "RP": // Rheinland-Pfalz
-		c.AddHoliday(DE_Fronleichnam)
-		c.AddHoliday(DE_Allerheiligen)
-		c.AddHoliday(DE_Reformationstag2017)
+		c.AddHoliday(
+			DEFronleichnam,
+			DEAllerheiligen,
+			DEReformationstag2017,
+		)
 	case "SA": // Sachsen
-		c.AddHoliday(DE_Fronleichnam)
-		c.AddHoliday(DE_Reformationstag)
-		c.AddHoliday(DE_BußUndBettag)
+		c.AddHoliday(
+			DEFronleichnam,
+			DEReformationstag,
+			DEBußUndBettag,
+		)
 	case "SL": // Saarland
-		c.AddHoliday(DE_Fronleichnam)
-		c.AddHoliday(DE_Allerheiligen)
-		c.AddHoliday(DE_MariaHimmelfahrt)
-		c.AddHoliday(DE_Reformationstag2017)
+		c.AddHoliday(
+			DEFronleichnam,
+			DEAllerheiligen,
+			DEMariaHimmelfahrt,
+			DEReformationstag2017,
+		)
 	case "ST": // Sachen-Anhalt
-		c.AddHoliday(DE_HeiligeDreiKoenige)
-		c.AddHoliday(DE_Reformationstag)
+		c.AddHoliday(
+			DEHeiligeDreiKoenige,
+			DEReformationstag,
+		)
 	case "TH": // Thüringen
-		c.AddHoliday(DE_Fronleichnam)
-		c.AddHoliday(DE_Reformationstag)
+		c.AddHoliday(
+			DEFronleichnam,
+			DEReformationstag,
+		)
 	}
 }
 
