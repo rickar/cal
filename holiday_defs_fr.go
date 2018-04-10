@@ -17,7 +17,7 @@ var (
 	FRNoël              = Christmas
 )
 
-// AddFrance adds all France holidays to the Calendar
+// AddFranceHolidays adds all France holidays to the Calendar
 func AddFranceHolidays(c *Calendar) {
 	c.AddHoliday(
 		FRNouvelAn,
