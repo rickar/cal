@@ -52,7 +52,7 @@ func TestNorwegianHolidays(t *testing.T) {
 func TestNorwegianHalfDays(t *testing.T) {
 	c := NewCalendar()
 	c.Observed = ObservedExact
-	AddnorwegianHalfDays(c)
+	AddNorwegianHalfDays(c)
 
 	tests := []testStruct{
 		{time.Date(2018, 12, 24, 12, 0, 0, 0, time.UTC), true, "Julaften"},

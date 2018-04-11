@@ -42,8 +42,8 @@ func AddNorwegianHolidays(c *Calendar) {
 	)
 }
 
-// AddnorwegianHalfDays are note holidays, but often practiced as a half-business day.
-func AddnorwegianHalfDays(c *Calendar) {
+// AddNorwegianHalfDays are note holidays, but often practiced as a half-business day.
+func AddNorwegianHalfDays(c *Calendar) {
 	c.AddHoliday(NOJulaften,
 		NONyttaarsaften,
 	)
