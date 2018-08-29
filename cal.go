@@ -2,7 +2,10 @@
 
 package cal
 
-import "time"
+import (
+	"math"
+	"time"
+)
 
 // IsWeekend reports whether the given date falls on a weekend.
 func IsWeekend(date time.Time) bool {
@@ -253,6 +256,25 @@ func (c *Calendar) WorkdaysFrom(start time.Time, offset int) time.Time {
 	}
 
 	return date
+}
+
+// WorkHoursNrInRange returns the number of working days in a range starting from the set start date to the end date,
+// set by the offset in hour
+func (c *Calendar) CountHolidayHoursWithOffset(start time.Time, offsetHour int) int {
+	days := int(math.Ceil(float64(offsetHour) / float64(24)))
+
+	holidayHours := 0
+	day := 0
+	for day <= days {
+		date := start.AddDate(0, 0, day)
+		if !c.IsWorkday(date) {
+			holidayHours += 24
+			days++
+		}
+		day++
+	}
+
+	return holidayHours
 }
 
 //CountWorkdays return amount of workdays between start and end dates
