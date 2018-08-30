@@ -8,10 +8,10 @@ import (
 
 // Holidays in Australia
 var (
-	NZNewYear         = NewHolidayFunc(calculateNewYear)
+	NZNewYear         = NewHolidayFunc(calculateNewYearOceania)
 	NZGoodFriday      = GoodFriday
-	NZChristmasDay    = NewHolidayFunc(calculateChristmasDay)
-	NZBoxingDays      = NewHolidayFunc(calculateBoxingDay)
+	NZChristmasDay    = NewHolidayFunc(calculateOcenaniaChristmasDay)
+	NZBoxingDays      = NewHolidayFunc(calculateOcenaniaBoxingDay)
 	NZEasterMonday    = EasterMonday
 	NZAnzacDay        = NewHolidayFunc(calculateNZAnzacDay)
 	NZQueensBirthday  = NewHolidayFunc(calculateQueensBirthday)

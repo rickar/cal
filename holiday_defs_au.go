@@ -8,14 +8,13 @@ import (
 
 // Holidays in Australia
 var (
-	AUNewYear                    = NewHolidayFunc(calculateNewYear)
-	AUAustralianDay              = NewHoliday(time.January, 26)
-	AUGoodFriday                 = GoodFriday
-	AUChristmasDay               = NewHolidayFunc(calculateChristmasDay)
-	AUBoxingDays                 = Christmas2
-	AUObservedChristmasBoxingDay = NewHolidayFunc(calculateChristmasDayBoxingDay)
-	AUEasterMonday               = EasterMonday
-	AUAnzacDay                   = NewHolidayFunc(calculateAnzacDay)
+	AUNewYear       = NewHolidayFunc(calculateNewYearOceania)
+	AUAustralianDay = NewHoliday(time.January, 26)
+	AUGoodFriday    = GoodFriday
+	AUChristmasDay  = NewHolidayFunc(calculateOcenaniaChristmasDay)
+	AUBoxingDays    = Christmas2
+	AUEasterMonday  = EasterMonday
+	AUAnzacDay      = NewHolidayFunc(calculateAnzacDay)
 )
 
 // AddAustralianHolidays adds all Australian holidays
@@ -28,7 +27,6 @@ func AddAustralianHolidays(c *Calendar) {
 		AUAnzacDay,
 		AUChristmasDay,
 		AUBoxingDays,
-		AUObservedChristmasBoxingDay,
 	)
 }
 
@@ -40,18 +38,25 @@ func AddAustralianHolidays(c *Calendar) {
 //  If it falls on a weekend an additional public holiday is held on the next available weekday.
 //
 //  https://www.timeanddate.com/holidays/australia/new-year-day
-func calculateNewYear(year int, loc *time.Location) (time.Month, int) {
+func calculateNewYearOceania(year int, loc *time.Location) (time.Month, int) {
 	d := time.Date(year, time.January, 1, 0, 0, 0, 0, loc)
-	wd := d.Weekday()
+	d = closestMonday(d)
+
+	return d.Month(), d.Day()
+}
+
+// closestMonday returns the closest Monday from a giving date
+func closestMonday(date time.Time) time.Time {
+	wd := date.Weekday()
 	if wd == 0 {
-		d = d.AddDate(0, 0, 1)
+		date = date.AddDate(0, 0, 1)
 	}
 
 	if wd == 6 {
-		d = d.AddDate(0, 0, 2)
+		date = date.AddDate(0, 0, 2)
 	}
 
-	return d.Month(), d.Day()
+	return date
 }
 
 // Anzac Day is a national day of remembrance in Australia and New Zealand that broadly commemorates all Australians
@@ -82,7 +87,7 @@ func calculateAnzacDay(year int, loc *time.Location) (time.Month, int) {
 //
 // https://www.timeanddate.com/holidays/australia/christmas-day-holiday
 //
-func calculateChristmasDay(year int, loc *time.Location) (time.Month, int) {
+func calculateOcenaniaChristmasDay(year int, loc *time.Location) (time.Month, int) {
 	d := time.Date(year, time.December, 25, 0, 0, 0, 0, loc)
 	wd := d.Weekday()
 	if wd == 0 || wd == 6 {
@@ -99,7 +104,7 @@ func calculateChristmasDay(year int, loc *time.Location) (time.Month, int) {
 //
 // https://www.timeanddate.com/holidays/australia/boxing-day
 //
-func calculateBoxingDay(year int, loc *time.Location) (time.Month, int) {
+func calculateOcenaniaBoxingDay(year int, loc *time.Location) (time.Month, int) {
 	d := time.Date(year, time.December, 26, 0, 0, 0, 0, loc)
 	wd := d.Weekday()
 	if wd == 0 || wd == 6 {
@@ -107,23 +112,4 @@ func calculateBoxingDay(year int, loc *time.Location) (time.Month, int) {
 	}
 
 	return d.Month(), d.Day()
-}
-
-// Christmas Day
-//
-// Christmas day is a public holidays in Australia,
-// if it fall on the weekend an additional public holiday is held on the next available weekday.
-//
-// https://www.timeanddate.com/holidays/australia/christmas-day-holiday
-//
-func calculateChristmasDayBoxingDay(year int, loc *time.Location) (time.Month, int) {
-	christmas := time.Date(year, time.December, 25, 0, 0, 0, 0, loc)
-	firstAvailableDay := time.Date(year, 12, 27, 0, 0, 0, 0, loc)
-
-	// Sunday or Saturday
-	if christmas.Weekday() == 0 || christmas.Weekday() == 6 {
-		return firstAvailableDay.Month(), firstAvailableDay.Day()
-	}
-
-	return christmas.Month(), christmas.Day()
 }

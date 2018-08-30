@@ -6,8 +6,6 @@ import (
 	"reflect"
 	"testing"
 	"time"
-
-	"github.com/stretchr/testify/assert"
 )
 
 func TestWeekend(t *testing.T) {
@@ -560,7 +558,9 @@ func TestCalendar_WorkdaysNrInRangeAustralia(t *testing.T) {
 	c := NewCalendar()
 	AddAustralianHolidays(c)
 	loc, err := time.LoadLocation("Australia/Sydney")
-	assert.NoError(t, err)
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	tests := []struct {
 		name         string
@@ -614,10 +614,9 @@ func TestCalendar_WorkdaysNrInRangeAustralia(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-
-			res := c.CountHolidayHoursInRange(tc.startTime, tc.captureDelay)
-
-			assert.Equal(t, tc.expRes, res)
+			if got := c.CountHolidayHoursWithOffset(tc.startTime, tc.captureDelay); !reflect.DeepEqual(got, tc.expRes) {
+				t.Errorf("Calendar.AddSkipNonWorkdays() = %v, want %v", got, tc.expRes)
+			}
 		})
 	}
 }

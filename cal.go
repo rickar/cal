@@ -258,8 +258,8 @@ func (c *Calendar) WorkdaysFrom(start time.Time, offset int) time.Time {
 	return date
 }
 
-// WorkHoursNrInRange returns the number of working days in a range starting from the set start date to the end date,
-// set by the offset in hour
+// CountHolidayHoursWithOffset returns the number of working hours in a range starting from the consumed start date
+// to the end date set by the offset
 func (c *Calendar) CountHolidayHoursWithOffset(start time.Time, offsetHour int) int {
 	days := int(math.Ceil(float64(offsetHour) / float64(24)))
 

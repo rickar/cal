@@ -1,10 +1,9 @@
 package cal
 
 import (
+	"reflect"
 	"testing"
 	"time"
-
-	"github.com/stretchr/testify/assert"
 )
 
 func TestAustralianHolidays(t *testing.T) {
@@ -12,8 +11,9 @@ func TestAustralianHolidays(t *testing.T) {
 	c.Observed = ObservedExact
 	AddAustralianHolidays(c)
 	loc, err := time.LoadLocation("Australia/Sydney")
-	assert.NoError(t, err)
-
+	if err != nil {
+		t.Fatal(err)
+	}
 	currentTime := time.Now()
 	year := currentTime.Year()
 
@@ -31,10 +31,11 @@ func TestAustralianHolidays(t *testing.T) {
 		{time.Date(2004, time.April, 25, 0, 0, 0, 0, loc), true, "Anzac Day"},
 	}
 
-	for _, test := range tests {
-		t.Run(test.name, func(t *testing.T) {
-			got := c.IsHoliday(test.t)
-			assert.Equal(t, test.want, got)
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			if got := c.IsHoliday(tc.t); !reflect.DeepEqual(got, tc.want) {
+				t.Errorf("Calendar.AddSkipNonWorkdays() = %v, want %v", got, tc.want)
+			}
 		})
 	}
 }
