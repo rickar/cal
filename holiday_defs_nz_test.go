@@ -9,7 +9,7 @@ import (
 func TestNewZelandHolidays(t *testing.T) {
 	c := NewCalendar()
 	c.Observed = ObservedExact
-	AddNewZelandHoliday(c)
+	AddNewZealandHoliday(c)
 	loc, err := time.LoadLocation("Australia/Sydney")
 	if err != nil {
 		t.Fatal(err)

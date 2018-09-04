@@ -21,7 +21,7 @@ var (
 )
 
 // AddNewZelandHoliday adds all New Zeland holidays
-func AddNewZelandHoliday(c *Calendar) {
+func AddNewZealandHoliday(c *Calendar) {
 	c.AddHoliday(
 		NZNewYear,
 		NZDayAfterNewYear,
