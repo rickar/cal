@@ -61,3 +61,17 @@ func TestAddBritishHolidays(t *testing.T) {
 		})
 	}
 }
+
+func TestCalculateNewYearsHoliday(t *testing.T) {
+	c := NewCalendar()
+	AddBritishHolidays(c)
+
+	i := time.Date(2011, time.January, 3, 0, 0, 0, 0, time.UTC)
+
+	if !c.IsHoliday(i) {
+		t.Errorf("Expected %q to be a holiday but wasn't", i)
+	}
+	if c.IsWorkday(i) {
+		t.Errorf("Did not expect %q to be a holiday", i)
+	}
+}
