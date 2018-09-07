@@ -553,3 +553,70 @@ func TestAddSkipNonWorkdays(t *testing.T) {
 		})
 	}
 }
+
+func TestCalendar_WorkdaysNrInRangeAustralia(t *testing.T) {
+	c := NewCalendar()
+	AddAustralianHolidays(c)
+	loc, err := time.LoadLocation("Australia/Sydney")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	tests := []struct {
+		name         string
+		captureDelay int
+		startTime    time.Time
+		expRes       int
+	}{
+		{
+			name:         "Christmas weekend",
+			captureDelay: 168,
+			startTime:    time.Date(2017, 12, 16, 2, 22, 45, 0, loc),
+			expRes:       144,
+		},
+		{
+			name:         "24 hours",
+			captureDelay: 24,
+			startTime:    time.Date(2017, 12, 6, 2, 13, 20, 0, loc),
+			expRes:       0,
+		},
+		{
+			name:         "5 days with weekend",
+			captureDelay: 120,
+			startTime:    time.Date(2017, 12, 6, 9, 15, 00, 0, loc),
+			expRes:       48,
+		},
+		{
+			name:         "Christmas Eve",
+			captureDelay: 48,
+			startTime:    time.Date(2017, 12, 24, 11, 00, 00, 0, loc),
+			expRes:       72,
+		},
+		{
+			name:         "12 hours",
+			captureDelay: 12,
+			startTime:    time.Date(2017, 12, 01, 11, 00, 00, 0, loc),
+			expRes:       48,
+		},
+		{
+			name:         "72 hours",
+			captureDelay: 72,
+			startTime:    time.Date(2017, 12, 20, 12, 00, 00, 0, loc),
+			expRes:       96,
+		},
+		{
+			name:         "11 days",
+			captureDelay: 11 * 24,
+			startTime:    time.Date(2017, 12, 20, 12, 00, 00, 0, loc),
+			expRes:       216,
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			if got := c.CountHolidayHoursWithOffset(tc.startTime, tc.captureDelay); !reflect.DeepEqual(got, tc.expRes) {
+				t.Errorf("Calendar.AddSkipNonWorkdays() = %v, want %v", got, tc.expRes)
+			}
+		})
+	}
+}
