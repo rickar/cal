@@ -63,34 +63,6 @@ func AddBritishHolidays(c *Calendar) {
 	)
 }
 
-// Dutch holidays
-var (
-	NLNieuwjaar       = NewYear
-	NLGoedeVrijdag    = GoodFriday
-	NLPaasMaandag     = EasterMonday
-	NLKoningsDag      = NewHolidayFunc(calculateKoningsDag)
-	NLBevrijdingsDag  = NewHoliday(time.May, 5)
-	NLHemelvaart      = DEChristiHimmelfahrt
-	NLPinksterMaandag = DEPfingstmontag
-	NLEersteKerstdag  = Christmas
-	NLTweedeKerstdag  = Christmas2
-)
-
-// AddDutchHolidays adds all Dutch holidays to the Calendar
-func AddDutchHolidays(c *Calendar) {
-	c.AddHoliday(
-		NLNieuwjaar,
-		NLGoedeVrijdag,
-		NLPaasMaandag,
-		NLKoningsDag,
-		NLBevrijdingsDag,
-		NLHemelvaart,
-		NLPinksterMaandag,
-		NLEersteKerstdag,
-		NLTweedeKerstdag,
-	)
-}
-
 // US holidays
 var (
 	USNewYear      = NewYear
@@ -155,15 +127,6 @@ func calculateEasterMonday(year int, loc *time.Location) (time.Month, int) {
 	// the day after Easter Sunday
 	em := easter.AddDate(0, 0, +1)
 	return em.Month(), em.Day()
-}
-
-//KoningsDag (kingsday) is April 27th, 26th if the 27th is a Sunday
-func calculateKoningsDag(year int, loc *time.Location) (time.Month, int) {
-	koningsDag := time.Date(year, time.April, 27, 0, 0, 0, 0, loc)
-	if koningsDag.Weekday() == time.Sunday {
-		koningsDag = koningsDag.AddDate(0, 0, -1)
-	}
-	return koningsDag.Month(), koningsDag.Day()
 }
 
 // NewYearsDay is the 1st of January unless the 1st is a Saturday or Sunday
