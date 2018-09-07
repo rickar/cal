@@ -41,6 +41,7 @@ func TestNewZelandHolidays(t *testing.T) {
 		{time.Date(2019, time.June, 3, 0, 0, 0, 0, loc), true, "Queen Birthday 2019"},
 		{time.Date(2020, time.June, 1, 0, 0, 0, 0, loc), true, "Queen Birthday 2020"},
 
+		{time.Date(1909, time.October, 13, 0, 0, 0, 0, loc), true, "Labour day 1909"},
 		{time.Date(2017, time.October, 23, 0, 0, 0, 0, loc), true, "Labour day 2017"},
 		{time.Date(2019, time.October, 28, 0, 0, 0, 0, loc), true, "Labour day 2017"},
 
