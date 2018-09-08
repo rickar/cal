@@ -8,7 +8,7 @@ var (
 	FRLundiDePâques     = EasterMonday
 	FRFêteDuTravail     = ECBLabourDay
 	FRArmistice1945     = NewHoliday(time.May, 8)
-	FRJeudiDeLAscension = NewHolidayFunc(calculateJeuDeLAscension)
+	FRJeudiDeLAscension = NewHolidayFunc(calculateJeudiDeLAscension)
 	FRLundiDePentecôte  = NewHolidayFunc(calculateLundiDePentecôte)
 	FRFêteNationale     = NewHoliday(time.July, 14)
 	FRAssomption        = NewHoliday(time.August, 15)
@@ -34,7 +34,7 @@ func AddFranceHolidays(c *Calendar) {
 	)
 }
 
-func calculateJeuDeLAscension(year int, loc *time.Location) (time.Month, int) {
+func calculateJeudiDeLAscension(year int, loc *time.Location) (time.Month, int) {
 	easter := calculateEaster(year, loc)
 	// 39 days after Easter Sunday
 	t := easter.AddDate(0, 0, +39)
