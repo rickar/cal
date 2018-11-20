@@ -8,13 +8,15 @@ import (
 
 // Holidays in Australia
 var (
-	AUNewYear       = NewHolidayFunc(calculateNewYearOceania)
-	AUAustralianDay = NewHoliday(time.January, 26)
-	AUGoodFriday    = GoodFriday
-	AUChristmasDay  = NewHolidayFunc(calculateOcenaniaChristmasDay)
-	AUBoxingDays    = Christmas2
-	AUEasterMonday  = EasterMonday
-	AUAnzacDay      = NewHolidayFunc(calculateAnzacDay)
+	AUNewYear        = NewHolidayFunc(calculateNewYearOceania)
+	AUAustralianDay  = NewHoliday(time.January, 26)
+	AUGoodFriday     = GoodFriday
+	AUChristmasDay   = NewHolidayFunc(calculateOcenaniaChristmasDay)
+	AUBoxingDays     = Christmas2
+	AUEasterMonday   = EasterMonday
+	AUAnzacDay       = NewHolidayFunc(calculateAnzacDay)
+	AUQueenBirthDay = NewHolidayFunc(calculateQueenBirthDay)
+	AULabourDay      = NewHolidayFunc(calculateAULabourDay)
 )
 
 // AddAustralianHolidays adds all Australian holidays
@@ -27,6 +29,8 @@ func AddAustralianHolidays(c *Calendar) {
 		AUAnzacDay,
 		AUChristmasDay,
 		AUBoxingDays,
+		AUQueenBirthDay,
+		AULabourDay,
 	)
 }
 
@@ -112,4 +116,121 @@ func calculateOcenaniaBoxingDay(year int, loc *time.Location) (time.Month, int) 
 	}
 
 	return d.Month(), d.Day()
+}
+
+// Queen's birth Day
+//
+// The Queen’s Birthday is a public holiday celebrated in most states and territories on the second Monday in June,
+// making for a much-looked-forward-to June long weekend.
+// WA QLD different
+//
+// https://publicholidays.com.au/queens-birthday/
+// WA - Monday in last week of Sep.
+// QLD -  1st. Monday of Oct
+func calculateQueenBirthDay(year int, loc *time.Location) (time.Month, int) {
+	if loc.String() == "Australia/West" || loc.String() == "Australia/Perth" {
+		d := time.Date(year, time.September, 30, 0, 0, 0, 0, loc)
+
+		wd := d.Weekday()
+		if wd == 0 {
+			d = d.AddDate(0, 0, -6)
+		} else if wd == 1 {
+		} else {
+			d = d.AddDate(0, 0, -(int(d.Weekday()) - 1))
+		}
+
+		return d.Month(), d.Day()
+
+	} else if loc.String() == "Australia/Queensland" {
+		d := time.Date(year, time.October, 1, 0, 0, 0, 0, loc)
+
+		wd := d.Weekday()
+		if wd == 0 {
+			d = d.AddDate(0, 0, 1)
+		} else if wd == 1 {
+		} else {
+			d = d.AddDate(0, 0, 8-int(d.Weekday()))
+		}
+
+		return d.Month(), d.Day()
+
+	} else {
+		d := time.Date(year, time.June, 1, 0, 0, 0, 0, loc)
+
+		wd := d.Weekday()
+		if wd == 0 {
+			d = d.AddDate(0, 0, 8)
+		} else if wd == 1 {
+			d = d.AddDate(0, 0, 8-int(d.Weekday()))
+		} else {
+			d = d.AddDate(0, 0, (8-int(d.Weekday()))+7)
+		}
+
+		return d.Month(), d.Day()
+
+	}
+}
+
+// Australian Labour Day
+//
+// WA -  first Monday in March  Australia/Perth, Australia/West
+// VIC, TAS - second Monday in March   Australia/Melbourne, Australia/Tasmania, Australia/Victoria
+// QLD, NT - first Monday in May   Australia/Brisbane, Australia/Darwin, Australia/North
+// ACT, NSW & SA - first Monday in Oct
+func calculateAULabourDay(year int, loc *time.Location) (time.Month, int) {
+	if loc.String() == "Australia/West" || loc.String() == "Australia/Perth" {
+		d := time.Date(year, time.March, 1, 0, 0, 0, 0, loc)
+
+		wd := d.Weekday()
+		if wd == 0 {
+			d = d.AddDate(0, 0, 1)
+		} else if wd == 1 {
+		} else {
+			d = d.AddDate(0, 0, 8-int(d.Weekday()))
+		}
+
+		return d.Month(), d.Day()
+
+	} else if loc.String() == "Australia/Melbourne" || loc.String() == "Australia/Tasmania" {
+		d := time.Date(year, time.March, 1, 0, 0, 0, 0, loc)
+
+		wd := d.Weekday()
+		if wd == 0 {
+			d = d.AddDate(0, 0, 8)
+		} else if wd == 1 {
+			d = d.AddDate(0, 0, 8-int(d.Weekday()))
+		} else {
+			d = d.AddDate(0, 0, (8-int(d.Weekday()))+7)
+		}
+
+		return d.Month(), d.Day()
+
+	} else if loc.String() == "Australia/Brisbane" || loc.String() == "Australia/Darwin" {
+		d := time.Date(year, time.May, 1, 0, 0, 0, 0, loc)
+
+		wd := d.Weekday()
+		if wd == 0 {
+			d = d.AddDate(0, 0, 1)
+		} else if wd == 1 {
+		} else {
+			d = d.AddDate(0, 0, 8-int(d.Weekday()))
+		}
+
+		return d.Month(), d.Day()
+
+	} else {
+		d := time.Date(year, time.October, 1, 0, 0, 0, 0, loc)
+
+		wd := d.Weekday()
+		if wd == 0 {
+			d = d.AddDate(0, 0, 1)
+		} else if wd == 1 {
+		} else {
+			d = d.AddDate(0, 0, 8-int(d.Weekday()))
+		}
+
+		return d.Month(), d.Day()
+
+	}
+
 }
