@@ -162,6 +162,40 @@ func TestWorkday(t *testing.T) {
 	}
 }
 
+func TestWorkdayFunc(t *testing.T) {
+	c := NewCalendar()
+	c.WorkdayFunc = func(date time.Time) bool {
+		return date.Weekday() == time.Monday ||
+			date.Weekday() == time.Tuesday ||
+			date.Weekday() == time.Wednesday ||
+			(date.Month() == time.March && (date.Day() == 9 || date.Day() == 10))
+	}
+	c.AddHoliday(Holiday{Month: time.March, Day: 6})
+	tests := []struct {
+		t    time.Time
+		want bool
+	}{
+		{time.Date(2019, 3, 1, 12, 0, 0, 0, time.UTC), false},
+		{time.Date(2019, 3, 2, 12, 0, 0, 0, time.UTC), false},
+		{time.Date(2019, 3, 3, 12, 0, 0, 0, time.UTC), false},
+		{time.Date(2019, 3, 4, 12, 0, 0, 0, time.UTC), true},
+		{time.Date(2019, 3, 5, 12, 0, 0, 0, time.UTC), true},
+		{time.Date(2019, 3, 6, 12, 0, 0, 0, time.UTC), false},
+		{time.Date(2019, 3, 7, 12, 0, 0, 0, time.UTC), false},
+		{time.Date(2019, 3, 8, 12, 0, 0, 0, time.UTC), false},
+		{time.Date(2019, 3, 9, 12, 0, 0, 0, time.UTC), true},
+		{time.Date(2019, 3, 10, 12, 0, 0, 0, time.UTC), true},
+		{time.Date(2019, 3, 11, 12, 0, 0, 0, time.UTC), true},
+	}
+
+	for _, test := range tests {
+		got := c.IsWorkday(test.t)
+		if got != test.want {
+			t.Errorf("got: %t; want: %t (%s)", got, test.want, test.t)
+		}
+	}
+}
+
 func TestHoliday(t *testing.T) {
 	c := NewCalendar()
 	c.AddHoliday(
