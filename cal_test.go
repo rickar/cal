@@ -238,6 +238,37 @@ func TestHoliday(t *testing.T) {
 	}
 }
 
+func TestHolidayPerCountry(t *testing.T) {
+	c := NewCalendar()
+
+	FRWW2Victory := NewHolidayExactPerCountry(time.May, 1, 2019, "fr-FR")
+	ESNationalDay := NewHolidayExactPerCountry(time.October, 12, 2019, "es-ES")
+
+	c.AddHoliday(
+		FRWW2Victory,
+		ESNationalDay,
+	)
+
+	tests := []struct {
+		t       time.Time
+		country string
+		want    bool
+	}{
+		{time.Date(2019, 5, 1, 12, 0, 0, 0, time.UTC), "fr-FR", true},
+		{time.Date(2014, 5, 26, 23, 59, 59, 0, time.UTC), "fr-FR", false},
+		{time.Date(2019, 10, 12, 23, 59, 59, 0, time.UTC), "fr-FR", false},
+		{time.Date(2019, 10, 12, 23, 59, 59, 0, time.UTC), "es-ES", true},
+	}
+
+	for _, test := range tests {
+		c.Country = test.country
+		got := c.IsHoliday(test.t)
+		if got != test.want {
+			t.Errorf("got: %t; want: %t (%s)", got, test.want, test.t)
+		}
+	}
+}
+
 func TestWorkdayNearest(t *testing.T) {
 	c := NewCalendar()
 	c.AddHoliday(
@@ -492,6 +523,49 @@ func TestCountWorkdays(t *testing.T) {
 	}
 
 	for _, test := range tests {
+		got := c.CountWorkdays(test.t, test.u)
+		if got != test.want {
+			t.Errorf("got: %v; want: %v (%s-%s)", got, test.want, test.t, test.u)
+		}
+		got = c.CountWorkdays(test.u, test.t)
+		if got != -test.want {
+			t.Errorf("got: %v; want: %v (%s-%s)", got, -test.want, test.u, test.t)
+		}
+	}
+}
+
+func TestCountWorkdaysPerCountry(t *testing.T) {
+	c := NewCalendar()
+
+	FRWW2Victory := NewHolidayExactPerCountry(time.May, 1, 2019, "fr-FR")
+	ESNationalDay := NewHolidayExactPerCountry(time.October, 12, 2019, "es-ES")
+
+	c.AddHoliday(
+		FRWW2Victory,
+		ESNationalDay,
+	)
+
+	/*
+	      May 2019
+	   Mo Th We Tu Fr Sa Su
+	   			  1  2  3  4  5
+	    6  7  8  9 10	11 12
+	*/
+
+	tests := []struct {
+		t       time.Time
+		u       time.Time
+		country string
+		want    int64
+	}{
+		{time.Date(2019, 4, 30, 12, 0, 0, 0, time.UTC), time.Date(2019, 5, 10, 12, 0, 0, 0, time.UTC), "fr-FR", 8},
+		{time.Date(2019, 4, 30, 12, 0, 0, 0, time.UTC), time.Date(2019, 5, 10, 12, 0, 0, 0, time.UTC), "es-ES", 9},
+	}
+
+	for _, test := range tests {
+		// specify a country for the calendar
+		c.Country = test.country
+
 		got := c.CountWorkdays(test.t, test.u)
 		if got != test.want {
 			t.Errorf("got: %v; want: %v (%s-%s)", got, test.want, test.t, test.u)

@@ -101,6 +101,7 @@ type Calendar struct {
 	holidays    [13][]Holiday // 0 for offset based holidays, 1-12 for month based
 	workday     [7]bool       // flags to indicate a day of the week is a workday
 	WorkdayFunc WorkdayFn     // optional function to override workday flags
+	Country     string        // to filter holidays for a specific country
 	Observed    ObservedRule
 }
 
@@ -134,6 +135,10 @@ func (c *Calendar) SetWorkday(day time.Weekday, workday bool) {
 // IsHoliday reports whether a given date is a holiday. It does not account
 // for the observation of holidays on alternate days.
 func (c *Calendar) IsHoliday(date time.Time) bool {
+	if c.Country != "" {
+		return c.IsHolidayPerCountry(date, c.Country)
+	}
+
 	idx := date.Month()
 	for i := range c.holidays[idx] {
 		if c.holidays[idx][i].matches(date) {
@@ -142,6 +147,23 @@ func (c *Calendar) IsHoliday(date time.Time) bool {
 	}
 	for i := range c.holidays[0] {
 		if c.holidays[0][i].matches(date) {
+			return true
+		}
+	}
+	return false
+}
+
+// IsHolidayPerCountry reports whether a given date is a holiday for a specific country. It does not account
+// for the observation of holidays on alternate days.
+func (c *Calendar) IsHolidayPerCountry(date time.Time, country string) bool {
+	idx := date.Month()
+	for i := range c.holidays[idx] {
+		if c.holidays[idx][i].matches(date) && c.holidays[idx][i].Country == country {
+			return true
+		}
+	}
+	for i := range c.holidays[0] {
+		if c.holidays[0][i].matches(date) && c.holidays[idx][i].Country == country {
 			return true
 		}
 	}

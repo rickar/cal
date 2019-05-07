@@ -35,6 +35,7 @@ type Holiday struct {
 	Day     int
 	Offset  int
 	Year    int
+	Country string
 	Func    HolidayFn
 
 	// last values used to calculate month and day with Func
@@ -50,6 +51,11 @@ func NewHoliday(month time.Month, day int) Holiday {
 // NewHolidayExact creates a new Holiday instance for an exact day of a month and year.
 func NewHolidayExact(month time.Month, day int, year int) Holiday {
 	return Holiday{Month: month, Day: day, Year: year}
+}
+
+// NewHolidayExact creates a new Holiday instance for an exact day of a month and year per country.
+func NewHolidayExactPerCountry(month time.Month, day int, year int, country string) Holiday {
+	return Holiday{Month: month, Day: day, Year: year, Country: country}
 }
 
 // NewHolidayFloat creates a new Holiday instance for an offset-based day of
