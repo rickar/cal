@@ -588,6 +588,92 @@ func TestAddSkipNonWorkdays(t *testing.T) {
 	}
 }
 
+
+func TestSubSkipNonWorkdays(t *testing.T) {
+	c := NewCalendar()
+
+	tests := []struct {
+		name  string
+		start time.Time
+		d     time.Duration
+		want  time.Time
+	}{
+		{
+			"Sat0Hour",
+			time.Date(2017, 7, 29, 12, 0, 0, 0, time.UTC),
+			0,
+			time.Date(2017, 7, 28, 12, 0, 0, 0, time.UTC),
+		},
+		{
+			"Sun0Hour",
+			time.Date(2017, 7, 30, 12, 0, 0, 0, time.UTC),
+			0,
+			time.Date(2017, 7, 28, 12, 0, 0, 0, time.UTC),
+		},
+		{
+			"Sun24Hour",
+			time.Date(2017, 7, 30, 12, 0, 0, 0, time.UTC),
+			24 * time.Hour,
+			time.Date(2017, 7, 27, 12, 0, 0, 0, time.UTC),
+		},
+		{
+			"Sun26Hour",
+			time.Date(2017, 7, 30, 14, 0, 0, 0, time.UTC),
+			26 * time.Hour,
+			time.Date(2017, 7, 27, 12, 0, 0, 0, time.UTC),
+		},
+		{
+			"Fri0Hour",
+			time.Date(2017, 7, 28, 12, 0, 0, 0, time.UTC),
+			0,
+			time.Date(2017, 7, 28, 12, 0, 0, 0, time.UTC),
+		},
+		{
+			"Fri14Hour",
+			time.Date(2017, 7, 31, 2, 0, 0, 0, time.UTC),
+			14 * time.Hour,
+			time.Date(2017, 7, 28, 12, 0, 0, 0, time.UTC),
+		},
+		{
+			"Fri24Hour",
+			time.Date(2017, 7, 31, 12, 0, 0, 0, time.UTC),
+			24 * time.Hour,
+			time.Date(2017, 7, 28, 12, 0, 0, 0, time.UTC),
+		},
+		{
+			"Tue72Hour",
+			time.Date(2017, 7, 28, 12, 0, 0, 0, time.UTC),
+			72 * time.Hour,
+			time.Date(2017, 7, 25, 12, 0, 0, 0, time.UTC),
+		},
+		{
+			"Tue5Day",
+			time.Date(2017, 8, 1, 12, 0, 0, 0, time.UTC),
+			5 * 24 * time.Hour,
+			time.Date(2017, 7, 25, 12, 0, 0, 0, time.UTC),
+		},
+		{
+			"Tue7Day",
+			time.Date(2017, 8, 3, 12, 0, 0, 0, time.UTC),
+			7 * 24 * time.Hour,
+			time.Date(2017, 7, 25, 12, 0, 0, 0, time.UTC),
+		},
+		{
+			"Tue10Day",
+			time.Date(2017, 8, 8, 12, 0, 0, 0, time.UTC),
+			10 * 24 * time.Hour,
+			time.Date(2017, 7, 25, 12, 0, 0, 0, time.UTC),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := c.SubSkipNonWorkdays(tt.start, tt.d); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Calendar.SubSkipNonWorkdays() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestCalendar_WorkdaysNrInRangeAustralia(t *testing.T) {
 	c := NewCalendar()
 	AddAustralianHolidays(c)
