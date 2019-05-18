@@ -312,7 +312,7 @@ func (c *Calendar) CountWorkdays(start, end time.Time) int64 {
 	return int64(factor * result)
 }
 
-// AddSkipNonWorkdays returns start time plus d woking duration
+// AddSkipNonWorkdays returns start time plus d working duration
 func (c *Calendar) AddSkipNonWorkdays(start time.Time, d time.Duration) time.Time {
 	const day = 24 * time.Hour
 	s := start
@@ -330,6 +330,28 @@ func (c *Calendar) AddSkipNonWorkdays(start time.Time, d time.Duration) time.Tim
 		} else {
 			break
 		}
+	}
+	return s
+}
+
+// SubSkipNonWorkdays  returns start time minus d working duration
+func (c *Calendar) SubSkipNonWorkdays(start time.Time, d time.Duration) time.Time {
+	const day = 24 * time.Hour * -1
+	s := start
+	for {
+		for !c.IsWorkday(s) {
+			s = s.Add(day)
+		}
+		
+		if (d >= day*-1){
+			s = s.Add(day)
+			d = d + day
+		} else if d > 0 {
+			s = s.Add(-d)
+			d = 0
+		} else {
+				break
+			}
 	}
 	return s
 }
