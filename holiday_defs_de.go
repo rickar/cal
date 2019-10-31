@@ -55,6 +55,7 @@ func AddGermanyStateHolidays(c *Calendar, state string) {
 	case "BE": // Berlin
 		c.AddHoliday(
 			DEInternationalerFrauentag,
+			DEReformationstag2017,
 		)
 	case "BW": // Baden-Württemberg
 		c.AddHoliday(
@@ -78,6 +79,7 @@ func AddGermanyStateHolidays(c *Calendar, state string) {
 			DEOstersonntag,
 			DEPfingstsonntag,
 			DEFronleichnam,
+			DEReformationstag2017,
 		)
 	case "HH": // Hamburg
 		c.AddHoliday(DEReformationstag)
