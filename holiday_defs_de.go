@@ -18,6 +18,7 @@ var (
 	DEPfingstmontag            = NewHolidayFunc(calculatePfingstMontag)
 	DEFronleichnam             = NewHolidayFunc(calculateFronleichnam)
 	DEMariaHimmelfahrt         = NewHoliday(time.August, 15)
+	DEWeltkindertag            = NewHoliday(time.September, 20)
 	DETagderDeutschenEinheit   = NewHoliday(time.October, 3)
 	DEReformationstag          = NewHoliday(time.October, 31)
 	DEReformationstag2017      = NewHolidayExact(time.October, 31, 2017)
@@ -70,9 +71,19 @@ func AddGermanyStateHolidays(c *Calendar, state string) {
 			DEAllerheiligen,
 			DEReformationstag2017,
 		)
+	case "HB": // Bremen
+		c.AddHoliday(DEReformationstag)
 	case "HE": // Hessen
-		c.AddHoliday(DEFronleichnam)
+		c.AddHoliday(
+			DEOstersonntag,
+			DEPfingstsonntag,
+			DEFronleichnam,
+		)
+	case "HH": // Hamburg
+		c.AddHoliday(DEReformationstag)
 	case "MV": // Mecklenburg-Vorpommern
+		c.AddHoliday(DEReformationstag)
+	case "NI": // Niedersachsen
 		c.AddHoliday(DEReformationstag)
 	case "NW": // Nordrhein-Westfalen
 		c.AddHoliday(
@@ -88,15 +99,16 @@ func AddGermanyStateHolidays(c *Calendar, state string) {
 		)
 	case "SA": // Sachsen
 		c.AddHoliday(
-			DEFronleichnam,
 			DEReformationstag,
 			DEBußUndBettag,
 		)
+	case "SH": // Schleswig-Holstein
+		c.AddHoliday(DEReformationstag)
 	case "SL": // Saarland
 		c.AddHoliday(
 			DEFronleichnam,
-			DEAllerheiligen,
 			DEMariaHimmelfahrt,
+			DEAllerheiligen,
 			DEReformationstag2017,
 		)
 	case "ST": // Sachen-Anhalt
@@ -106,7 +118,7 @@ func AddGermanyStateHolidays(c *Calendar, state string) {
 		)
 	case "TH": // Thüringen
 		c.AddHoliday(
-			DEFronleichnam,
+			DEWeltkindertag,
 			DEReformationstag,
 		)
 	}
