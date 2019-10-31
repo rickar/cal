@@ -99,7 +99,7 @@ func AddGermanyStateHolidays(c *Calendar, state string) {
 			DEAllerheiligen,
 			DEReformationstag2017,
 		)
-	case "SA": // Sachsen
+	case "SN", "SA": // Sachsen (keep wrong "SA" code for compatibility)
 		c.AddHoliday(
 			DEReformationstag,
 			DEBußUndBettag,
