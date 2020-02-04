@@ -7,7 +7,7 @@ var (
 	GBNewYear       = NewHolidayFunc(calculateNewYearsHoliday)
 	GBGoodFriday    = GoodFriday
 	GBEasterMonday  = EasterMonday
-	GBEarlyMay      = NewHolidayFloat(time.May, time.Monday, 1)
+	GBEarlyMay      = makeGBEarlyMay()
 	GBSpringHoliday = NewHolidayFloat(time.May, time.Monday, -1)
 	GBSummerHoliday = NewHolidayFloat(time.August, time.Monday, -1)
 	GBChristmasDay  = Christmas
@@ -39,4 +39,19 @@ func calculateNewYearsHoliday(year int, loc *time.Location) (time.Month, int) {
 		day = day.AddDate(0, 0, 1)
 	}
 	return time.January, day.Day()
+}
+
+// Early May holiday in UK is usually 1st Monday in May, but in 2020 this is
+// replaced by VE day on Fri 8th May
+func makeGBEarlyMay() Holiday {
+	hol := NewHolidayFloat(time.May, time.Monday, 1)
+	hol.Func = func(year int, loc *time.Location) (month time.Month, day int) {
+		if year == 2020 {
+			// In 2020 force VE day
+			return time.May, 8
+		}
+		// Else defer to floating holiday calculation
+		return time.May, 0
+	}
+	return hol
 }
