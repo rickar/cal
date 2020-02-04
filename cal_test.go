@@ -331,6 +331,64 @@ func TestWorkdayMonday(t *testing.T) {
 	}
 }
 
+func TestWorkdayMondayTuesday(t *testing.T) {
+	c := NewCalendar()
+	c.Observed = ObservedMondayTuesday
+	c.AddHoliday(
+		GBChristmasDay,
+		GBBoxingDay,
+	)
+
+	tests := []struct {
+		t    time.Time
+		want bool
+	}{
+		{time.Date(2019, 12, 24, 12, 0, 0, 0, time.UTC), true},  // Tue
+		{time.Date(2019, 12, 25, 12, 0, 0, 0, time.UTC), false}, // Wed
+		{time.Date(2019, 12, 26, 12, 0, 0, 0, time.UTC), false}, // Thu
+		{time.Date(2019, 12, 27, 12, 0, 0, 0, time.UTC), true},  // Fri
+		{time.Date(2019, 12, 28, 12, 0, 0, 0, time.UTC), false}, // Sat
+		{time.Date(2019, 12, 29, 12, 0, 0, 0, time.UTC), false}, // Sun
+
+		{time.Date(2020, 12, 24, 12, 0, 0, 0, time.UTC), true},  // Thu
+		{time.Date(2020, 12, 25, 12, 0, 0, 0, time.UTC), false}, // Fri
+		{time.Date(2020, 12, 26, 12, 0, 0, 0, time.UTC), false}, // Sat
+		{time.Date(2020, 12, 27, 12, 0, 0, 0, time.UTC), false}, // Sun
+		{time.Date(2020, 12, 28, 12, 0, 0, 0, time.UTC), false}, // Mon
+		{time.Date(2020, 12, 29, 12, 0, 0, 0, time.UTC), true},  // Tues
+
+		{time.Date(2021, 12, 24, 12, 0, 0, 0, time.UTC), true},  // Fri
+		{time.Date(2021, 12, 25, 12, 0, 0, 0, time.UTC), false}, // Sat
+		{time.Date(2021, 12, 26, 12, 0, 0, 0, time.UTC), false}, // Sun
+		{time.Date(2021, 12, 27, 12, 0, 0, 0, time.UTC), false}, // Mon
+		{time.Date(2021, 12, 28, 12, 0, 0, 0, time.UTC), false}, // Tues
+		{time.Date(2021, 12, 29, 12, 0, 0, 0, time.UTC), true},  // Wed
+
+		{time.Date(2022, 12, 23, 12, 0, 0, 0, time.UTC), true},  // Fri
+		{time.Date(2022, 12, 24, 12, 0, 0, 0, time.UTC), false}, // Sat
+		{time.Date(2022, 12, 25, 12, 0, 0, 0, time.UTC), false}, // Sun
+		{time.Date(2022, 12, 26, 12, 0, 0, 0, time.UTC), false}, // Mon
+		{time.Date(2022, 12, 27, 12, 0, 0, 0, time.UTC), false}, // Tues
+		{time.Date(2022, 12, 28, 12, 0, 0, 0, time.UTC), true},  // Wed
+		{time.Date(2022, 12, 29, 12, 0, 0, 0, time.UTC), true},  // Thu
+
+		{time.Date(2023, 12, 22, 12, 0, 0, 0, time.UTC), true},  // Fri
+		{time.Date(2023, 12, 23, 12, 0, 0, 0, time.UTC), false}, // Sat
+		{time.Date(2023, 12, 24, 12, 0, 0, 0, time.UTC), false}, // Sun
+		{time.Date(2023, 12, 25, 12, 0, 0, 0, time.UTC), false}, // Mon
+		{time.Date(2023, 12, 26, 12, 0, 0, 0, time.UTC), false}, // Tues
+		{time.Date(2023, 12, 27, 12, 0, 0, 0, time.UTC), true},  // Wed
+		{time.Date(2023, 12, 28, 12, 0, 0, 0, time.UTC), true},  // Thu
+	}
+
+	for _, test := range tests {
+		got := c.IsWorkday(test.t)
+		if got != test.want {
+			t.Errorf("got: %t; want: %t (%s)", got, test.want, test.t)
+		}
+	}
+}
+
 func TestWorkdays(t *testing.T) {
 	c := NewCalendar()
 	c.AddHoliday(USNewYear, USMLK)
@@ -587,7 +645,6 @@ func TestAddSkipNonWorkdays(t *testing.T) {
 		})
 	}
 }
-
 
 func TestSubSkipNonWorkdays(t *testing.T) {
 	c := NewCalendar()
