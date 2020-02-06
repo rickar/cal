@@ -167,10 +167,15 @@ func (c *Calendar) IsWorkday(date time.Time) bool {
 		return true
 	}
 
-	if c.Observed == ObservedMonday && day == time.Monday {
+	if (c.Observed == ObservedMonday || c.Observed == ObservedMondayTuesday) && day == time.Monday {
 		sun := date.AddDate(0, 0, -1)
 		sat := date.AddDate(0, 0, -2)
 		return !c.IsHoliday(sat) && !c.IsHoliday(sun)
+	} else if c.Observed == ObservedMondayTuesday && day == time.Tuesday {
+		mon := date.AddDate(0, 0, -1)
+		sun := date.AddDate(0, 0, -2)
+		sat := date.AddDate(0, 0, -3)
+		return !(c.IsHoliday(sat) && c.IsHoliday(sun)) && !(c.IsHoliday(sat) && c.IsHoliday(mon)) && !(c.IsHoliday(sun) && c.IsHoliday(mon))
 	} else if c.Observed == ObservedNearest {
 		if day == time.Friday {
 			sat := date.AddDate(0, 0, 1)
@@ -342,16 +347,16 @@ func (c *Calendar) SubSkipNonWorkdays(start time.Time, d time.Duration) time.Tim
 		for !c.IsWorkday(s) {
 			s = s.Add(day)
 		}
-		
-		if (d >= day*-1){
+
+		if d >= day*-1 {
 			s = s.Add(day)
 			d = d + day
 		} else if d > 0 {
 			s = s.Add(-d)
 			d = 0
 		} else {
-				break
-			}
+			break
+		}
 	}
 	return s
 }

@@ -12,9 +12,10 @@ type ObservedRule int
 
 // ObservedRule are the specific ObservedRules
 const (
-	ObservedNearest ObservedRule = iota // nearest weekday (Friday or Monday)
-	ObservedExact                       // the exact day only
-	ObservedMonday                      // Monday always
+	ObservedNearest       ObservedRule = iota // nearest weekday (Friday or Monday)
+	ObservedExact                             // the exact day only
+	ObservedMonday                            // Monday always
+	ObservedMondayTuesday                     // As above, but also accounts for Christmas Day being on a weekend (which pushes Boxing Day to Tuesday)
 )
 
 // HolidayFn calculates the occurrence of a holiday for the given year.
