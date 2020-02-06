@@ -72,6 +72,46 @@ func TestCalculateNewYearsHoliday(t *testing.T) {
 		t.Errorf("Expected %q to be a holiday but wasn't", i)
 	}
 	if c.IsWorkday(i) {
-		t.Errorf("Did not expect %q to be a holiday", i)
+		t.Errorf("Did not expect %q to be a workday", i)
+	}
+}
+
+func TestEarlyMay(t *testing.T) {
+	type date struct {
+		day   int
+		month time.Month
+		year  int
+	}
+	holidays := map[string]date{
+		"early_may_2019": {
+			day:   6,
+			month: time.May,
+			year:  2019,
+		},
+		"early_may_2020": {
+			day:   8,
+			month: time.May,
+			year:  2020,
+		},
+		"early_may_2021": {
+			day:   3,
+			month: time.May,
+			year:  2021,
+		},
+	}
+
+	for name, holiday := range holidays {
+		t.Run(name, func(t *testing.T) {
+			c := NewCalendar()
+			AddBritishHolidays(c)
+			i := time.Date(holiday.year, holiday.month, holiday.day, 0, 0, 0, 0, time.UTC)
+
+			if !c.IsHoliday(i) {
+				t.Errorf("Expected %q to be a holiday but wasn't", i)
+			}
+			if c.IsWorkday(i) {
+				t.Errorf("Did not expect %q to be a workday", i)
+			}
+		})
 	}
 }
