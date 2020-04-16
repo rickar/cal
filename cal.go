@@ -7,6 +7,11 @@ import (
 	"time"
 )
 
+const (
+	dayStart = 9
+	dayEnd   = 17
+)
+
 // IsWeekend reports whether the given date falls on a weekend.
 func IsWeekend(date time.Time) bool {
 	day := date.Weekday()
@@ -118,8 +123,8 @@ func NewCalendar() *Calendar {
 	c.workday[time.Wednesday] = true
 	c.workday[time.Thursday] = true
 	c.workday[time.Friday] = true
-	c.dayStart = time.Duration(9 * time.Hour)
-	c.dayEnd = time.Duration(18 * time.Hour)
+	c.dayStart = time.Duration(dayStart * time.Hour)
+	c.dayEnd = time.Duration(dayEnd * time.Hour)
 	return c
 }
 
@@ -344,6 +349,13 @@ func minTime(ts ...time.Time) time.Time {
 	return r
 }
 
+// DailyWorkedTime returns the total time worked per day
+// it makes it easy to compute working times per day
+// allowing calls like c.AddWorkHours(time.Now(), 8 * c.DailyWorkedTime())
+func (c *Calendar) DailyWorkedTime() time.Duration {
+	return c.dayEnd - c.dayStart
+}
+
 // StartWorkTime returns the time at which work starts in the current day
 func (c *Calendar) StartWorkTime(t time.Time) time.Time {
 	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0,
@@ -401,7 +413,7 @@ func (c *Calendar) AddWorkHours(t time.Time, worked time.Duration) time.Time {
 	return t
 }
 
-// SetWorkingHours configures the calendar to override the default 9-18 working hours
+// SetWorkingHours configures the calendar to override the default 9-17 working hours
 func (c *Calendar) SetWorkingHours(start time.Duration, end time.Duration) {
 	if start > end {
 		// This should not really happen, but SetWorkingHours(18*time.Hour, 9*time.Hour) should also mean a 9-18 time range
