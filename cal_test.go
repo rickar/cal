@@ -797,3 +797,104 @@ func TestCalendar_WorkdaysNrInRangeAustralia(t *testing.T) {
 		})
 	}
 }
+
+func TestStartWorkTime(t *testing.T) {
+	c := NewCalendar()
+	got := c.StartWorkTime(time.Date(2020, 04, 15, 01, 20, 0, 0, time.UTC))
+	expected := time.Date(2020, 04, 15, 9, 0, 0, 0, time.UTC)
+	if got != expected {
+		t.Errorf("Calendar.StartWorkTime() = %v, want %v", got, expected)
+	}
+}
+
+func TestEndWorkTime(t *testing.T) {
+	c := NewCalendar()
+	got := c.EndWorkTime(time.Date(2020, 04, 15, 01, 20, 0, 0, time.UTC))
+	expected := time.Date(2020, 04, 15, 18, 0, 0, 0, time.UTC)
+	if got != expected {
+		t.Errorf("Calendar.EndWorkTime() = %v, want %v", got, expected)
+	}
+}
+
+func TestNextWorkStart(t *testing.T) {
+	c := NewCalendar()
+	got := c.NextWorkStart(time.Date(2020, 04, 15, 01, 20, 0, 0, time.UTC))
+	expected := time.Date(2020, 04, 15, 9, 0, 0, 0, time.UTC)
+	if got != expected {
+		t.Errorf("Calendar.NextWorkStart() = %v, want %v", got, expected)
+	}
+	got = c.NextWorkStart(time.Date(2020, 04, 15, 10, 20, 0, 0, time.UTC))
+	expected = time.Date(2020, 04, 16, 9, 0, 0, 0, time.UTC)
+	if got != expected {
+		t.Errorf("Calendar.NextWorkStart() = %v, want %v", got, expected)
+	}
+	got = c.NextWorkStart(time.Date(2020, 04, 15, 21, 20, 0, 0, time.UTC))
+	expected = time.Date(2020, 04, 16, 9, 0, 0, 0, time.UTC)
+	if got != expected {
+		t.Errorf("Calendar.NextWorkStart() = %v, want %v", got, expected)
+	}
+	got = c.NextWorkStart(time.Date(2020, 04, 18, 21, 20, 0, 0, time.UTC))
+	expected = time.Date(2020, 04, 20, 9, 0, 0, 0, time.UTC)
+	if got != expected {
+		t.Errorf("Calendar.NextWorkStart() = %v, want %v", got, expected)
+	}
+}
+
+func TestWorkedHours(t *testing.T) {
+	c := NewCalendar()
+
+	got := c.CountWorkHours(time.Now(), time.Now().Add(7*24*time.Hour))
+	expected := time.Duration(5 * 9 * time.Hour)
+	if got != expected {
+		t.Errorf("Calendar.CountWorkHours() = %v, want %v", got, expected)
+	}
+
+	got = c.CountWorkHours(time.Date(2020, 01, 01, 0, 0, 0, 0, time.UTC), time.Date(2019, 01, 01, 0, 0, 0, 0, time.UTC))
+	expected = time.Duration(9 * 261 * time.Hour)
+	if got != expected {
+		t.Errorf("Calendar.CountWorkHours() = %v, want %v", got, expected)
+	}
+
+	loc, err := time.LoadLocation("Europe/Madrid")
+	if err != nil {
+		t.Errorf("failed to load GMT+1 location: %v", err)
+	}
+
+	got = c.CountWorkHours(time.Date(2020, 4, 15, 10, 0, 0, 0, time.UTC), time.Date(2020, 4, 15, 10, 0, 0, 0, loc))
+	// In april in Spain, there are 2 hours difference with Coordinated Universal Time
+	expected = time.Duration(2 * time.Hour)
+	if got != expected {
+		t.Errorf("Calendar.CountWorkHours() = %v, want %v", got, expected)
+	}
+
+	c.SetWorkingHours(2*time.Hour, 4*time.Hour) // night shift
+	got = c.CountWorkHours(time.Date(2020, 03, 29, 2, 0, 0, 0, loc), time.Date(2020, 03, 29, 4, 0, 0, 0, loc))
+	// 2020/03/29 is the daylight saving date in 2020 for Spain
+	expected = time.Duration(1 * time.Hour)
+	if got != expected {
+		t.Errorf("Calendar.CountWorkHours() = %v, want %v", got, expected)
+	}
+
+}
+
+func TestAddWorkedHours(t *testing.T) {
+	c := NewCalendar()
+
+	got := c.AddWorkHours(time.Date(2020, 04, 15, 3, 0, 0, 0, time.UTC), 10*time.Hour)
+	expected := time.Date(2020, 04, 16, 10, 0, 0, 0, time.UTC)
+	if got != expected {
+		t.Errorf("Calendar.AddWorkHours() = %v, want %v", got, expected)
+	}
+
+	got = c.AddWorkHours(time.Date(2020, 04, 15, 3, 0, 0, 0, time.UTC), 5*9*time.Hour)
+	expected = time.Date(2020, 04, 21, 18, 0, 0, 0, time.UTC)
+	if got != expected {
+		t.Errorf("Calendar.AddWorkHours() = %v, want %v", got, expected)
+	}
+
+	got = c.AddWorkHours(time.Date(2020, 04, 19, 3, 0, 0, 0, time.UTC), 9*time.Hour)
+	expected = time.Date(2020, 04, 20, 18, 0, 0, 0, time.UTC)
+	if got != expected {
+		t.Errorf("Calendar.AddWorkHours() = %v, want %v", got, expected)
+	}
+}

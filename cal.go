@@ -100,6 +100,8 @@ type WorkdayFn func(date time.Time) bool
 type Calendar struct {
 	holidays    [13][]Holiday // 0 for offset based holidays, 1-12 for month based
 	workday     [7]bool       // flags to indicate a day of the week is a workday
+	dayStart    time.Duration // the time offset at which the workdays starts
+	dayEnd      time.Duration // the time offset at which workdays end
 	WorkdayFunc WorkdayFn     // optional function to override workday flags
 	Observed    ObservedRule
 }
@@ -116,6 +118,8 @@ func NewCalendar() *Calendar {
 	c.workday[time.Wednesday] = true
 	c.workday[time.Thursday] = true
 	c.workday[time.Friday] = true
+	c.dayStart = time.Duration(9 * time.Hour)
+	c.dayEnd = time.Duration(18 * time.Hour)
 	return c
 }
 
@@ -315,6 +319,98 @@ func (c *Calendar) CountWorkdays(start, end time.Time) int64 {
 		result++
 	}
 	return int64(factor * result)
+}
+
+func maxTime(ts ...time.Time) time.Time {
+	r := time.Time{}
+	for _, t := range ts {
+		if t.After(r) {
+			r = t
+		}
+	}
+	return r
+}
+
+func minTime(ts ...time.Time) time.Time {
+	if len(ts) == 0 {
+		return time.Time{}
+	}
+	r := ts[0]
+	for _, t := range ts {
+		if t.Before(r) {
+			r = t
+		}
+	}
+	return r
+}
+
+// StartWorkTime returns the time at which work starts in the current day
+func (c *Calendar) StartWorkTime(t time.Time) time.Time {
+	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0,
+		0, t.Location()).Add(c.dayStart)
+
+}
+
+// EndWorkTime returns the time at which work ends in the current day
+func (c *Calendar) EndWorkTime(t time.Time) time.Time {
+	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0,
+		0, t.Location()).Add(c.dayEnd)
+
+}
+
+// NextWorkStart determines what will be the next future time work will start
+func (c *Calendar) NextWorkStart(t time.Time) time.Time {
+	start := c.StartWorkTime(t)
+	for !c.IsWorkday(start) || t.After(start) {
+		start = start.Add(24 * time.Hour)
+	}
+	return start
+}
+
+// CountWorkHours counts the actual number of worked hours between 2 different times
+func (c *Calendar) CountWorkHours(start, end time.Time) time.Duration {
+	r := time.Duration(0)
+	if end.Before(start) {
+		start, end = end, start
+	}
+	current := maxTime(start, c.StartWorkTime(start))
+	if current.After(c.EndWorkTime(start)) {
+		current = c.NextWorkStart(start)
+	}
+	for current.Before(end) {
+		lastTimeInDay := minTime(c.EndWorkTime(current), end)
+		r += lastTimeInDay.Sub(current)
+		current = c.NextWorkStart(lastTimeInDay)
+	}
+	return r
+}
+
+// AddWorkHours determines the time in the future where the worked hours will be completed
+func (c *Calendar) AddWorkHours(t time.Time, worked time.Duration) time.Time {
+	wStart := maxTime(t, c.StartWorkTime(t))
+	for !c.IsWorkday(wStart) {
+		wStart = c.NextWorkStart(wStart)
+	}
+	for worked > 0 {
+
+		t = minTime(wStart.Add(worked), c.EndWorkTime(wStart))
+		worked -= c.CountWorkHours(wStart, t)
+
+		wStart = c.NextWorkStart(t)
+	}
+	return t
+}
+
+// SetWorkingHours configures the calendar to override the default 9-18 working hours
+func (c *Calendar) SetWorkingHours(start time.Duration, end time.Duration) {
+	if start > end {
+		// This should not really happen, but SetWorkingHours(18*time.Hour, 9*time.Hour) should also mean a 9-18 time range
+		c.dayStart = end
+		c.dayEnd = start
+	} else {
+		c.dayStart = start
+		c.dayEnd = end
+	}
 }
 
 // AddSkipNonWorkdays returns start time plus d working duration
