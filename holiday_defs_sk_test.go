@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func TestSlovakiaHolidays(t *testing.T) {
+func TestSlovakHolidays(t *testing.T) {
 	c := NewCalendar()
 	c.Observed = ObservedExact
 	AddSlovakHolidays(c)
