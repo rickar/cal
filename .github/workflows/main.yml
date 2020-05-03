@@ -29,9 +29,12 @@ jobs:
 
       - name: Download Deps
         run: go mod download
+        working-directory: ./v2
 
       - name: Build
         run: go build ./...
+        working-directory: ./v2
 
       - name: Test
         run: go test -v ./...
+        working-directory: ./v2
