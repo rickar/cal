@@ -20,7 +20,7 @@ var (
 	}
 
 	// NewYear represents New Year's Day on 1-Jan
-	NewYear = aa.NewYear.Clone("Новий Рік", cal.ObservancePublic, weekendAlt)
+	NewYear = aa.NewYear.Clone(&cal.Holiday{Name: "Новий Рік", Type: cal.ObservancePublic, Observed: weekendAlt})
 
 	// OrthodoxChristmas represents Orthodox Christmas on 7-Jan
 	OrthodoxChristmas = &cal.Holiday{
@@ -52,7 +52,7 @@ var (
 	}
 
 	// LabourDay represents Labour Day on 1-May
-	LabourDay = aa.WorkersDay.Clone("День праці", cal.ObservancePublic, weekendAlt)
+	LabourDay = aa.WorkersDay.Clone(&cal.Holiday{Name: "День праці", Type: cal.ObservancePublic, Observed: weekendAlt})
 
 	// LabourDay2 represents second Labour Day on 2-May
 	LabourDay2 = &cal.Holiday{
@@ -116,7 +116,7 @@ var (
 	}
 
 	// CatholicChristmas represents Christmas Day on 25-Dec
-	CatholicChristmas = aa.ChristmasDay.Clone("Різдво", cal.ObservancePublic, nil)
+	CatholicChristmas = aa.ChristmasDay.Clone(&cal.Holiday{Name: "Різдво", Type: cal.ObservancePublic})
 
 	// Holidays provides a list of the standard national holidays
 	Holidays = []*cal.Holiday{

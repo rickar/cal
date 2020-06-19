@@ -25,14 +25,33 @@ func TestClone(t *testing.T) {
 		Weekday:     12,
 	}
 
-	c := h.Clone("clone", ObservanceBank, []AltDay{{Day: 1, Offset: 2}})
+	c := h.Clone(nil)
 	if c.Day != h.Day || c.Description != h.Description || c.EndYear != h.EndYear ||
 		!reflect.DeepEqual(c.Except, h.Except) || c.Julian != h.Julian ||
-		c.Month != h.Month || c.Name != "clone" || reflect.DeepEqual(c.Observed, h.Observed) || c.Offset != h.Offset ||
-		c.StartYear != h.StartYear || c.Type != ObservanceBank || c.Weekday != h.Weekday {
+		c.Month != h.Month || c.Name != h.Name || !reflect.DeepEqual(c.Observed, h.Observed) || c.Offset != h.Offset ||
+		c.StartYear != h.StartYear || c.Type != h.Type || c.Weekday != h.Weekday {
 
-		t.Errorf("bad clone")
+		t.Errorf("bad full clone")
 	}
+
+	c = h.Clone(&Holiday{
+		Name:        "clone",
+		Description: "clone desc",
+		Type:        ObservanceBank,
+		StartYear:   1234,
+		EndYear:     2345,
+		Except:      []int{1, 2, 3, 4},
+		Observed:    []AltDay{{Day: 1, Offset: 2}},
+	})
+
+	if c.Day != h.Day || c.Description != "clone desc" || c.EndYear != 2345 ||
+		reflect.DeepEqual(c.Except, h.Except) || c.Julian != h.Julian ||
+		c.Month != h.Month || c.Name != "clone" || reflect.DeepEqual(c.Observed, h.Observed) || c.Offset != h.Offset ||
+		c.StartYear != 1234 || c.Type != ObservanceBank || c.Weekday != h.Weekday {
+
+		t.Errorf("bad partial clone")
+	}
+
 }
 
 func TestCalc(t *testing.T) {

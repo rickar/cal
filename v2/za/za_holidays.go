@@ -18,7 +18,7 @@ var (
 	}
 
 	// NewYear represents New Year's Day on 1-Jan
-	NewYear = aa.NewYear.Clone("New Year's Day", cal.ObservancePublic, weekendAlt)
+	NewYear = aa.NewYear.Clone(&cal.Holiday{Name: "New Year's Day", Type: cal.ObservancePublic, Observed: weekendAlt})
 
 	// HumanRightsDay represents Human Rights Day on 21-Mar
 	HumanRightsDay = &cal.Holiday{
@@ -31,10 +31,10 @@ var (
 	}
 
 	// GoodFriday represents Good Friday - two days before Easter
-	GoodFriday = aa.GoodFriday.Clone("Good Friday", cal.ObservancePublic, nil)
+	GoodFriday = aa.GoodFriday.Clone(&cal.Holiday{Name: "Good Friday", Type: cal.ObservancePublic})
 
 	// FamilyDay represents Family Day on the Monday after Easter
-	FamilyDay = aa.EasterMonday.Clone("Family Day", cal.ObservancePublic, nil)
+	FamilyDay = aa.EasterMonday.Clone(&cal.Holiday{Name: "Family Day", Type: cal.ObservancePublic})
 
 	// FreedomDay represents Freedom Day on 27-Apr
 	FreedomDay = &cal.Holiday{
@@ -47,7 +47,7 @@ var (
 	}
 
 	// WorkersDay represents Workers' Day on 1-May
-	WorkersDay = aa.WorkersDay.Clone("Workers' Day", cal.ObservancePublic, weekendAlt)
+	WorkersDay = aa.WorkersDay.Clone(&cal.Holiday{Name: "Workers' Day", Type: cal.ObservancePublic, Observed: weekendAlt})
 
 	// YouthDay represents Youth Day on 16-June
 	YouthDay = &cal.Holiday{
@@ -90,14 +90,14 @@ var (
 	}
 
 	// ChristmasDay represents Christmas Day on 25-Dec
-	ChristmasDay = aa.ChristmasDay.Clone("Christmas Day", cal.ObservanceBank, weekendAlt)
+	ChristmasDay = aa.ChristmasDay.Clone(&cal.Holiday{Name: "Christmas Day", Type: cal.ObservanceBank, Observed: weekendAlt})
 
 	// GoodwillDay represents Day of Goodwill on 26-Dec
-	GoodwillDay = aa.ChristmasDay2.Clone("Day of Goodwill", cal.ObservanceBank,
-		[]cal.AltDay{
+	GoodwillDay = aa.ChristmasDay2.Clone(&cal.Holiday{Name: "Day of Goodwill", Type: cal.ObservanceBank,
+		Observed: []cal.AltDay{
 			{Day: time.Sunday, Offset: 1},
 			{Day: time.Monday, Offset: 1},
-		})
+		}})
 
 	// Holidays provides a list of the standard national holidays
 	Holidays = []*cal.Holiday{

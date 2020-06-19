@@ -18,17 +18,17 @@ var (
 	}
 
 	// NewYear represents New Year's Day on 1-Jan
-	NewYear = aa.NewYear.Clone("New Year's Day", cal.ObservancePublic,
-		[]cal.AltDay{
+	NewYear = aa.NewYear.Clone(&cal.Holiday{Name: "New Year's Day", Type: cal.ObservancePublic,
+		Observed: []cal.AltDay{
 			{Day: time.Saturday, Offset: 2},
 			{Day: time.Sunday, Offset: 1},
-		})
+		}})
 
 	// GoodFriday represents Good Friday - two days before Easter
-	GoodFriday = aa.GoodFriday.Clone("Good Friday", cal.ObservancePublic, nil)
+	GoodFriday = aa.GoodFriday.Clone(&cal.Holiday{Name: "Good Friday", Type: cal.ObservancePublic})
 
 	// EasterMonday represents Easter Monday - the day after Easter
-	EasterMonday = aa.EasterMonday.Clone("Easter Monday", cal.ObservancePublic, nil)
+	EasterMonday = aa.EasterMonday.Clone(&cal.Holiday{Name: "Easter Monday", Type: cal.ObservancePublic})
 
 	// VictoriaDay represents Victoria Day on the Monday before 25-May
 	VictoriaDay = &cal.Holiday{
@@ -81,18 +81,18 @@ var (
 	}
 
 	// RemembranceDay represents Remembrance Day on 11-Nov
-	RemembranceDay = aa.ArmisticeDay.Clone("Remembrance Day", cal.ObservancePublic, weekendAlt)
+	RemembranceDay = aa.ArmisticeDay.Clone(&cal.Holiday{Name: "Remembrance Day", Type: cal.ObservancePublic, Observed: weekendAlt})
 
 	// ChristmasDay represents Christmas Day on 25-Dec
-	ChristmasDay = aa.ChristmasDay.Clone("Christmas Day", cal.ObservanceBank,
-		[]cal.AltDay{
+	ChristmasDay = aa.ChristmasDay.Clone(&cal.Holiday{Name: "Christmas Day", Type: cal.ObservanceBank,
+		Observed: []cal.AltDay{
 			{Day: time.Saturday, Offset: -1},
 			{Day: time.Sunday, Offset: 1},
-		})
+		}})
 
 	// BoxingDay represents Boxing Day on 26-Dec
-	BoxingDay = aa.ChristmasDay2.Clone("Boxing Day", cal.ObservanceBank,
-		[]cal.AltDay{{Day: time.Monday, Offset: 1}})
+	BoxingDay = aa.ChristmasDay2.Clone(&cal.Holiday{Name: "Boxing Day", Type: cal.ObservanceBank,
+		Observed: []cal.AltDay{{Day: time.Monday, Offset: 1}}})
 
 	// Holidays provides a list of the standard national holidays
 	Holidays = []*cal.Holiday{

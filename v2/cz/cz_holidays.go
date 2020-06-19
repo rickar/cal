@@ -12,16 +12,16 @@ import (
 
 var (
 	// NewYear represents New Year's Day on 1-Jan
-	NewYear = aa.NewYear.Clone("Nový rok", cal.ObservancePublic, nil)
+	NewYear = aa.NewYear.Clone(&cal.Holiday{Name: "Nový rok", Type: cal.ObservancePublic})
 
 	// GoodFriday represents Good Friday - two days before Easter
-	GoodFriday = aa.GoodFriday.Clone("Velký pátek", cal.ObservancePublic, nil)
+	GoodFriday = aa.GoodFriday.Clone(&cal.Holiday{Name: "Velký pátek", Type: cal.ObservancePublic})
 
 	// EasterMonday represents Easter Monday - the day after Easter
-	EasterMonday = aa.EasterMonday.Clone("Velikonoční pondělí", cal.ObservancePublic, nil)
+	EasterMonday = aa.EasterMonday.Clone(&cal.Holiday{Name: "Velikonoční pondělí", Type: cal.ObservancePublic})
 
 	// LabourDay represents Labour Day on 1-May
-	LabourDay = aa.WorkersDay.Clone("Svátek práce", cal.ObservancePublic, nil)
+	LabourDay = aa.WorkersDay.Clone(&cal.Holiday{Name: "Svátek práce", Type: cal.ObservancePublic})
 
 	// LiberationDay represents Liberation Day on 8-May
 	LiberationDay = &cal.Holiday{
@@ -87,10 +87,10 @@ var (
 	}
 
 	// ChristmasDay represents Christmas Day on 25-Dec
-	ChristmasDay = aa.ChristmasDay.Clone("1. svátek vánoční", cal.ObservancePublic, nil)
+	ChristmasDay = aa.ChristmasDay.Clone(&cal.Holiday{Name: "1. svátek vánoční", Type: cal.ObservancePublic})
 
 	// SaintStephensDay represents Saints Stephen's Day on 26-Dec
-	SaintStephensDay = aa.ChristmasDay2.Clone("2. svátek vánoční", cal.ObservancePublic, nil)
+	SaintStephensDay = aa.ChristmasDay2.Clone(&cal.Holiday{Name: "2. svátek vánoční", Type: cal.ObservancePublic})
 
 	// Holidays provides a list of the standard national holidays
 	Holidays = []*cal.Holiday{

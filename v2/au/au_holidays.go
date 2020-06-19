@@ -20,7 +20,7 @@ var (
 	}
 
 	// NewYear represents New Year's Day on 1-Jan
-	NewYear = aa.NewYear.Clone("New Year's Day", cal.ObservancePublic, weekendAlt)
+	NewYear = aa.NewYear.Clone(&cal.Holiday{Name: "New Year's Day", Type: cal.ObservancePublic, Observed: weekendAlt})
 
 	// AustraliaDay represents Australia Day on 26-Jan
 	AustraliaDay = &cal.Holiday{
@@ -33,10 +33,10 @@ var (
 	}
 
 	// GoodFriday represents Good Friday - two days before Easter
-	GoodFriday = aa.GoodFriday.Clone("Good Friday", cal.ObservancePublic, nil)
+	GoodFriday = aa.GoodFriday.Clone(&cal.Holiday{Name: "Good Friday", Type: cal.ObservancePublic})
 
 	// EasterMonday represents Easter Monday - the day after Easter
-	EasterMonday = aa.EasterMonday.Clone("Easter Monday", cal.ObservancePublic, nil)
+	EasterMonday = aa.EasterMonday.Clone(&cal.Holiday{Name: "Easter Monday", Type: cal.ObservancePublic})
 
 	// LabourDayWa represents Labour Day in WA on the first Monday of March
 	LabourDayWa = &cal.Holiday{
@@ -180,21 +180,21 @@ var (
 	}
 
 	// ChristmasDay represents Christmas Day on 25-Dec
-	ChristmasDay = aa.ChristmasDay.Clone("Christmas Day", cal.ObservanceBank, weekendAlt)
+	ChristmasDay = aa.ChristmasDay.Clone(&cal.Holiday{Name: "Christmas Day", Type: cal.ObservanceBank, Observed: weekendAlt})
 
 	// BoxingDay represents Boxing Day on 26-Dec
-	BoxingDay = aa.ChristmasDay2.Clone("Boxing Day", cal.ObservanceBank,
-		[]cal.AltDay{
+	BoxingDay = aa.ChristmasDay2.Clone(&cal.Holiday{Name: "Boxing Day", Type: cal.ObservanceBank,
+		Observed: []cal.AltDay{
 			{Day: time.Saturday, Offset: 2},
 			{Day: time.Sunday, Offset: 2},
-			{Day: time.Monday, Offset: 1}})
+			{Day: time.Monday, Offset: 1}}})
 
 	// ProclamationDay represents Proclamation Day on 26-Dec
-	ProclamationDay = aa.ChristmasDay2.Clone("Proclamation Day", cal.ObservanceBank,
-		[]cal.AltDay{
+	ProclamationDay = aa.ChristmasDay2.Clone(&cal.Holiday{Name: "Proclamation Day", Type: cal.ObservanceBank,
+		Observed: []cal.AltDay{
 			{Day: time.Saturday, Offset: 2},
 			{Day: time.Sunday, Offset: 2},
-			{Day: time.Monday, Offset: 1}})
+			{Day: time.Monday, Offset: 1}}})
 
 	// HolidaysACT provides a list of standard holidays in the Australian Capital Territory region.
 	HolidaysACT = []*cal.Holiday{

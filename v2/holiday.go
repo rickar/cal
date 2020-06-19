@@ -11,7 +11,8 @@ type ObservanceType uint8
 
 // Allowed values for ObservanceType
 const (
-	ObservancePublic    ObservanceType = iota // public / national / regional holiday
+	ObservanceUnknown   ObservanceType = iota // value not set or not applicable
+	ObservancePublic                          // public / national / regional holiday
 	ObservanceBank                            // bank holiday
 	ObservanceReligious                       // religious holiday
 	ObservanceOther                           // all other holidays (school, work, etc.)
@@ -50,13 +51,16 @@ type Holiday struct {
 	Func     HolidayFn    // logic used to determine occurrences
 }
 
-// Clone returns a copy of the Holiday with the given name, type, and
-// observance rules.
-func (h *Holiday) Clone(name string, typ ObservanceType, observed []AltDay) *Holiday {
-	return &Holiday{
-		Name:        name,
+// Clone returns a copy of the Holiday. If ovderrides is non-nil, then the
+// field values set in overrides will be used instead of the original values.
+//
+// The following fields can be set in overrides: Name, Description, Type,
+// StartYear, EndYear, Except, Observed.
+func (h *Holiday) Clone(overrides *Holiday) *Holiday {
+	val := &Holiday{
+		Name:        h.Name,
 		Description: h.Description,
-		Type:        typ,
+		Type:        h.Type,
 		StartYear:   h.StartYear,
 		EndYear:     h.EndYear,
 		Except:      h.Except,
@@ -65,9 +69,35 @@ func (h *Holiday) Clone(name string, typ ObservanceType, observed []AltDay) *Hol
 		Weekday:     h.Weekday,
 		Offset:      h.Offset,
 		Julian:      h.Julian,
-		Observed:    observed,
+		Observed:    h.Observed,
 		Func:        h.Func,
 	}
+
+	if overrides != nil {
+		if overrides.Name != "" {
+			val.Name = overrides.Name
+		}
+		if overrides.Description != "" {
+			val.Description = overrides.Description
+		}
+		if overrides.Type != ObservanceUnknown {
+			val.Type = overrides.Type
+		}
+		if overrides.StartYear > 0 {
+			val.StartYear = overrides.StartYear
+		}
+		if overrides.EndYear > 0 {
+			val.EndYear = overrides.EndYear
+		}
+		if overrides.Except != nil {
+			val.Except = overrides.Except
+		}
+		if overrides.Observed != nil {
+			val.Observed = overrides.Observed
+		}
+	}
+
+	return val
 }
 
 // Calc reports the actual and observed dates of a holiday for the given year.

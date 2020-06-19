@@ -12,16 +12,16 @@ import (
 
 var (
 	// Nytaarsdag represents New Year's Day on 1-Jan
-	Nytaarsdag = aa.NewYear.Clone("Nytårsdag", cal.ObservancePublic, nil)
+	Nytaarsdag = aa.NewYear.Clone(&cal.Holiday{Name: "Nytårsdag", Type: cal.ObservancePublic})
 
 	// Skaertorsdag represents Maundy Thursday on the Thursday before Easter
-	Skaertorsdag = aa.MaundyThursday.Clone("Skærtorsdag", cal.ObservancePublic, nil)
+	Skaertorsdag = aa.MaundyThursday.Clone(&cal.Holiday{Name: "Skærtorsdag", Type: cal.ObservancePublic})
 
 	// Langfredag represents Good Friday on the Friday before Easter
-	Langfredag = aa.GoodFriday.Clone("Langfredag", cal.ObservancePublic, nil)
+	Langfredag = aa.GoodFriday.Clone(&cal.Holiday{Name: "Langfredag", Type: cal.ObservancePublic})
 
 	// AndenPaaskedag represents Easter Monday on the day after Easter
-	AndenPaaskedag = aa.EasterMonday.Clone("Anden påskedag", cal.ObservancePublic, nil)
+	AndenPaaskedag = aa.EasterMonday.Clone(&cal.Holiday{Name: "Anden påskedag", Type: cal.ObservancePublic})
 
 	// StoreBededag represents General Prayer Day on the fourth Friday after Easter
 	StoreBededag = &cal.Holiday{
@@ -32,10 +32,10 @@ var (
 	}
 
 	// KristiHimmelfartsdag represents Ascension Day on the 39th day after Easter
-	KristiHimmelfartsdag = aa.AscensionDay.Clone("Kristi Himmelfartsdag", cal.ObservancePublic, nil)
+	KristiHimmelfartsdag = aa.AscensionDay.Clone(&cal.Holiday{Name: "Kristi Himmelfartsdag", Type: cal.ObservancePublic})
 
 	// AndenPinsedag represents Pentecost Monday on the day after Pentecost (50 days after Easter)
-	AndenPinsedag = aa.PentecostMonday.Clone("Anden Pinsedag", cal.ObservancePublic, nil)
+	AndenPinsedag = aa.PentecostMonday.Clone(&cal.Holiday{Name: "Anden Pinsedag", Type: cal.ObservancePublic})
 
 	// Grundlovsdag represents Constitution Day on 5-Jun
 	Grundlovsdag = &cal.Holiday{
@@ -47,10 +47,10 @@ var (
 	}
 
 	// Juledag represents Christmas Day on 25-Dec
-	Juledag = aa.ChristmasDay.Clone("Juledag", cal.ObservancePublic, nil)
+	Juledag = aa.ChristmasDay.Clone(&cal.Holiday{Name: "Juledag", Type: cal.ObservancePublic})
 
 	// AndenJuledag represents the second day of Christmas on 26-Dec
-	AndenJuledag = aa.ChristmasDay2.Clone("Anden juledag", cal.ObservancePublic, nil)
+	AndenJuledag = aa.ChristmasDay2.Clone(&cal.Holiday{Name: "Anden juledag", Type: cal.ObservancePublic})
 
 	// Holidays provides a list of the standard national holidays
 	Holidays = []*cal.Holiday{

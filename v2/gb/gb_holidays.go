@@ -20,13 +20,13 @@ var (
 	}
 
 	// NewYear represents New Year's Day on 1-Jan
-	NewYear = aa.NewYear.Clone("New Year's Day", cal.ObservanceBank, weekendAlt)
+	NewYear = aa.NewYear.Clone(&cal.Holiday{Name: "New Year's Day", Type: cal.ObservanceBank, Observed: weekendAlt})
 
 	// GoodFriday represents Good Friday - two days before Easter
-	GoodFriday = aa.GoodFriday.Clone("Good Friday", cal.ObservanceBank, nil)
+	GoodFriday = aa.GoodFriday.Clone(&cal.Holiday{Name: "Good Friday", Type: cal.ObservanceBank})
 
 	// EasterMonday represents Easter Monday - the day after Easter
-	EasterMonday = aa.EasterMonday.Clone("Easter Monday", cal.ObservanceBank, nil)
+	EasterMonday = aa.EasterMonday.Clone(&cal.Holiday{Name: "Easter Monday", Type: cal.ObservanceBank})
 
 	// EarlyMay represents Early May on the first Monday of May
 	EarlyMay = &cal.Holiday{
@@ -81,14 +81,14 @@ var (
 	}
 
 	// ChristmasDay represents Christmas Day on 25-Dec
-	ChristmasDay = aa.ChristmasDay.Clone("Christmas Day", cal.ObservanceBank, weekendAlt)
+	ChristmasDay = aa.ChristmasDay.Clone(&cal.Holiday{Name: "Christmas Day", Type: cal.ObservanceBank, Observed: weekendAlt})
 
 	// BoxingDay represents Boxing Day on 26-Dec
-	BoxingDay = aa.ChristmasDay2.Clone("Boxing Day", cal.ObservanceBank,
-		[]cal.AltDay{
+	BoxingDay = aa.ChristmasDay2.Clone(&cal.Holiday{Name: "Boxing Day", Type: cal.ObservanceBank,
+		Observed: []cal.AltDay{
 			{Day: time.Saturday, Offset: 2},
 			{Day: time.Sunday, Offset: 2},
-			{Day: time.Monday, Offset: 1}})
+			{Day: time.Monday, Offset: 1}}})
 
 	// Holidays provides a list of the standard national holidays
 	Holidays = []*cal.Holiday{

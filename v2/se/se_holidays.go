@@ -12,22 +12,22 @@ import (
 
 var (
 	// Nyarsdagen represents New Year's Day on 1-Jan
-	Nyarsdagen = aa.NewYear.Clone("Nyårsdagen", cal.ObservancePublic, nil)
+	Nyarsdagen = aa.NewYear.Clone(&cal.Holiday{Name: "Nyårsdagen", Type: cal.ObservancePublic})
 
 	// TrettondedagJul represents Epiphany on 6-Jan
-	TrettondedagJul = aa.Epiphany.Clone("Trettondedag jul", cal.ObservancePublic, nil)
+	TrettondedagJul = aa.Epiphany.Clone(&cal.Holiday{Name: "Trettondedag jul", Type: cal.ObservancePublic})
 
 	// Langfredagen represents Good Friday on the Friday before Easter
-	Langfredagen = aa.GoodFriday.Clone("Långfredagen", cal.ObservancePublic, nil)
+	Langfredagen = aa.GoodFriday.Clone(&cal.Holiday{Name: "Långfredagen", Type: cal.ObservancePublic})
 
 	// AnnandagPask represents Easter Monday on the day after Easter
-	AnnandagPask = aa.EasterMonday.Clone("Annandag påsk", cal.ObservancePublic, nil)
+	AnnandagPask = aa.EasterMonday.Clone(&cal.Holiday{Name: "Annandag påsk", Type: cal.ObservancePublic})
 
 	// ForstaMaj represents Labour Day on 1-May
-	ForstaMaj = aa.WorkersDay.Clone("Första Maj", cal.ObservancePublic, nil)
+	ForstaMaj = aa.WorkersDay.Clone(&cal.Holiday{Name: "Första Maj", Type: cal.ObservancePublic})
 
 	// KristiHimmelfardsdag represents Ascension Day on the 39th day after Easter
-	KristiHimmelfardsdag = aa.AscensionDay.Clone("Kristi himmelsfärds dag", cal.ObservancePublic, nil)
+	KristiHimmelfardsdag = aa.AscensionDay.Clone(&cal.Holiday{Name: "Kristi himmelsfärds dag", Type: cal.ObservancePublic})
 
 	// Nationaldagen represents National Day of Sweden on 6-Jun
 	Nationaldagen = &cal.Holiday{
@@ -81,10 +81,10 @@ var (
 	}
 
 	// Juldagen represents Christmas Day on 25-Dec
-	Juldagen = aa.ChristmasDay.Clone("Juldagen", cal.ObservancePublic, nil)
+	Juldagen = aa.ChristmasDay.Clone(&cal.Holiday{Name: "Juldagen", Type: cal.ObservancePublic})
 
 	// AnnandagJul represents the second day of Christmas on 26-Dec
-	AnnandagJul = aa.ChristmasDay2.Clone("Annandag jul", cal.ObservancePublic, nil)
+	AnnandagJul = aa.ChristmasDay2.Clone(&cal.Holiday{Name: "Annandag jul", Type: cal.ObservancePublic})
 
 	// Nyarsafton represents New Year's Eve on 31-Dec
 	Nyarsafton = &cal.Holiday{

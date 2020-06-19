@@ -20,7 +20,7 @@ var (
 	}
 
 	// NewYear represents New Year's Day on 1-Jan
-	NewYear = aa.NewYear.Clone("New Year's Day", cal.ObservancePublic, weekendAlt)
+	NewYear = aa.NewYear.Clone(&cal.Holiday{Name: "New Year's Day", Type: cal.ObservancePublic, Observed: weekendAlt})
 
 	// MlkDay represents Martin Luther King Jr. Day on the 3rd Monday in January
 	MlkDay = &cal.Holiday{
@@ -103,7 +103,7 @@ var (
 	}
 
 	// ChristmasDay represents Christmas Day on the 25-Dec
-	ChristmasDay = aa.ChristmasDay.Clone("Christmas Day", cal.ObservancePublic, weekendAlt)
+	ChristmasDay = aa.ChristmasDay.Clone(&cal.Holiday{Name: "Christmas Day", Type: cal.ObservancePublic, Observed: weekendAlt})
 
 	// Holidays provides a list of the standard national holidays
 	Holidays = []*cal.Holiday{

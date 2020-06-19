@@ -12,10 +12,10 @@ import (
 
 var (
 	// Neujahr represents New Year's Day on 1-Jan
-	Neujahr = aa.NewYear.Clone("Neujahrstag", cal.ObservancePublic, nil)
+	Neujahr = aa.NewYear.Clone(&cal.Holiday{Name: "Neujahrstag", Type: cal.ObservancePublic})
 
 	// HeiligeDreiKoenige represents Epiphany on 6-Jan
-	HeiligeDreiKoenige = aa.Epiphany.Clone("Heilige Drei Könige", cal.ObservancePublic, nil)
+	HeiligeDreiKoenige = aa.Epiphany.Clone(&cal.Holiday{Name: "Heilige Drei Könige", Type: cal.ObservancePublic})
 
 	// Frauentag represents Women's Day on 8-Mar
 	Frauentag = &cal.Holiday{
@@ -27,25 +27,25 @@ var (
 	}
 
 	// Karfreitag represents Good Friday on the Friday before Easter
-	Karfreitag = aa.GoodFriday.Clone("Karfreitag", cal.ObservancePublic, nil)
+	Karfreitag = aa.GoodFriday.Clone(&cal.Holiday{Name: "Karfreitag", Type: cal.ObservancePublic})
 
 	// Ostermontag represents Easter Monday on the day after Easter
-	Ostermontag = aa.EasterMonday.Clone("Ostermontag", cal.ObservancePublic, nil)
+	Ostermontag = aa.EasterMonday.Clone(&cal.Holiday{Name: "Ostermontag", Type: cal.ObservancePublic})
 
 	// TagderArbeit represents Labour Day on 1-May
-	TagderArbeit = aa.WorkersDay.Clone("Tag der Arbeit", cal.ObservancePublic, nil)
+	TagderArbeit = aa.WorkersDay.Clone(&cal.Holiday{Name: "Tag der Arbeit", Type: cal.ObservancePublic})
 
 	// ChristiHimmelfahrt represents Ascension Day on the 39th day after Easter
-	ChristiHimmelfahrt = aa.AscensionDay.Clone("Christi Himmelfahrt", cal.ObservancePublic, nil)
+	ChristiHimmelfahrt = aa.AscensionDay.Clone(&cal.Holiday{Name: "Christi Himmelfahrt", Type: cal.ObservancePublic})
 
 	// Pfingstmontag represents Pentecost Monday on the day after Pentecost (50 days after Easter)
-	Pfingstmontag = aa.PentecostMonday.Clone("Pfingstmontag", cal.ObservancePublic, nil)
+	Pfingstmontag = aa.PentecostMonday.Clone(&cal.Holiday{Name: "Pfingstmontag", Type: cal.ObservancePublic})
 
 	// Fronleichnam represents Corpus Christi on the 60th day after Easter
-	Fronleichnam = aa.CorpusChristi.Clone("Fronleichnam", cal.ObservancePublic, nil)
+	Fronleichnam = aa.CorpusChristi.Clone(&cal.Holiday{Name: "Fronleichnam", Type: cal.ObservancePublic})
 
 	// MariaHimmelfahrt represents Assumption of Mary on 15-Aug
-	MariaHimmelfahrt = aa.AssumptionOfMary.Clone("Mariä Himmelfahrt", cal.ObservancePublic, nil)
+	MariaHimmelfahrt = aa.AssumptionOfMary.Clone(&cal.Holiday{Name: "Mariä Himmelfahrt", Type: cal.ObservancePublic})
 
 	// Weltkindertag represents World Children's Day on 20-Sep
 	Weltkindertag = &cal.Holiday{
@@ -76,7 +76,7 @@ var (
 	}
 
 	// Allerheiligen represents All Saints' Day on 1-Nov
-	Allerheiligen = aa.AllSaintsDay.Clone("Allerheiligen", cal.ObservancePublic, nil)
+	Allerheiligen = aa.AllSaintsDay.Clone(&cal.Holiday{Name: "Allerheiligen", Type: cal.ObservancePublic})
 
 	// BussUndBettag represents Repentance and Prayer Day on the first Wednesday between 16-22 Nov
 	BussUndBettag = &cal.Holiday{
@@ -90,10 +90,10 @@ var (
 	}
 
 	// Weihnachtstag represents Christmas Day on 25-Dec
-	Weihnachtstag = aa.ChristmasDay.Clone("Weihnachtstag", cal.ObservancePublic, nil)
+	Weihnachtstag = aa.ChristmasDay.Clone(&cal.Holiday{Name: "Weihnachtstag", Type: cal.ObservancePublic})
 
 	// ZweiterWeihnachtsfeiertag represents Boxing Day on 26-Dec
-	ZweiterWeihnachtsfeiertag = aa.ChristmasDay2.Clone("Zweiter Weihnachtsfeiertag", cal.ObservancePublic, nil)
+	ZweiterWeihnachtsfeiertag = aa.ChristmasDay2.Clone(&cal.Holiday{Name: "Zweiter Weihnachtsfeiertag", Type: cal.ObservancePublic})
 
 	// Holidays provides a list of the standard national holidays
 	Holidays = []*cal.Holiday{

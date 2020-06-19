@@ -13,19 +13,19 @@ import (
 var (
 
 	// RepublicDay represents Republic Day on 1-Jan
-	RepublicDay = aa.NewYear.Clone("Deň vzniku Slovenskej republiky", cal.ObservancePublic, nil)
+	RepublicDay = aa.NewYear.Clone(&cal.Holiday{Name: "Deň vzniku Slovenskej republiky", Type: cal.ObservancePublic})
 
 	// Epiphany represents Epiphany on 6-Jan
-	Epiphany = aa.Epiphany.Clone("Zjavenie Pána", cal.ObservancePublic, nil)
+	Epiphany = aa.Epiphany.Clone(&cal.Holiday{Name: "Zjavenie Pána", Type: cal.ObservancePublic})
 
 	// GoodFriday represents Good Friday - two days before Easter
-	GoodFriday = aa.GoodFriday.Clone("Veľkonočný piatok", cal.ObservancePublic, nil)
+	GoodFriday = aa.GoodFriday.Clone(&cal.Holiday{Name: "Veľkonočný piatok", Type: cal.ObservancePublic})
 
 	// EasterMonday represents Easter Monday - the day after Easter
-	EasterMonday = aa.EasterMonday.Clone("Veľkonočný pondelok", cal.ObservancePublic, nil)
+	EasterMonday = aa.EasterMonday.Clone(&cal.Holiday{Name: "Veľkonočný pondelok", Type: cal.ObservancePublic})
 
 	// LabourDay represents Labour Day on 1-May
-	LabourDay = aa.WorkersDay.Clone("Sviatok práce", cal.ObservancePublic, nil)
+	LabourDay = aa.WorkersDay.Clone(&cal.Holiday{Name: "Sviatok práce", Type: cal.ObservancePublic})
 
 	// Liberation represents Liberation Day on 8-May
 	Liberation = &cal.Holiday{
@@ -73,7 +73,7 @@ var (
 	}
 
 	// AllSaints represents All Saints' Day on 1-Nov
-	AllSaints = aa.AllSaintsDay.Clone("Sviatok všetkých svätých", cal.ObservancePublic, nil)
+	AllSaints = aa.AllSaintsDay.Clone(&cal.Holiday{Name: "Sviatok všetkých svätých", Type: cal.ObservancePublic})
 
 	// Freedom represents Struggle for Freedom and Democracy Day on 17-Nov
 	Freedom = &cal.Holiday{
@@ -94,10 +94,10 @@ var (
 	}
 
 	// ChristmasDay represents Christmas Day on 25-Dec
-	ChristmasDay = aa.ChristmasDay.Clone("Prvý sviatok vianočný", cal.ObservancePublic, nil)
+	ChristmasDay = aa.ChristmasDay.Clone(&cal.Holiday{Name: "Prvý sviatok vianočný", Type: cal.ObservancePublic})
 
 	// SaintStephen represents Boxing Day on 26-Dec
-	SaintStephen = aa.ChristmasDay2.Clone("Druhý sviatok vianočný", cal.ObservancePublic, nil)
+	SaintStephen = aa.ChristmasDay2.Clone(&cal.Holiday{Name: "Druhý sviatok vianočný", Type: cal.ObservancePublic})
 
 	// Holidays provides a list of the standard national holidays
 	Holidays = []*cal.Holiday{
