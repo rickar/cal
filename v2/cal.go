@@ -51,10 +51,11 @@ func (c *Calendar) IsHoliday(date time.Time) (actual, observed bool, h *Holiday)
 		return false, false, nil
 	}
 
+	year, month, day := date.Date()
 	for _, hol := range c.Holidays {
-		act, obs := hol.Calc(date.Year())
-		actMatch := !act.IsZero() && act.Month() == date.Month() && act.Day() == date.Day()
-		obsMatch := !obs.IsZero() && obs.Month() == date.Month() && obs.Day() == date.Day()
+		act, obs := hol.Calc(year)
+		actMatch := !act.IsZero() && act.Month() == month && act.Day() == day
+		obsMatch := !obs.IsZero() && obs.Month() == month && obs.Day() == day
 		if actMatch || obsMatch {
 			return actMatch, obsMatch, hol
 		}
