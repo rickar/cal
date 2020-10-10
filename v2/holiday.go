@@ -51,7 +51,7 @@ type Holiday struct {
 	Func     HolidayFn    // logic used to determine occurrences
 }
 
-// Clone returns a copy of the Holiday. If ovderrides is non-nil, then the
+// Clone returns a copy of the Holiday. If overrides is non-nil, then the
 // field values set in overrides will be used instead of the original values.
 //
 // The following fields can be set in overrides: Name, Description, Type,
