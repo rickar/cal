@@ -159,6 +159,17 @@ var (
 		Func:    cal.CalcWeekdayOffset,
 	}
 
+	// FridayBeforeAflFinal represents the Friday before the AFL Grand Final;
+	// normally on the last Friday of September but subject to AFL schedules
+	FridayBeforeAflFinal = &cal.Holiday{
+		Name:    "Friday before the AFL Grand Final",
+		Type:    cal.ObservancePublic,
+		Month:   time.September,
+		Weekday: time.Friday,
+		Offset:  -1,
+		Func:    calcFridayBeforeAflFinal,
+	}
+
 	// QueensBirthdayQld represents Queen's Birthday in QLD on the first Monday in October
 	QueensBirthdayQld = &cal.Holiday{
 		Name:    "Queen's Birthday",
@@ -175,6 +186,16 @@ var (
 		Type:    cal.ObservancePublic,
 		Month:   time.October,
 		Weekday: time.Monday,
+		Offset:  1,
+		Func:    cal.CalcWeekdayOffset,
+	}
+
+	// MelbourneCup represents Melbourne Cup day on the first Tuesday in November
+	MelbourneCup = &cal.Holiday{
+		Name:    "Melbourne Cup",
+		Type:    cal.ObservancePublic,
+		Month:   time.November,
+		Weekday: time.Tuesday,
 		Offset:  1,
 		Func:    cal.CalcWeekdayOffset,
 	}
@@ -287,6 +308,8 @@ var (
 		EasterMonday,
 		AnzacDay,
 		QueensBirthday,
+		FridayBeforeAflFinal,
+		MelbourneCup,
 		ChristmasDay,
 		BoxingDay,
 	}
@@ -305,3 +328,12 @@ var (
 		BoxingDay,
 	}
 )
+
+func calcFridayBeforeAflFinal(h *cal.Holiday, year int) time.Time {
+	switch year {
+	case 2020:
+		return time.Date(year, time.October, 23, 0, 0, 0, 0, cal.DefaultLoc)
+	default:
+		return cal.CalcWeekdayOffset(h, year)
+	}
+}

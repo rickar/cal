@@ -164,6 +164,15 @@ func TestHolidays(t *testing.T) {
 		{QueensBirthdayWa, 2021, d(2021, 9, 27), d(2021, 9, 27)},
 		{QueensBirthdayWa, 2022, d(2022, 9, 26), d(2022, 9, 26)},
 
+		{FridayBeforeAflFinal, 2015, d(2015, 9, 25), d(2015, 9, 25)},
+		{FridayBeforeAflFinal, 2016, d(2016, 9, 30), d(2016, 9, 30)},
+		{FridayBeforeAflFinal, 2017, d(2017, 9, 29), d(2017, 9, 29)},
+		{FridayBeforeAflFinal, 2018, d(2018, 9, 28), d(2018, 9, 28)},
+		{FridayBeforeAflFinal, 2019, d(2019, 9, 27), d(2019, 9, 27)},
+		{FridayBeforeAflFinal, 2020, d(2020, 10, 23), d(2020, 10, 23)},
+		{FridayBeforeAflFinal, 2021, d(2021, 9, 24), d(2021, 9, 24)},
+		{FridayBeforeAflFinal, 2022, d(2022, 9, 30), d(2022, 9, 30)},
+
 		{QueensBirthdayQld, 2015, d(2015, 10, 5), d(2015, 10, 5)},
 		{QueensBirthdayQld, 2016, d(2016, 10, 3), d(2016, 10, 3)},
 		{QueensBirthdayQld, 2017, d(2017, 10, 2), d(2017, 10, 2)},
@@ -181,6 +190,15 @@ func TestHolidays(t *testing.T) {
 		{LabourDayActNswSa, 2020, d(2020, 10, 5), d(2020, 10, 5)},
 		{LabourDayActNswSa, 2021, d(2021, 10, 4), d(2021, 10, 4)},
 		{LabourDayActNswSa, 2022, d(2022, 10, 3), d(2022, 10, 3)},
+
+		{MelbourneCup, 2015, d(2015, 11, 3), d(2015, 11, 3)},
+		{MelbourneCup, 2016, d(2016, 11, 1), d(2016, 11, 1)},
+		{MelbourneCup, 2017, d(2017, 11, 7), d(2017, 11, 7)},
+		{MelbourneCup, 2018, d(2018, 11, 6), d(2018, 11, 6)},
+		{MelbourneCup, 2019, d(2019, 11, 5), d(2019, 11, 5)},
+		{MelbourneCup, 2020, d(2020, 11, 3), d(2020, 11, 3)},
+		{MelbourneCup, 2021, d(2021, 11, 2), d(2021, 11, 2)},
+		{MelbourneCup, 2022, d(2022, 11, 1), d(2022, 11, 1)},
 
 		{ChristmasDay, 2015, d(2015, 12, 25), d(2015, 12, 25)},
 		{ChristmasDay, 2016, d(2016, 12, 25), d(2016, 12, 26)},
