@@ -111,6 +111,12 @@ var (
 		Func:  cal.CalcDayOfMonth,
 	}
 
+	// AnzacDayActWa represents ANZAC Day for ACT and WA who observe a public holiday if it falls on a weekend
+	AnzacDayActWa = AnzacDay.Clone(&cal.Holiday{Observed: weekendAlt})
+
+	// AnzacDayNtQldSa represents ANZAC Day for NT, QLD and SA who observe a public holiday on Monday if ANZAC day falls on a Sunday
+	AnzacDayNtQldSa = AnzacDay.Clone(&cal.Holiday{Observed: []cal.AltDay{{Day: time.Sunday, Offset: 1}}})
+
 	// LabourDayNtQld represents May Day in NT and QLD on the first Monday of May
 	LabourDayNtQld = &cal.Holiday{
 		Name:    "Labour Day / May Day",
@@ -240,7 +246,7 @@ var (
 		EasterSaturday,
 		EasterSunday,
 		EasterMonday,
-		AnzacDay,
+		AnzacDayActWa,
 		ReconciliationDay,
 		QueensBirthday,
 		LabourDayActNswSa,
@@ -270,7 +276,7 @@ var (
 		GoodFriday,
 		EasterSaturday,
 		EasterMonday,
-		AnzacDay,
+		AnzacDayNtQldSa,
 		LabourDayNtQld,
 		QueensBirthday,
 		PicnicDay,
@@ -286,7 +292,7 @@ var (
 		EasterSaturday,
 		EasterSunday,
 		EasterMonday,
-		AnzacDay,
+		AnzacDayNtQldSa,
 		LabourDayNtQld,
 		QueensBirthdayQld,
 		ChristmasDay,
@@ -301,7 +307,7 @@ var (
 		GoodFriday,
 		EasterSaturday,
 		EasterMonday,
-		AnzacDay,
+		AnzacDayNtQldSa,
 		QueensBirthday,
 		LabourDayActNswSa,
 		ChristmasDay,
@@ -345,7 +351,7 @@ var (
 		LabourDayWa,
 		GoodFriday,
 		EasterMonday,
-		AnzacDay,
+		AnzacDayActWa,
 		WesternAustraliaDay,
 		QueensBirthdayWa,
 		ChristmasDay,
