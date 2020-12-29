@@ -35,6 +35,20 @@ var (
 	// GoodFriday represents Good Friday - two days before Easter
 	GoodFriday = aa.GoodFriday.Clone(&cal.Holiday{Name: "Good Friday", Type: cal.ObservancePublic})
 
+	// EasterSaturday represents the day before Easter, which falls on a Saturday.
+	EasterSaturday = &cal.Holiday{
+		Name:   "Easter Sunday",
+		Offset: -1,
+		Func:   cal.CalcEasterOffset,
+	}
+
+	// EasterSunday represents Easter, which falls on a Sunday.
+	EasterSunday = &cal.Holiday{
+		Name:   "Easter Sunday",
+		Offset: 0,
+		Func:   cal.CalcEasterOffset,
+	}
+
 	// EasterMonday represents Easter Monday - the day after Easter
 	EasterMonday = aa.EasterMonday.Clone(&cal.Holiday{Name: "Easter Monday", Type: cal.ObservancePublic})
 
@@ -223,6 +237,8 @@ var (
 		AustraliaDay,
 		CanberraDay,
 		GoodFriday,
+		EasterSaturday,
+		EasterSunday,
 		EasterMonday,
 		AnzacDay,
 		ReconciliationDay,
@@ -237,6 +253,8 @@ var (
 		NewYear,
 		AustraliaDay,
 		GoodFriday,
+		EasterSaturday,
+		EasterSunday,
 		EasterMonday,
 		AnzacDay,
 		QueensBirthday,
@@ -250,6 +268,7 @@ var (
 		NewYear,
 		AustraliaDay,
 		GoodFriday,
+		EasterSaturday,
 		EasterMonday,
 		AnzacDay,
 		LabourDayNtQld,
@@ -264,6 +283,8 @@ var (
 		NewYear,
 		AustraliaDay,
 		GoodFriday,
+		EasterSaturday,
+		EasterSunday,
 		EasterMonday,
 		AnzacDay,
 		LabourDayNtQld,
@@ -278,6 +299,7 @@ var (
 		AustraliaDay,
 		MarchPublicHoliday,
 		GoodFriday,
+		EasterSaturday,
 		EasterMonday,
 		AnzacDay,
 		QueensBirthday,
@@ -305,6 +327,8 @@ var (
 		AustraliaDay,
 		LabourDayVic,
 		GoodFriday,
+		EasterSaturday,
+		EasterSunday,
 		EasterMonday,
 		AnzacDay,
 		QueensBirthday,
