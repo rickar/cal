@@ -101,6 +101,11 @@ func TestHolidays(t *testing.T) {
 		{ThanksgivingDay, 2021, d(2021, 11, 25), d(2021, 11, 25)},
 		{ThanksgivingDay, 2022, d(2022, 11, 24), d(2022, 11, 24)},
 
+		{DayAfterThanksgivingDay, 2021, d(2021, 11, 26), d(2021, 11, 26)},
+		{DayAfterThanksgivingDay, 2022, d(2022, 11, 25), d(2022, 11, 25)},
+		{DayAfterThanksgivingDay, 2023, d(2023, 11, 24), d(2023, 11, 24)},
+		{DayAfterThanksgivingDay, 2024, d(2024, 11, 29), d(2024, 11, 29)},
+
 		{ChristmasDay, 2015, d(2015, 12, 25), d(2015, 12, 25)},
 		{ChristmasDay, 2016, d(2016, 12, 25), d(2016, 12, 26)},
 		{ChristmasDay, 2017, d(2017, 12, 25), d(2017, 12, 25)},

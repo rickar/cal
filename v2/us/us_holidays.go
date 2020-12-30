@@ -102,6 +102,16 @@ var (
 		Func:    cal.CalcWeekdayOffset,
 	}
 
+	// DayAfterThanksgivingDay represents the day after Thanksgiving Day on the fourth Friday in November
+	DayAfterThanksgivingDay = &cal.Holiday{
+		Name:    "Day After Thanksgiving Day",
+		Type:    cal.ObservancePublic,
+		Month:   time.November,
+		Weekday: time.Thursday,
+		Offset:  4,
+		Func:    cal.CalcDayAfterWeekdayOffset,
+	}
+
 	// ChristmasDay represents Christmas Day on the 25-Dec
 	ChristmasDay = aa.ChristmasDay.Clone(&cal.Holiday{Name: "Christmas Day", Type: cal.ObservancePublic, Observed: weekendAlt})
 

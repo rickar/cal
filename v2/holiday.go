@@ -143,6 +143,13 @@ func CalcWeekdayOffset(h *Holiday, year int) time.Time {
 	return DayStart(WeekdayN(year, h.Month, h.Weekday, h.Offset))
 }
 
+// CalcDayAfterWeekdayOffset calculates the occurrence of a holiday that is always a
+// day after another WeekdayOffset holiday.
+func CalcDayAfterWeekdayOffset(h *Holiday, year int) time.Time {
+	dayBefore := DayStart(WeekdayN(year, h.Month, h.Weekday, h.Offset))
+	return time.Date(year, dayBefore.Month(), dayBefore.Day()+1, 0, 0, 0, 0, DefaultLoc)
+}
+
 // CalcWeekdayFrom calculates the occurrence of a holiday that falls on a
 // specific day of the week following a starting date.
 func CalcWeekdayFrom(h *Holiday, year int) time.Time {
