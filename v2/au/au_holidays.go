@@ -188,6 +188,7 @@ var (
 		Weekday: time.Friday,
 		Offset:  -1,
 		Func:    calcFridayBeforeAflFinal,
+		StartYear: 2015,
 	}
 
 	// QueensBirthdayQld represents Queen's Birthday in QLD on the first Monday in October
@@ -361,6 +362,8 @@ var (
 
 func calcFridayBeforeAflFinal(h *cal.Holiday, year int) time.Time {
 	switch year {
+	case 2015:
+		return time.Date(year, time.October, 2, 0, 0, 0, 0, cal.DefaultLoc)
 	case 2020:
 		return time.Date(year, time.October, 23, 0, 0, 0, 0, cal.DefaultLoc)
 	default:
