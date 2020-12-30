@@ -35,6 +35,20 @@ var (
 	// GoodFriday represents Good Friday - two days before Easter
 	GoodFriday = aa.GoodFriday.Clone(&cal.Holiday{Name: "Good Friday", Type: cal.ObservancePublic})
 
+	// EasterSaturday represents the day before Easter, which falls on a Saturday.
+	EasterSaturday = &cal.Holiday{
+		Name:   "Easter Sunday",
+		Offset: -1,
+		Func:   cal.CalcEasterOffset,
+	}
+
+	// EasterSunday represents Easter, which falls on a Sunday.
+	EasterSunday = &cal.Holiday{
+		Name:   "Easter Sunday",
+		Offset: 0,
+		Func:   cal.CalcEasterOffset,
+	}
+
 	// EasterMonday represents Easter Monday - the day after Easter
 	EasterMonday = aa.EasterMonday.Clone(&cal.Holiday{Name: "Easter Monday", Type: cal.ObservancePublic})
 
@@ -96,6 +110,12 @@ var (
 		Day:   25,
 		Func:  cal.CalcDayOfMonth,
 	}
+
+	// AnzacDayActWa represents ANZAC Day for ACT and WA who observe a public holiday if it falls on a weekend
+	AnzacDayActWa = AnzacDay.Clone(&cal.Holiday{Observed: weekendAlt})
+
+	// AnzacDayNtQldSa represents ANZAC Day for NT, QLD and SA who observe a public holiday on Monday if ANZAC day falls on a Sunday
+	AnzacDayNtQldSa = AnzacDay.Clone(&cal.Holiday{Observed: []cal.AltDay{{Day: time.Sunday, Offset: 1}}})
 
 	// LabourDayNtQld represents May Day in NT and QLD on the first Monday of May
 	LabourDayNtQld = &cal.Holiday{
@@ -168,6 +188,7 @@ var (
 		Weekday: time.Friday,
 		Offset:  -1,
 		Func:    calcFridayBeforeAflFinal,
+		StartYear: 2015,
 	}
 
 	// QueensBirthdayQld represents Queen's Birthday in QLD on the first Monday in October
@@ -223,8 +244,10 @@ var (
 		AustraliaDay,
 		CanberraDay,
 		GoodFriday,
+		EasterSaturday,
+		EasterSunday,
 		EasterMonday,
-		AnzacDay,
+		AnzacDayActWa,
 		ReconciliationDay,
 		QueensBirthday,
 		LabourDayActNswSa,
@@ -237,6 +260,8 @@ var (
 		NewYear,
 		AustraliaDay,
 		GoodFriday,
+		EasterSaturday,
+		EasterSunday,
 		EasterMonday,
 		AnzacDay,
 		QueensBirthday,
@@ -250,8 +275,9 @@ var (
 		NewYear,
 		AustraliaDay,
 		GoodFriday,
+		EasterSaturday,
 		EasterMonday,
-		AnzacDay,
+		AnzacDayNtQldSa,
 		LabourDayNtQld,
 		QueensBirthday,
 		PicnicDay,
@@ -264,8 +290,10 @@ var (
 		NewYear,
 		AustraliaDay,
 		GoodFriday,
+		EasterSaturday,
+		EasterSunday,
 		EasterMonday,
-		AnzacDay,
+		AnzacDayNtQldSa,
 		LabourDayNtQld,
 		QueensBirthdayQld,
 		ChristmasDay,
@@ -278,8 +306,9 @@ var (
 		AustraliaDay,
 		MarchPublicHoliday,
 		GoodFriday,
+		EasterSaturday,
 		EasterMonday,
-		AnzacDay,
+		AnzacDayNtQldSa,
 		QueensBirthday,
 		LabourDayActNswSa,
 		ChristmasDay,
@@ -305,6 +334,8 @@ var (
 		AustraliaDay,
 		LabourDayVic,
 		GoodFriday,
+		EasterSaturday,
+		EasterSunday,
 		EasterMonday,
 		AnzacDay,
 		QueensBirthday,
@@ -321,7 +352,7 @@ var (
 		LabourDayWa,
 		GoodFriday,
 		EasterMonday,
-		AnzacDay,
+		AnzacDayActWa,
 		WesternAustraliaDay,
 		QueensBirthdayWa,
 		ChristmasDay,
@@ -331,6 +362,8 @@ var (
 
 func calcFridayBeforeAflFinal(h *cal.Holiday, year int) time.Time {
 	switch year {
+	case 2015:
+		return time.Date(year, time.October, 2, 0, 0, 0, 0, cal.DefaultLoc)
 	case 2020:
 		return time.Date(year, time.October, 23, 0, 0, 0, 0, cal.DefaultLoc)
 	default:
