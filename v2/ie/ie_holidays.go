@@ -14,7 +14,7 @@ var (
 	// NewYear represents New Year's Day on 1-Jan
 	NewYear = aa.NewYear.Clone(&cal.Holiday{})
 
-	// Patrick's Day Day on 17-Mar
+	// SaintPatrickDay represents Saint Patrick's Day on 17-Mar
 	SaintPatrickDay = &cal.Holiday{
 		Name:  "Saint Patrick's Day",
 		Month: time.March,
@@ -25,7 +25,7 @@ var (
 	// EasterMonday represents Easter Monday - the day after Easter
 	EasterMonday = aa.EasterMonday.Clone(&cal.Holiday{})
 
-	// First Monday in May
+	// FirstMondayMay represents the first Monday in May
 	FirstMondayMay = &cal.Holiday{
 		Name:    "First Monday in May",
 		Month:   time.May,
@@ -34,7 +34,7 @@ var (
 		Func:    cal.CalcWeekdayOffset,
 	}
 
-	// First Monday in June
+	// FirstMondayJune represents the first Monday in June
 	FirstMondayJune = &cal.Holiday{
 		Name:    "First Monday in June",
 		Month:   time.June,
@@ -43,7 +43,7 @@ var (
 		Func:    cal.CalcWeekdayOffset,
 	}
 
-	// First Monday in August
+	// FirstMondayAugust represents the first Monday in August
 	FirstMondayAugust = &cal.Holiday{
 		Name:    "First Monday in August",
 		Month:   time.August,
@@ -52,7 +52,7 @@ var (
 		Func:    cal.CalcWeekdayOffset,
 	}
 
-	// Last Monday in October
+	// LastMondayInOctober represents the last Monday in October
 	LastMondayInOctober = &cal.Holiday{
 		Name:    "Last Monday in October",
 		Type:    cal.ObservancePublic,
@@ -65,9 +65,8 @@ var (
 	// ChristmasDay represents Christmas Day on 25-Dec
 	ChristmasDay = aa.ChristmasDay.Clone(&cal.Holiday{})
 
-	// Saint Stephen's Day Day on 26-Dec
+	// SaintStephenDay represents Saint Stephen's Day on 26-Dec
 	SaintStephenDay = aa.ChristmasDay2.Clone(&cal.Holiday{Name: "Saint Stephen's Day"})
-
 
 	// Holidays provides a list of the standard national holidays
 	Holidays = []*cal.Holiday{
