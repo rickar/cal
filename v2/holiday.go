@@ -42,13 +42,14 @@ type Holiday struct {
 	Except      []int          // years where the holiday doesn't apply
 
 	// calculation fields; required fields depend on rule being followed
-	Month    time.Month   // the month the holiday occurs
-	Day      int          // the day the holiday occurs
-	Weekday  time.Weekday // the weekday the holiday occurs
-	Offset   int          // the weekday or start date offset the holiday occurs
-	Julian   bool         // the holiday is based on a Julian calendar
-	Observed []AltDay     // the substitution days for the holiday
-	Func     HolidayFn    // logic used to determine occurrences
+	Month      time.Month   // the month the holiday occurs
+	Day        int          // the day the holiday occurs
+	Weekday    time.Weekday // the weekday the holiday occurs
+	Offset     int          // the weekday or start date offset the holiday occurs
+	OffsetDays int          // days offset from the date the holiday would occur, used for DayAfter Holidays
+	Julian     bool         // the holiday is based on a Julian calendar
+	Observed   []AltDay     // the substitution days for the holiday
+	Func       HolidayFn    // logic used to determine occurrences
 }
 
 // Clone returns a copy of the Holiday. If overrides is non-nil, then the
@@ -68,6 +69,7 @@ func (h *Holiday) Clone(overrides *Holiday) *Holiday {
 		Day:         h.Day,
 		Weekday:     h.Weekday,
 		Offset:      h.Offset,
+		OffsetDays:  h.OffsetDays,
 		Julian:      h.Julian,
 		Observed:    h.Observed,
 		Func:        h.Func,
@@ -117,6 +119,9 @@ func (h *Holiday) Calc(year int) (actual, observed time.Time) {
 		}
 	}
 	actual = h.Func(h, year)
+	if h.OffsetDays != 0 {
+		actual = time.Date(actual.Year(), actual.Month(), actual.Day()+h.OffsetDays, 0, 0, 0, 0, DefaultLoc)
+	}
 
 	if h.Observed == nil {
 		return actual, actual
@@ -141,13 +146,6 @@ func CalcDayOfMonth(h *Holiday, year int) time.Time {
 // nth occurrence of a weekday in a month, such as the third wednesday of July.
 func CalcWeekdayOffset(h *Holiday, year int) time.Time {
 	return DayStart(WeekdayN(year, h.Month, h.Weekday, h.Offset))
-}
-
-// CalcDayAfterWeekdayOffset calculates the occurrence of a holiday that is always a
-// day after another WeekdayOffset holiday.
-func CalcDayAfterWeekdayOffset(h *Holiday, year int) time.Time {
-	dayBefore := DayStart(WeekdayN(year, h.Month, h.Weekday, h.Offset))
-	return time.Date(year, dayBefore.Month(), dayBefore.Day()+1, 0, 0, 0, 0, DefaultLoc)
 }
 
 // CalcWeekdayFrom calculates the occurrence of a holiday that falls on a

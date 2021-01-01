@@ -104,12 +104,13 @@ var (
 
 	// DayAfterThanksgivingDay represents the day after Thanksgiving Day on the fourth Friday in November
 	DayAfterThanksgivingDay = &cal.Holiday{
-		Name:    "Day After Thanksgiving Day",
-		Type:    cal.ObservancePublic,
-		Month:   time.November,
-		Weekday: time.Thursday,
-		Offset:  4,
-		Func:    cal.CalcDayAfterWeekdayOffset,
+		Name:       "Day After Thanksgiving Day",
+		Type:       cal.ObservancePublic,
+		Month:      time.November,
+		Weekday:    time.Thursday,
+		Offset:     4,
+		OffsetDays: 1,
+		Func:       cal.CalcWeekdayOffset,
 	}
 
 	// ChristmasDay represents Christmas Day on the 25-Dec
