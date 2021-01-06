@@ -109,7 +109,7 @@ var (
 		Month:      time.November,
 		Weekday:    time.Thursday,
 		Offset:     4,
-		OffsetDays: 1,
+		CalcOffset: 1,
 		Func:       cal.CalcWeekdayOffset,
 	}
 
