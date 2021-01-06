@@ -42,13 +42,14 @@ type Holiday struct {
 	Except      []int          // years where the holiday doesn't apply
 
 	// calculation fields; required fields depend on rule being followed
-	Month    time.Month   // the month the holiday occurs
-	Day      int          // the day the holiday occurs
-	Weekday  time.Weekday // the weekday the holiday occurs
-	Offset   int          // the weekday or start date offset the holiday occurs
-	Julian   bool         // the holiday is based on a Julian calendar
-	Observed []AltDay     // the substitution days for the holiday
-	Func     HolidayFn    // logic used to determine occurrences
+	Month      time.Month   // the month the holiday occurs
+	Day        int          // the day the holiday occurs
+	Weekday    time.Weekday // the weekday the holiday occurs
+	Offset     int          // the weekday or start date offset the holiday occurs
+	CalcOffset int          // days offset from the date the holiday occurs, applied after the calculation
+	Julian     bool         // the holiday is based on a Julian calendar
+	Observed   []AltDay     // the substitution days for the holiday
+	Func       HolidayFn    // logic used to determine occurrences
 }
 
 // Clone returns a copy of the Holiday. If overrides is non-nil, then the
@@ -68,6 +69,7 @@ func (h *Holiday) Clone(overrides *Holiday) *Holiday {
 		Day:         h.Day,
 		Weekday:     h.Weekday,
 		Offset:      h.Offset,
+		CalcOffset:  h.CalcOffset,
 		Julian:      h.Julian,
 		Observed:    h.Observed,
 		Func:        h.Func,
@@ -117,6 +119,9 @@ func (h *Holiday) Calc(year int) (actual, observed time.Time) {
 		}
 	}
 	actual = h.Func(h, year)
+	if h.CalcOffset != 0 {
+		actual = actual.AddDate(0, 0, h.CalcOffset)
+	}
 
 	if h.Observed == nil {
 		return actual, actual
