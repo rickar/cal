@@ -45,8 +45,8 @@ package main
 import (
 	"time"
 
-	"github.com/rickar/cal/v2"
-	"github.com/rickar/cal/v2/us"
+	"github.com/Tamh/cal/v2"
+	"github.com/Tamh/cal/v2/us"
 )
 
 func main() {

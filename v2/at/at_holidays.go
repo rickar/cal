@@ -6,8 +6,8 @@ package at
 import (
 	"time"
 
-	"github.com/rickar/cal/v2"
-	"github.com/rickar/cal/v2/aa"
+	"github.com/Tamh/cal/v2"
+	"github.com/Tamh/cal/v2/aa"
 )
 
 var (

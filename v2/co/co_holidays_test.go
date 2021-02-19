@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/rickar/cal/v2"
+	"github.com/Tamh/cal/v2"
 )
 
 func d(y, m, d int) time.Time {
