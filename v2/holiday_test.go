@@ -69,6 +69,11 @@ func TestCalc(t *testing.T) {
 		Func:      func(h *Holiday, year int) time.Time { return time.Date(year, time.March, 11, 0, 0, 0, 0, DefaultLoc) },
 	}
 
+	h3 := &Holiday{
+		CalcOffset: 1,
+		Func:       h2.Func,
+	}
+
 	act, obs = h2.Calc(2000)
 	if !act.IsZero() || !obs.IsZero() {
 		t.Errorf("expected zero time before start year")
@@ -99,6 +104,13 @@ func TestCalc(t *testing.T) {
 		t.Errorf("observed day 2016 - got: %s, %s; want: %s, %s", act, obs,
 			time.Date(2016, time.March, 11, 0, 0, 0, 0, DefaultLoc),
 			time.Date(2016, time.March, 11, 0, 0, 0, 0, DefaultLoc))
+	}
+
+	act, obs = h3.Calc(2016)
+	if !act.Equal(obs) || !act.Equal(time.Date(2016, time.March, 12, 0, 0, 0, 0, DefaultLoc)) {
+		t.Errorf("offset calc - got %s, %s; want: %s, %s", act, obs,
+			time.Date(2016, time.March, 12, 0, 0, 0, 0, DefaultLoc),
+			time.Date(2016, time.March, 12, 0, 0, 0, 0, DefaultLoc))
 	}
 }
 

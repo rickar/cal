@@ -32,10 +32,8 @@ over v1:
   * Name and description fields added
   * Support for time.Location matching to ease use of multiple Calendars
 * BusinessCalendar
-  * Full support for working hours including dynamically determining work 
-    start and end times per day and the number of work hours between dates
-  * Support for "overnight" working hours where a workday starts at night and
-    ends in the morning
+  * Full support for working hours and related calculations
+  * Work days and work start and end times can be provided by custom functions
 
 # Example
 Here is a simple usage example of a cron job that runs once per day:

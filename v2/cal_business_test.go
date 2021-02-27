@@ -102,8 +102,6 @@ func TestIsWorkTime(t *testing.T) {
 	cal2.WorkdayEndFunc = func(date time.Time) time.Time {
 		return time.Date(date.Year(), date.Month(), date.Day(), date.Day()%12+6, 45, 0, 0, time.UTC)
 	}
-	cal3 := NewBusinessCalendar()
-	cal3.SetWorkHours(22*time.Hour, 6*time.Hour)
 
 	tests := []struct {
 		c    *BusinessCalendar
@@ -119,11 +117,6 @@ func TestIsWorkTime(t *testing.T) {
 		{cal2, dt(2020, 4, 1, 0, 00), false},
 		{cal2, dt(2020, 4, 1, 7, 00), true},
 		{cal2, dt(2020, 4, 1, 7, 50), false},
-
-		{cal3, dt(2020, 4, 1, 12, 00), false},
-		{cal3, dt(2020, 4, 1, 22, 00), true},
-		{cal3, dt(2020, 4, 1, 2, 00), true},
-		{cal3, dt(2020, 4, 1, 7, 00), false},
 	}
 
 	for i, test := range tests {
@@ -336,8 +329,6 @@ func TestWorkingHours(t *testing.T) {
 	cal2.WorkdayEndFunc = func(date time.Time) time.Time {
 		return time.Date(date.Year(), date.Month(), date.Day(), date.Day()%12+6, 45, 0, 0, time.UTC)
 	}
-	cal3 := NewBusinessCalendar()
-	cal3.SetWorkHours(22*time.Hour, 4*time.Hour)
 
 	tests := []struct {
 		c    *BusinessCalendar
@@ -349,9 +340,6 @@ func TestWorkingHours(t *testing.T) {
 
 		{cal2, d(2020, 4, 1), 6*time.Hour + 15*time.Minute},
 		{cal2, d(2020, 4, 6), 6*time.Hour + 15*time.Minute},
-
-		{cal3, d(2020, 4, 1), 6 * time.Hour},
-		{cal3, d(2020, 4, 5), 0 * time.Hour},
 	}
 
 	for i, test := range tests {
@@ -371,8 +359,6 @@ func TestWorkdayStart(t *testing.T) {
 	cal2.WorkdayEndFunc = func(date time.Time) time.Time {
 		return time.Date(date.Year(), date.Month(), date.Day(), date.Day()%12+6, 45, 0, 0, time.UTC)
 	}
-	cal3 := NewBusinessCalendar()
-	cal3.SetWorkHours(22*time.Hour, 4*time.Hour)
 
 	tests := []struct {
 		c    *BusinessCalendar
@@ -384,9 +370,6 @@ func TestWorkdayStart(t *testing.T) {
 
 		{cal2, d(2020, 4, 1), dt(2020, 4, 1, 1, 30)},
 		{cal2, d(2020, 4, 6), dt(2020, 4, 6, 6, 30)},
-
-		{cal3, d(2020, 4, 1), dt(2020, 4, 1, 22, 0)},
-		{cal3, d(2020, 4, 5), time.Time{}},
 	}
 
 	for i, test := range tests {
@@ -406,8 +389,6 @@ func TestWorkdayEnd(t *testing.T) {
 	cal2.WorkdayEndFunc = func(date time.Time) time.Time {
 		return time.Date(date.Year(), date.Month(), date.Day(), date.Day()%12+6, 45, 0, 0, time.UTC)
 	}
-	cal3 := NewBusinessCalendar()
-	cal3.SetWorkHours(22*time.Hour, 4*time.Hour)
 
 	tests := []struct {
 		c    *BusinessCalendar
@@ -419,9 +400,6 @@ func TestWorkdayEnd(t *testing.T) {
 
 		{cal2, d(2020, 4, 1), dt(2020, 4, 1, 7, 45)},
 		{cal2, d(2020, 4, 6), dt(2020, 4, 6, 12, 45)},
-
-		{cal3, d(2020, 4, 1), dt(2020, 4, 1, 4, 0)},
-		{cal3, d(2020, 4, 5), time.Time{}},
 	}
 
 	for i, test := range tests {
@@ -441,8 +419,6 @@ func TestNextWorkdayStart(t *testing.T) {
 	cal2.WorkdayEndFunc = func(date time.Time) time.Time {
 		return time.Date(date.Year(), date.Month(), date.Day(), date.Day()%12+6, 45, 0, 0, time.UTC)
 	}
-	cal3 := NewBusinessCalendar()
-	cal3.SetWorkHours(22*time.Hour, 4*time.Hour)
 
 	tests := []struct {
 		c    *BusinessCalendar
@@ -456,10 +432,6 @@ func TestNextWorkdayStart(t *testing.T) {
 
 		{cal2, dt(2020, 4, 1, 3, 0), dt(2020, 4, 2, 2, 30)},
 		{cal2, dt(2020, 4, 6, 8, 0), dt(2020, 4, 7, 7, 30)},
-
-		{cal3, dt(2020, 4, 1, 0, 0), dt(2020, 4, 1, 22, 0)},
-		{cal3, dt(2020, 4, 1, 23, 0), dt(2020, 4, 2, 22, 0)},
-		{cal3, dt(2020, 4, 5, 12, 0), dt(2020, 4, 6, 22, 0)},
 	}
 
 	for i, test := range tests {
@@ -479,8 +451,6 @@ func TestWorkHoursInRange(t *testing.T) {
 	cal2.WorkdayEndFunc = func(date time.Time) time.Time {
 		return time.Date(date.Year(), date.Month(), date.Day(), date.Day()%12+6, 45, 0, 0, time.UTC)
 	}
-	cal3 := NewBusinessCalendar()
-	cal3.SetWorkHours(22*time.Hour, 4*time.Hour)
 
 	tests := []struct {
 		c    *BusinessCalendar
@@ -496,10 +466,6 @@ func TestWorkHoursInRange(t *testing.T) {
 
 		{cal2, dt(2020, 4, 1, 1, 0), dt(2020, 4, 2, 5, 00), 8*time.Hour + 45*time.Minute},
 		{cal2, dt(2020, 4, 13, 0, 0), dt(2020, 4, 18, 0, 0), 5*6*time.Hour + 5*15*time.Minute},
-
-		{cal3, dt(2020, 4, 1, 12, 0), dt(2020, 4, 2, 0, 0), 2 * time.Hour},
-		{cal3, dt(2020, 4, 1, 0, 0), dt(2020, 4, 2, 0, 0), 6 * time.Hour},
-		{cal3, dt(2020, 4, 1, 0, 0), dt(2020, 4, 1, 12, 0), 4 * time.Hour},
 	}
 
 	for i, test := range tests {
@@ -524,8 +490,6 @@ func TestAddWorkHours(t *testing.T) {
 	cal2.WorkdayEndFunc = func(date time.Time) time.Time {
 		return time.Date(date.Year(), date.Month(), date.Day(), date.Day()%12+6, 45, 0, 0, time.UTC)
 	}
-	cal3 := NewBusinessCalendar()
-	cal3.SetWorkHours(22*time.Hour, 4*time.Hour)
 
 	tests := []struct {
 		c    *BusinessCalendar
@@ -542,11 +506,6 @@ func TestAddWorkHours(t *testing.T) {
 
 		{cal2, dt(2020, 4, 1, 1, 0), 8*time.Hour + 45*time.Minute, dt(2020, 4, 2, 5, 00)},
 		{cal2, dt(2020, 4, 13, 0, 0), 5*6*time.Hour + 5*15*time.Minute, dt(2020, 4, 17, 11, 45)},
-
-		{cal3, dt(2020, 4, 1, 12, 0), 2 * time.Hour, dt(2020, 4, 2, 0, 0)},
-		{cal3, dt(2020, 4, 1, 0, 0), 6 * time.Hour, dt(2020, 4, 2, 0, 0)},
-		{cal3, dt(2020, 4, 1, 0, 0), 4 * time.Hour, dt(2020, 4, 1, 4, 0)},
-		{cal3, dt(2020, 4, 1, 12, 0), 24 * time.Hour, dt(2020, 4, 7, 4, 0)},
 	}
 
 	for i, test := range tests {

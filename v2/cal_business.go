@@ -61,8 +61,8 @@ func (c *BusinessCalendar) SetWorkday(day time.Weekday, workday bool) {
 
 // SetWorkHours sets the start and end times for a workday.
 //
-// Only hours and minutes will be considered. Workdays that cross midnight
-// (start is greater than end) are supported.
+// Only hours and minutes will be considered. The time component of start
+// should be less than the time component of end.
 func (c *BusinessCalendar) SetWorkHours(start time.Duration, end time.Duration) {
 	c.workdayStart = start
 	c.workdayEnd = end
@@ -119,12 +119,6 @@ func (c *BusinessCalendar) IsWorkTime(date time.Time) bool {
 
 	h := date.Hour()
 	m := date.Minute()
-	if startHour > endHour {
-		return (h == startHour && m >= startMinute) ||
-			(h > startHour && h <= 23) ||
-			(h < endHour) || (h == endHour && m <= endMinute)
-
-	}
 	return (h == startHour && m >= startMinute) ||
 		(h > startHour && h < endHour) ||
 		(h == endHour && m <= endMinute)
@@ -267,10 +261,6 @@ func (c *BusinessCalendar) WorkHours(date time.Time) time.Duration {
 		endMinute = endTime.Minute()
 	}
 
-	if startHour > endHour {
-		return (time.Duration(endHour)*time.Hour + time.Duration(endMinute)*time.Minute) +
-			(time.Duration(23-startHour)*time.Hour + time.Duration(60-startMinute)*time.Minute)
-	}
 	return (time.Duration(endHour)*time.Hour + time.Duration(endMinute)*time.Minute) -
 		(time.Duration(startHour)*time.Hour + time.Duration(startMinute)*time.Minute)
 }
@@ -331,12 +321,8 @@ func (c *BusinessCalendar) WorkHoursInRange(start, end time.Time) time.Duration 
 			current = c.NextWorkdayStart(start)
 		} else {
 			dayEnd := c.WorkdayEnd(start)
-			if dayEnd.After(dayStart) {
-				if start.After(dayEnd) {
-					current = c.NextWorkdayStart(start)
-				} else {
-					current = dayStart
-				}
+			if start.After(dayEnd) {
+				current = c.NextWorkdayStart(start)
 			} else {
 				current = dayStart
 			}
@@ -344,24 +330,10 @@ func (c *BusinessCalendar) WorkHoursInRange(start, end time.Time) time.Duration 
 	}
 
 	for current.Before(end) {
-		dayStart := c.WorkdayStart(current)
 		dayEnd := c.WorkdayEnd(current)
-		if dayEnd.Before(dayStart) {
-			last := MinTime(dayEnd, end)
-			if last.After(start) {
-				r += last.Sub(DayStart(last))
-			}
-			current = dayStart
-			if current.Before(end) {
-				last = MinTime(DayEnd(current), end)
-				r += last.Sub(current) + 1*time.Nanosecond
-			}
-			current = c.NextWorkdayStart(DayEnd(current))
-		} else {
-			last := MinTime(dayEnd, end)
-			r += last.Sub(current)
-			current = c.NextWorkdayStart(last)
-		}
+		last := MinTime(dayEnd, end)
+		r += last.Sub(current)
+		current = c.NextWorkdayStart(last)
 	}
 	return r
 }
@@ -381,44 +353,19 @@ func (c *BusinessCalendar) AddWorkHours(date time.Time, worked time.Duration) ti
 	} else if !c.IsWorkTime(start) {
 		dayStart := c.WorkdayStart(start)
 		dayEnd := c.WorkdayEnd(start)
-		if dayEnd.After(dayStart) {
-			if start.Before(dayStart) {
-				start = dayStart
-			} else if start.After(dayEnd) {
-				start = c.NextWorkdayStart(start)
-			}
-		} else {
-			if start.After(dayEnd) && start.Before(dayStart) {
-				start = dayStart
-			}
+		if start.Before(dayStart) {
+			start = dayStart
+		} else if start.After(dayEnd) {
+			start = c.NextWorkdayStart(start)
 		}
 	}
 
 	var r time.Time
 	for worked > 0 {
-		dayStart := c.WorkdayStart(start)
 		dayEnd := c.WorkdayEnd(start)
-
-		if dayEnd.After(dayStart) {
-			r = MinTime(start.Add(worked), dayEnd)
-			worked -= c.WorkHoursInRange(start, r)
-		} else {
-			if dayEnd.After(date) {
-				r = MinTime(DayStart(start).Add(worked), dayEnd)
-				worked -= c.WorkHoursInRange(DayStart(start), r)
-			}
-			if worked > 0 {
-				r = MinTime(dayStart.Add(worked), DayEnd(start).Add(1*time.Nanosecond))
-				worked -= c.WorkHoursInRange(dayStart, r)
-			}
-		}
-
-		if dayEnd.After(dayStart) {
-			start = c.NextWorkdayStart(dayEnd)
-		} else {
-			start = c.NextWorkdayStart(DayEnd(dayStart))
-		}
+		r = MinTime(start.Add(worked), dayEnd)
+		worked -= c.WorkHoursInRange(start, r)
+		start = c.NextWorkdayStart(dayEnd)
 	}
-
 	return r
 }
