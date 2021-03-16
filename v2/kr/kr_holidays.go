@@ -28,6 +28,11 @@ var (
         {Day: time.Sunday, Offset: 1},
     }
 
+    LunarNewYearChuseokAlt = []cal.AltDay{
+        {Day: time.Saturday, Offset: 2},
+        {Day: time.Sunday, Offset: 2},
+    }
+
     // NewYear represents New Year's Day on 1-Jan
     NewYear = aa.NewYear.Clone(&cal.Holiday{Name: "새해 첫날", Type: cal.ObservancePublic})
 
@@ -38,7 +43,7 @@ var (
         Month:    time.January,
         Day:      1,
         Lunar:    true,
-        Observed: weekendAlt,
+        Observed: LunarNewYearChuseokAlt,
         Func:     CalcDayOfLunarMonth,
     }
 
@@ -61,7 +66,15 @@ var (
         Func:     cal.CalcDayOfMonth,
     }
 
-    // TODO: 부처님 오신 날 lunar
+    // BuddhasDay represents 부처님 오신 날 on the Lunar 8-April
+    BuddhasDay = &cal.Holiday{
+        Name:  "부처님 오신 날",
+        Type:  cal.ObservancePublic,
+        Month: time.April,
+        Day:   8,
+        Lunar: true,
+        Func:  CalcDayOfLunarMonth,
+    }
 
     // MemorialDay represents 현충일 on the 6-June
     MemorialDay = &cal.Holiday{
@@ -81,8 +94,16 @@ var (
         Func:  cal.CalcDayOfMonth,
     }
 
-    // TODO: 추석 lunar Chuseok
-    // Observed: weekendAlt,
+    // Chuseok represents 추석 on the Lunar 15-August
+    Chuseok = &cal.Holiday{
+        Name:     "추석",
+        Type:     cal.ObservancePublic,
+        Month:    time.August,
+        Day:      15,
+        Lunar:    true,
+        Observed: LunarNewYearChuseokAlt,
+        Func:     CalcDayOfLunarMonth,
+    }
 
     // FoundationDay represents 개천절 on the 3-October
     FoundationDay = &cal.Holiday{
@@ -108,10 +129,13 @@ var (
     // Holidays provides a list of the standard national holidays
     Holidays = []*cal.Holiday{
         NewYear,
+        LunarNewYear,
         IndependenceMovementDay,
+        BuddhasDay,
         ChildrensDay,
         MemorialDay,
         LiberationDay,
+        Chuseok,
         FoundationDay,
         HangeulDay,
         ChristmasDay,

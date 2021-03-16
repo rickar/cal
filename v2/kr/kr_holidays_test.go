@@ -48,6 +48,15 @@ func TestHolidays(t *testing.T) {
         {IndependenceMovementDay, 2021, d(2021, 3, 1), d(2021, 3, 1)},
         {IndependenceMovementDay, 2022, d(2022, 3, 1), d(2022, 3, 1)},
 
+        {BuddhasDay, 2015, d(2015, 5, 25), d(2015, 5, 25)},
+        {BuddhasDay, 2016, d(2016, 5, 14), d(2016, 5, 14)},
+        {BuddhasDay, 2017, d(2017, 5, 3), d(2017, 5, 3)},
+        {BuddhasDay, 2018, d(2018, 5, 22), d(2018, 5, 22)},
+        {BuddhasDay, 2019, d(2019, 5, 12), d(2019, 5, 12)},
+        {BuddhasDay, 2020, d(2020, 4, 30), d(2020, 4, 30)},
+        {BuddhasDay, 2021, d(2021, 5, 19), d(2021, 5, 19)},
+        {BuddhasDay, 2022, d(2022, 5, 8), d(2022, 5, 8)},
+
         {ChildrensDay, 2015, d(2015, 5, 5), d(2015, 5, 5)},
         {ChildrensDay, 2016, d(2016, 5, 5), d(2016, 5, 5)},
         {ChildrensDay, 2017, d(2017, 5, 5), d(2017, 5, 5)},
@@ -74,6 +83,14 @@ func TestHolidays(t *testing.T) {
         {LiberationDay, 2020, d(2020, 8, 15), d(2020, 8, 15)},
         {LiberationDay, 2021, d(2021, 8, 15), d(2021, 8, 15)},
         {LiberationDay, 2022, d(2022, 8, 15), d(2022, 8, 15)},
+
+        {Chuseok, 2016, d(2016, 9, 15), d(2016, 9, 15)},
+        {Chuseok, 2017, d(2017, 10, 4), d(2017, 10, 4)},
+        {Chuseok, 2018, d(2018, 9, 24), d(2018, 9, 24)},
+        {Chuseok, 2019, d(2019, 9, 13), d(2019, 9, 13)},
+        {Chuseok, 2020, d(2020, 10, 1), d(2020, 10, 1)},
+        {Chuseok, 2021, d(2021, 9, 21), d(2021, 9, 21)},
+        {Chuseok, 2022, d(2022, 9, 10), d(2022, 9, 12)},
 
         {FoundationDay, 2015, d(2015, 10, 3), d(2015, 10, 3)},
         {FoundationDay, 2016, d(2016, 10, 3), d(2016, 10, 3)},
