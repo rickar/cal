@@ -110,14 +110,21 @@ func Example_lunar() {
     // gregorian: 2020-02-23 ~ 2020-03-23
     // korean lunar: 2020-01-30 ~ 2020-02-29
     // chinese lunar: 2020-02-01 ~ 2020-02-30
-    fmt.Println(Sol2Lun(d(2020, 2, 22)))
-    fmt.Println(Sol2Lun(d(2020, 2, 23)))
-    fmt.Println(Sol2Lun(d(2020, 3, 2)))
-    fmt.Println(Sol2Lun(d(2020, 5, 5))) // leap month
+
+    fmt.Println(Solar2Lunar(d(2020, 2, 22)))
+    fmt.Println(Solar2Lunar(d(2020, 2, 23)))
+    fmt.Println(Solar2Lunar(d(2020, 3, 2)))
+    fmt.Println(Solar2Lunar(d(2020, 5, 5)))
+    fmt.Println(Solar2Lunar(d(2020, 5, 23)))
+    fmt.Println(Solar2Lunar(d(2020, 6, 20)))
+    fmt.Println(Solar2Lunar(d(2020, 6, 21)))
 
     // Output:
     // [2020 1 29] false
     // [2020 1 30] false
     // [2020 2 8] false
-    // [2020 4 13] true
+    // [2020 4 13] false
+    // [2020 4 1] true
+    // [2020 4 29] true
+    // [2020 5 1] false
 }

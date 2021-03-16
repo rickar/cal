@@ -4,6 +4,8 @@ package kr
 // cause upon package does not export functions.
 
 import (
+    "log"
+    "sort"
     "time"
 )
 
@@ -22,6 +24,7 @@ const (
 // }
 
 // Sol2Lun converts to lunar year/month/day and if it is belongs to the leap month
+// Chinese lunar calendar
 func Sol2Lun(t time.Time) (ymd [3]int, isLeap bool) {
     offset := offsetDays(MINDATE, t)
     year, offset := lunarYearByOffset(offset)
@@ -133,4 +136,59 @@ func getLunarInfo(year int) int {
         return 0
     }
     return LunarInfoList[idx]
+}
+
+// Solar2Lunar converts to lunar year/month/day and if it is belongs to the leap month
+// Korean lunar calendar
+func Solar2Lunar(t time.Time) (ymd [3]int, isLeap bool) {
+    const (
+        BASEYEAR = 1391
+        MINDATE  = 2229156 // 1391-02-05 ( lunisolar 1391-01-01 )
+        MAXDATE  = 2470172 // 2050-12-31 ( lunisolar 2050-11-18 )
+    )
+
+    // TODO gregorian 1582-10~05 ~ 1582-10-14 dates do not exist.
+    days := julian(t)
+    if days < MINDATE || days > MAXDATE {
+        log.Fatalf("The date is out of range: %d", days)
+    }
+
+    days -= MINDATE
+    month := sort.Search(len(MonthTable), func(i int) bool { return MonthTable[i] > days }) - 1
+    if month > len(MonthTable)-1 {
+        log.Fatalf("Out of MonthTable range: %d/%d", month, len(MonthTable))
+    }
+
+    year := sort.Search(len(YearTable), func(i int) bool { return YearTable[i] > month }) - 1
+    if year > len(YearTable)-1 {
+        log.Fatalf("Out of YearTable range: %d/%d", year, len(YearTable))
+    }
+
+    var day int
+    month, day = month-YearTable[year]+1, days-MonthTable[month]+1
+    if LeapTable[year] != 0 && LeapTable[year] <= month {
+        if LeapTable[year] == month {
+            isLeap = true
+        } else {
+            isLeap = false
+        }
+        month--
+    } else {
+        isLeap = false
+    }
+
+    ymd[0], ymd[1], ymd[2] = year+BASEYEAR, month, day
+    return ymd, isLeap
+}
+
+// julian https://github.com/toelsiba/date/blob/master/julian_day.go
+// Gregorian calendar starting from October 15, 1582
+// Algorithm from Henry F. Fliegel and Thomas C. Van Flandern
+func julian(t time.Time) (jd int) {
+    year, month, day := t.Year(), int(t.Month()), t.Day()
+    e := (1461 * (year + 4800 + (month-14)/12)) / 4
+    e += (367 * (month - 2 - 12*((month-14)/12))) / 12
+    e += -(3 * ((year + 4900 + (month-14)/12) / 100)) / 4
+    e += day - 32075
+    return e
 }
