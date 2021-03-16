@@ -30,6 +30,15 @@ func TestHolidays(t *testing.T) {
         {NewYear, 2021, d(2021, 1, 1), d(2021, 1, 1)},
         {NewYear, 2022, d(2022, 1, 1), d(2022, 1, 1)},
 
+        {LunarNewYear, 2015, d(2015, 2, 19), d(2015, 2, 19)},
+        {LunarNewYear, 2016, d(2016, 2, 8), d(2016, 2, 8)},
+        {LunarNewYear, 2017, d(2017, 1, 28), d(2017, 1, 30)},
+        {LunarNewYear, 2018, d(2018, 2, 16), d(2018, 2, 16)},
+        {LunarNewYear, 2019, d(2019, 2, 5), d(2019, 2, 5)},
+        {LunarNewYear, 2020, d(2020, 1, 25), d(2020, 1, 27)},
+        {LunarNewYear, 2021, d(2021, 2, 12), d(2021, 2, 12)},
+        {LunarNewYear, 2022, d(2022, 2, 1), d(2022, 2, 1)},
+
         {IndependenceMovementDay, 2015, d(2015, 3, 1), d(2015, 3, 1)},
         {IndependenceMovementDay, 2016, d(2016, 3, 1), d(2016, 3, 1)},
         {IndependenceMovementDay, 2017, d(2017, 3, 1), d(2017, 3, 1)},
