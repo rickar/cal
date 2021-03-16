@@ -36,6 +36,16 @@ var (
     // NewYear represents New Year's Day on 1-Jan
     NewYear = aa.NewYear.Clone(&cal.Holiday{Name: "새해 첫날", Type: cal.ObservancePublic})
 
+    // BeforeLunarNewYear represents 설전날 before on the Lunar 1-Jan
+    BeforeLunarNewYear = &cal.Holiday{
+        Name:  "설전날",
+        Type:  cal.ObservancePublic,
+        Month: time.January,
+        Day:   1,
+        Lunar: true,
+        Func:  CalcBeforeDayOfLunarMonth,
+    }
+
     // LunarNewYear represents 설날 on the Lunar 1-Jan
     LunarNewYear = &cal.Holiday{
         Name:     "설날",
@@ -45,6 +55,16 @@ var (
         Lunar:    true,
         Observed: LunarNewYearChuseokAlt,
         Func:     CalcDayOfLunarMonth,
+    }
+
+    // AfterLunarNewYear represents 설다음날 after on the Lunar 1-Jan
+    AfterLunarNewYear = &cal.Holiday{
+        Name:  "설다음날",
+        Type:  cal.ObservancePublic,
+        Month: time.January,
+        Day:   1,
+        Lunar: true,
+        Func:  CalcAfterDayOfLunarMonth,
     }
 
     // IndependenceMovementDay represents 3.1절 on the 1-Mar
@@ -94,6 +114,16 @@ var (
         Func:  cal.CalcDayOfMonth,
     }
 
+    // BeforeChuseok represents 추석전날 before on the Lunar 15-August
+    BeforeChuseok = &cal.Holiday{
+        Name:  "추석전날",
+        Type:  cal.ObservancePublic,
+        Month: time.August,
+        Day:   15,
+        Lunar: true,
+        Func:  CalcBeforeDayOfLunarMonth,
+    }
+
     // Chuseok represents 추석 on the Lunar 15-August
     Chuseok = &cal.Holiday{
         Name:     "추석",
@@ -103,6 +133,16 @@ var (
         Lunar:    true,
         Observed: LunarNewYearChuseokAlt,
         Func:     CalcDayOfLunarMonth,
+    }
+
+    // AfterChuseok represents 추석전날 after on the Lunar 15-August
+    AfterChuseok = &cal.Holiday{
+        Name:  "추석다음날",
+        Type:  cal.ObservancePublic,
+        Month: time.August,
+        Day:   15,
+        Lunar: true,
+        Func:  CalcAfterDayOfLunarMonth,
     }
 
     // FoundationDay represents 개천절 on the 3-October
@@ -129,13 +169,17 @@ var (
     // Holidays provides a list of the standard national holidays
     Holidays = []*cal.Holiday{
         NewYear,
+        BeforeLunarNewYear,
         LunarNewYear,
+        AfterLunarNewYear,
         IndependenceMovementDay,
         BuddhasDay,
         ChildrensDay,
         MemorialDay,
         LiberationDay,
+        BeforeChuseok,
         Chuseok,
+        AfterChuseok,
         FoundationDay,
         HangeulDay,
         ChristmasDay,
@@ -146,4 +190,16 @@ var (
 // specific day of the month such as the 5th of November.
 func CalcDayOfLunarMonth(h *cal.Holiday, year int) time.Time {
     return Lunar2Solar(year, int(h.Month), h.Day, false)
+}
+
+// CalcBeforeDayOfLunarMonth a before day of specific LunarDate.
+// 1/1 before day maybe become 12/29 or 12/30
+// so treat before day as solar calendar
+func CalcBeforeDayOfLunarMonth(h *cal.Holiday, year int) time.Time {
+    return Lunar2Solar(year, int(h.Month), h.Day, false).Add(time.Hour * 24 * -1)
+}
+
+// CalcAfterDayOfLunarMonth a after day of specific LunarDate.
+func CalcAfterDayOfLunarMonth(h *cal.Holiday, year int) time.Time {
+    return Lunar2Solar(year, int(h.Month), h.Day, false).Add(time.Hour * 24)
 }
