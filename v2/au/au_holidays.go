@@ -182,12 +182,12 @@ var (
 	// FridayBeforeAflFinal represents the Friday before the AFL Grand Final;
 	// normally on the last Friday of September but subject to AFL schedules
 	FridayBeforeAflFinal = &cal.Holiday{
-		Name:    "Friday before the AFL Grand Final",
-		Type:    cal.ObservancePublic,
-		Month:   time.September,
-		Weekday: time.Friday,
-		Offset:  -1,
-		Func:    calcFridayBeforeAflFinal,
+		Name:      "Friday before the AFL Grand Final",
+		Type:      cal.ObservancePublic,
+		Month:     time.September,
+		Weekday:   time.Friday,
+		Offset:    -1,
+		Func:      calcFridayBeforeAflFinal,
 		StartYear: 2015,
 	}
 
