@@ -31,6 +31,9 @@ jobs:
         run: go mod download
         working-directory: ./v2
 
+      - name: Format
+        run: if [ "$(gofmt -s -l . | wc -l)" -gt 0 ]; then exit 1; fi
+        
       - name: Build
         run: go build ./...
         working-directory: ./v2
