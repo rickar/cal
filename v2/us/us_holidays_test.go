@@ -56,6 +56,18 @@ func TestHolidays(t *testing.T) {
 		{MemorialDay, 2021, d(2021, 5, 31), d(2021, 5, 31)},
 		{MemorialDay, 2022, d(2022, 5, 30), d(2022, 5, 30)},
 
+		{Juneteenth, 2015, time.Time{}, time.Time{}},
+		{Juneteenth, 2016, time.Time{}, time.Time{}},
+		{Juneteenth, 2017, time.Time{}, time.Time{}},
+		{Juneteenth, 2018, time.Time{}, time.Time{}},
+		{Juneteenth, 2019, time.Time{}, time.Time{}},
+		{Juneteenth, 2020, time.Time{}, time.Time{}},
+		{Juneteenth, 2021, d(2021, 6, 19), d(2021, 6, 18)},
+		{Juneteenth, 2022, d(2022, 6, 19), d(2022, 6, 20)},
+		{Juneteenth, 2023, d(2023, 6, 19), d(2023, 6, 19)},
+		{Juneteenth, 2024, d(2024, 6, 19), d(2024, 6, 19)},
+		{Juneteenth, 2025, d(2025, 6, 19), d(2025, 6, 19)},
+
 		{IndependenceDay, 2015, d(2015, 7, 4), d(2015, 7, 3)},
 		{IndependenceDay, 2016, d(2016, 7, 4), d(2016, 7, 4)},
 		{IndependenceDay, 2017, d(2017, 7, 4), d(2017, 7, 4)},

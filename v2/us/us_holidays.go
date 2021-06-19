@@ -52,6 +52,17 @@ var (
 		Func:    cal.CalcWeekdayOffset,
 	}
 
+	// Juneteenth represents Juneteenth on June 19th
+	Juneteenth = &cal.Holiday{
+		Name:      "Juneteenth",
+		Type:      cal.ObservancePublic,
+		Month:     time.June,
+		Day:       19,
+		Observed:  weekendAlt,
+		Func:      cal.CalcDayOfMonth,
+		StartYear: 2021,
+	}
+
 	// IndependenceDay represents Independence Day on 4-Jul
 	IndependenceDay = &cal.Holiday{
 		Name:     "Independence Day",
