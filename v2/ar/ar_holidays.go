@@ -99,11 +99,12 @@ var (
 
 	// Argentinian commemoration of the passage to the immortality of General Manuel Belgrano.
 	BelgranoDay = &cal.Holiday{
-		Name:  "Aniversario paso a la inmortalidad del General Juan Manuel Belgrano",
-		Type:  cal.ObservancePublic,
-		Month: time.June,
-		Day:   20,
-		Func:  cal.CalcDayOfMonth,
+		Name:     "Aniversario paso a la inmortalidad del General Juan Manuel Belgrano",
+		Type:     cal.ObservancePublic,
+		Observed: weekendAlt,
+		Month:    time.June,
+		Day:      20,
+		Func:     cal.CalcDayOfMonth,
 	}
 
 	// Argentinian Independece Day
