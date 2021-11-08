@@ -40,9 +40,7 @@ func (c *Calendar) AddHoliday(h ...*Holiday) {
 		c.Holidays = make([]*Holiday, 0, 12)
 	}
 
-	for _, hd := range h {
-		c.Holidays = append(c.Holidays, hd)
-	}
+	c.Holidays = append(c.Holidays, h...)
 }
 
 // IsHoliday reports whether a given date is a holiday or an observation day.
@@ -53,9 +51,23 @@ func (c *Calendar) IsHoliday(date time.Time) (actual, observed bool, h *Holiday)
 
 	year, month, day := date.Date()
 	for _, hol := range c.Holidays {
+
+		if hol.Month != 0 && hol.Month != month {
+			continue
+		}
+
 		act, obs := hol.Calc(year)
-		actMatch := !act.IsZero() && act.Month() == month && act.Day() == day
-		obsMatch := !obs.IsZero() && obs.Month() == month && obs.Day() == day
+
+		actMatch := !act.IsZero()
+		if actMatch {
+			_, actMonth, actDay := act.Date()
+			actMatch = actMonth == month && actDay == day
+		}
+		obsMatch := !obs.IsZero()
+		if obsMatch {
+			_, obsMonth, obsDay := obs.Date()
+			obsMatch = obsMonth == month && obsDay == day
+		}
 		if actMatch || obsMatch {
 			return actMatch, obsMatch, hol
 		}

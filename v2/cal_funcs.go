@@ -79,42 +79,51 @@ func IsWeekdayN(t time.Time, day time.Weekday, n int) bool {
 		return false
 	}
 
+	tYear, tMonth, tDay := t.Date()
+
 	if n > 0 {
-		return (t.Day()-1)/7 == (n - 1)
+		return (tDay-1)/7 == (n - 1)
 	}
 
-	want := WeekdayN(t.Year(), t.Month(), day, n)
-	return want.Year() == t.Year() && want.Month() == t.Month() && want.Day() == t.Day()
+	want := WeekdayN(tYear, tMonth, day, n)
+	wantYear, wantMonth, wantDay := want.Date()
+	return wantYear == tYear && wantMonth == tMonth && wantDay == tDay
 }
 
 // DayStart reports the start of the day in t (sets time fields zero).
 func DayStart(t time.Time) time.Time {
-	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
+	year, month, day := t.Date()
+	return time.Date(year, month, day, 0, 0, 0, 0, t.Location())
 }
 
 // DayEnd reports the end of the day in t (sets time fields to maximum).
 func DayEnd(t time.Time) time.Time {
-	return time.Date(t.Year(), t.Month(), t.Day(), 23, 59, 59, 999999999, t.Location())
+	year, month, day := t.Date()
+	return time.Date(year, month, day, 23, 59, 59, 999999999, t.Location())
 }
 
 // MonthStart reports the starting day of the month in t. The time portion is
 // unchanged.
 func MonthStart(t time.Time) time.Time {
-	return time.Date(t.Year(), t.Month(), 1, t.Hour(), t.Minute(), t.Second(),
-		t.Nanosecond(), t.Location())
+	year, month, _ := t.Date()
+	hour, min, sec := t.Clock()
+	return time.Date(year, month, 1, hour, min, sec, t.Nanosecond(), t.Location())
 }
 
 // MonthEnd reports the ending day of the month in t. The time portion is
 // unchanged.
 func MonthEnd(t time.Time) time.Time {
-	return time.Date(t.Year(), t.Month()+1, 0, t.Hour(), t.Minute(),
-		t.Second(), t.Nanosecond(), t.Location())
+	year, month, _ := t.Date()
+	hour, min, sec := t.Clock()
+	return time.Date(year, month+1, 0, hour, min, sec, t.Nanosecond(), t.Location())
 }
 
 // ReplaceLocation returns a copy of the given time in the given location
 // without changing the time of day.
 func ReplaceLocation(t time.Time, loc *time.Location) time.Time {
-	return time.Date(t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second(), t.Nanosecond(), loc)
+	year, month, day := t.Date()
+	hour, min, sec := t.Clock()
+	return time.Date(year, month, day, hour, min, sec, t.Nanosecond(), loc)
 }
 
 // JulianDayNumber reports the Julian Day Number for t. Note that Julian days
@@ -122,11 +131,13 @@ func ReplaceLocation(t time.Time, loc *time.Location) time.Time {
 func JulianDayNumber(t time.Time) int {
 	// algorithm from http://www.tondering.dk/claus/cal/julperiod.php#formula
 	utc := t.UTC()
-	a := (14 - int(utc.Month())) / 12
-	y := utc.Year() + 4800 - a
-	m := int(utc.Month()) + 12*a - 3
+	year, month, day := utc.Date()
 
-	jdn := utc.Day() + (153*m+2)/5 + 365*y + y/4 - y/100 + y/400 - 32045
+	a := (14 - int(month)) / 12
+	y := year + 4800 - a
+	m := int(month) + 12*a - 3
+
+	jdn := day + (153*m+2)/5 + 365*y + y/4 - y/100 + y/400 - 32045
 	if utc.Hour() < 12 {
 		jdn--
 	}
@@ -149,8 +160,9 @@ func JulianDate(t time.Time) float64 {
 	if utc.Hour() < 12 {
 		jdn++
 	}
-	return float64(jdn) + (float64(utc.Hour())-12.0)/24.0 +
-		float64(utc.Minute())/1440.0 + float64(utc.Second())/86400.0
+	hour, min, sec := utc.Clock()
+	return float64(jdn) + (float64(hour)-12.0)/24.0 +
+		float64(min)/1440.0 + float64(sec)/86400.0
 }
 
 // ModifiedJulianDate reports the modified Julian Date Number for t. Note

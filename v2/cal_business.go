@@ -83,11 +83,7 @@ func (c *BusinessCalendar) IsWorkday(date time.Time) bool {
 	}
 
 	_, obs, _ := c.IsHoliday(date)
-	if obs {
-		return false
-	}
-
-	return true
+	return !obs
 }
 
 // IsWorkTime reports whether a given date and time is within working hours.
@@ -117,8 +113,7 @@ func (c *BusinessCalendar) IsWorkTime(date time.Time) bool {
 		endMinute = endTime.Minute()
 	}
 
-	h := date.Hour()
-	m := date.Minute()
+	h, m, _ := date.Clock()
 	return (h == startHour && m >= startMinute) ||
 		(h > startHour && h < endHour) ||
 		(h == endHour && m <= endMinute)
@@ -273,7 +268,8 @@ func (c *BusinessCalendar) WorkdayStart(date time.Time) time.Time {
 	}
 
 	if c.WorkdayStartFunc == nil {
-		return time.Date(date.Year(), date.Month(), date.Day(), 0, 0, 0, 0, date.Location()).Add(c.workdayStart)
+		year, month, day := date.Date()
+		return time.Date(year, month, day, 0, 0, 0, 0, date.Location()).Add(c.workdayStart)
 	}
 	return c.WorkdayStartFunc(date)
 }
@@ -286,7 +282,8 @@ func (c *BusinessCalendar) WorkdayEnd(date time.Time) time.Time {
 	}
 
 	if c.WorkdayEndFunc == nil {
-		return time.Date(date.Year(), date.Month(), date.Day(), 0, 0, 0, 0, date.Location()).Add(c.workdayEnd)
+		year, month, day := date.Date()
+		return time.Date(year, month, day, 0, 0, 0, 0, date.Location()).Add(c.workdayEnd)
 	}
 	return c.WorkdayEndFunc(date)
 }
