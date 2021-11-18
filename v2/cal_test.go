@@ -54,26 +54,40 @@ func TestIsHoliday(t *testing.T) {
 		Func: CalcDayOfMonth,
 	}
 
+	cachedCalendar := &Calendar{
+		Holidays:  []*Holiday{hol},
+		Cacheable: true,
+	}
+	CacheMaxSize = 2
+	CacheEvictSize = 1
+
 	tests := []struct {
-		c       Calendar
+		c       *Calendar
 		date    time.Time
 		wantAct bool
 		wantObs bool
 		wantHol *Holiday
 	}{
-		{Calendar{}, time.Date(2000, 1, 1, 12, 30, 0, 0, time.UTC), false, false, nil},
-		{Calendar{Holidays: []*Holiday{hol},
+		{&Calendar{}, time.Date(2000, 1, 1, 12, 30, 0, 0, time.UTC), false, false, nil},
+		{&Calendar{Holidays: []*Holiday{hol},
 			Locations: []*time.Location{zone1, zone2}},
 			time.Date(2015, 7, 4, 12, 30, 0, 0, time.UTC), false, false, nil},
-		{Calendar{Holidays: []*Holiday{hol},
+		{&Calendar{Holidays: []*Holiday{hol},
 			Locations: []*time.Location{zone1, zone2}},
 			time.Date(2015, 7, 4, 12, 30, 0, 0, zone1), true, false, hol},
-		{Calendar{Holidays: []*Holiday{hol},
+		{&Calendar{Holidays: []*Holiday{hol},
 			Locations: []*time.Location{zone1, zone2}},
 			time.Date(2015, 7, 3, 12, 30, 0, 0, zone2), false, true, hol},
-		{Calendar{Holidays: []*Holiday{hol},
+		{&Calendar{Holidays: []*Holiday{hol},
 			Locations: []*time.Location{zone1, zone2}},
 			time.Date(2015, 8, 4, 12, 30, 0, 0, zone2), false, false, nil},
+
+		{cachedCalendar, time.Date(2000, 1, 1, 12, 30, 0, 0, time.UTC), false, false, nil},
+		{cachedCalendar, time.Date(2000, 1, 1, 12, 30, 0, 0, time.UTC), false, false, nil},
+		{cachedCalendar, time.Date(2015, 7, 4, 12, 30, 0, 0, time.UTC), true, false, hol},
+		{cachedCalendar, time.Date(2015, 7, 4, 12, 30, 0, 0, time.UTC), true, false, hol},
+		{cachedCalendar, time.Date(2015, 7, 3, 12, 30, 0, 0, time.UTC), false, true, hol},
+		{cachedCalendar, time.Date(2015, 7, 3, 12, 30, 0, 0, time.UTC), false, true, hol},
 	}
 
 	for i, test := range tests {

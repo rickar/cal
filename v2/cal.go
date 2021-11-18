@@ -8,13 +8,37 @@ import "time"
 // require a full time.Time value.
 var DefaultLoc = time.Local
 
+// CacheMaxSize is the maximum number of items that can be stored in the cache
+var CacheMaxSize = 365 * 3
+
+// CacheEvictSize is the number of items to evict from cache when it is full
+var CacheEvictSize = 30
+
 // Calendar represents a basic yearly calendar with a list of holidays.
 type Calendar struct {
 	Name        string           // calendar short name
 	Description string           // calendar description
 	Locations   []*time.Location // locations where the calendar applies
 	Holidays    []*Holiday       // applicable holidays for this calendar
+	Cacheable   bool             // indicates that holiday calcs can be cached (don't change holiday defs while enabled)
+
+	isHolCache map[holCacheKey]*holCacheEntry // cached results for IsHoliday
 }
+
+type holCacheKey struct {
+	year  int
+	month time.Month
+	day   int
+}
+
+type holCacheEntry struct {
+	act bool
+	obs bool
+	hol *Holiday
+}
+
+// shared entry to avoid repeated allocations for "false" entries
+var holFalseEntry *holCacheEntry = &holCacheEntry{act: false, obs: false, hol: nil}
 
 // IsApplicable reports whether the calendar is applicable for the given
 // location.
@@ -50,12 +74,17 @@ func (c *Calendar) IsHoliday(date time.Time) (actual, observed bool, h *Holiday)
 	}
 
 	year, month, day := date.Date()
-	for _, hol := range c.Holidays {
 
-		if hol.Month != 0 && hol.Month != month {
-			continue
+	if c.Cacheable {
+		if c.isHolCache == nil {
+			c.isHolCache = make(map[holCacheKey]*holCacheEntry)
 		}
+		if v, ok := c.isHolCache[holCacheKey{year: year, month: month, day: day}]; ok {
+			return v.act, v.obs, v.hol
+		}
+	}
 
+	for _, hol := range c.Holidays {
 		act, obs := hol.Calc(year)
 
 		actMatch := !act.IsZero()
@@ -69,9 +98,31 @@ func (c *Calendar) IsHoliday(date time.Time) (actual, observed bool, h *Holiday)
 			obsMatch = obsMonth == month && obsDay == day
 		}
 		if actMatch || obsMatch {
+			if c.Cacheable {
+				c.evict()
+				c.isHolCache[holCacheKey{year: year, month: month, day: day}] =
+					&holCacheEntry{act: actMatch, obs: obsMatch, hol: hol}
+			}
 			return actMatch, obsMatch, hol
 		}
 	}
 
+	if c.Cacheable {
+		c.evict()
+		c.isHolCache[holCacheKey{year: year, month: month, day: day}] = holFalseEntry
+	}
 	return false, false, nil
+}
+
+func (c *Calendar) evict() {
+	if len(c.isHolCache) >= CacheMaxSize {
+		n := 0
+		for k := range c.isHolCache {
+			delete(c.isHolCache, k)
+			n++
+			if n >= CacheEvictSize {
+				break
+			}
+		}
+	}
 }
