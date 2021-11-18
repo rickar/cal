@@ -12,8 +12,12 @@ import (
 
 var (
 	// Standard Canada weekend substitution rules:
+	//   Saturdays move to Monday
 	//   Sundays move to Monday
+	// See: https://www.canada.ca/en/employment-social-development/services/labour-standards/reports/holidays.html#h2.6
+	// Most employers in Canada, including the Federal Government, use the proceeding Monday.
 	weekendAlt = []cal.AltDay{
+		{Day: time.Saturday, Offset: 2},
 		{Day: time.Sunday, Offset: 1},
 	}
 
@@ -80,19 +84,30 @@ var (
 		Func:    cal.CalcWeekdayOffset,
 	}
 
+	// National Day for Truth and Reconciliation on 30-Sep
+	NationalDayForTruthAndReconciliation = &cal.Holiday{
+		StartYear: 2021,
+		Name:      "National Day for Truth and Reconciliation",
+		Month:     time.September,
+		Day:       30,
+		Func:      cal.CalcDayOfMonth,
+		Observed:  weekendAlt,
+	}
+
 	// RemembranceDay represents Remembrance Day on 11-Nov
 	RemembranceDay = aa.ArmisticeDay.Clone(&cal.Holiday{Name: "Remembrance Day", Type: cal.ObservancePublic, Observed: weekendAlt})
 
 	// ChristmasDay represents Christmas Day on 25-Dec
 	ChristmasDay = aa.ChristmasDay.Clone(&cal.Holiday{Name: "Christmas Day", Type: cal.ObservanceBank,
-		Observed: []cal.AltDay{
-			{Day: time.Saturday, Offset: -1},
-			{Day: time.Sunday, Offset: 1},
-		}})
+		Observed: weekendAlt,
+	})
 
 	// BoxingDay represents Boxing Day on 26-Dec
 	BoxingDay = aa.ChristmasDay2.Clone(&cal.Holiday{Name: "Boxing Day", Type: cal.ObservanceBank,
-		Observed: []cal.AltDay{{Day: time.Monday, Offset: 1}}})
+		Observed: []cal.AltDay{
+			{Day: time.Saturday, Offset: 2},
+			{Day: time.Sunday, Offset: 2},
+			{Day: time.Monday, Offset: 1}}})
 
 	// Holidays provides a list of the standard national holidays
 	Holidays = []*cal.Holiday{
@@ -104,6 +119,7 @@ var (
 		CivicDay,
 		LabourDay,
 		ThanksgivingDay,
+		NationalDayForTruthAndReconciliation,
 		RemembranceDay,
 		ChristmasDay,
 		BoxingDay,

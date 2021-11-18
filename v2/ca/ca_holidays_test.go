@@ -58,7 +58,7 @@ func TestHolidays(t *testing.T) {
 
 		{CanadaDay, 2015, d(2015, 7, 1), d(2015, 7, 1)},
 		{CanadaDay, 2016, d(2016, 7, 1), d(2016, 7, 1)},
-		{CanadaDay, 2017, d(2017, 7, 1), d(2017, 7, 1)},
+		{CanadaDay, 2017, d(2017, 7, 1), d(2017, 7, 3)},
 		{CanadaDay, 2018, d(2018, 7, 1), d(2018, 7, 2)},
 		{CanadaDay, 2019, d(2019, 7, 1), d(2019, 7, 1)},
 		{CanadaDay, 2020, d(2020, 7, 1), d(2020, 7, 1)},
@@ -92,9 +92,17 @@ func TestHolidays(t *testing.T) {
 		{ThanksgivingDay, 2021, d(2021, 10, 11), d(2021, 10, 11)},
 		{ThanksgivingDay, 2022, d(2022, 10, 10), d(2022, 10, 10)},
 
+		{NationalDayForTruthAndReconciliation, 2021, d(2021, 9, 30), d(2021, 9, 30)},
+		{NationalDayForTruthAndReconciliation, 2022, d(2022, 9, 30), d(2022, 9, 30)},
+		{NationalDayForTruthAndReconciliation, 2023, d(2023, 9, 30), d(2023, 10, 2)},
+		{NationalDayForTruthAndReconciliation, 2024, d(2024, 9, 30), d(2024, 9, 30)},
+		{NationalDayForTruthAndReconciliation, 2025, d(2025, 9, 30), d(2025, 9, 30)},
+		{NationalDayForTruthAndReconciliation, 2026, d(2026, 9, 30), d(2026, 9, 30)},
+		{NationalDayForTruthAndReconciliation, 2027, d(2027, 9, 30), d(2027, 9, 30)},
+
 		{RemembranceDay, 2015, d(2015, 11, 11), d(2015, 11, 11)},
 		{RemembranceDay, 2016, d(2016, 11, 11), d(2016, 11, 11)},
-		{RemembranceDay, 2017, d(2017, 11, 11), d(2017, 11, 11)},
+		{RemembranceDay, 2017, d(2017, 11, 11), d(2017, 11, 13)},
 		{RemembranceDay, 2018, d(2018, 11, 11), d(2018, 11, 12)},
 		{RemembranceDay, 2019, d(2019, 11, 11), d(2019, 11, 11)},
 		{RemembranceDay, 2020, d(2020, 11, 11), d(2020, 11, 11)},
@@ -107,16 +115,16 @@ func TestHolidays(t *testing.T) {
 		{ChristmasDay, 2018, d(2018, 12, 25), d(2018, 12, 25)},
 		{ChristmasDay, 2019, d(2019, 12, 25), d(2019, 12, 25)},
 		{ChristmasDay, 2020, d(2020, 12, 25), d(2020, 12, 25)},
-		{ChristmasDay, 2021, d(2021, 12, 25), d(2021, 12, 24)},
+		{ChristmasDay, 2021, d(2021, 12, 25), d(2021, 12, 27)},
 		{ChristmasDay, 2022, d(2022, 12, 25), d(2022, 12, 26)},
 
-		{BoxingDay, 2015, d(2015, 12, 26), d(2015, 12, 26)},
+		{BoxingDay, 2015, d(2015, 12, 26), d(2015, 12, 28)},
 		{BoxingDay, 2016, d(2016, 12, 26), d(2016, 12, 27)},
 		{BoxingDay, 2017, d(2017, 12, 26), d(2017, 12, 26)},
 		{BoxingDay, 2018, d(2018, 12, 26), d(2018, 12, 26)},
 		{BoxingDay, 2019, d(2019, 12, 26), d(2019, 12, 26)},
-		{BoxingDay, 2020, d(2020, 12, 26), d(2020, 12, 26)},
-		{BoxingDay, 2021, d(2021, 12, 26), d(2021, 12, 26)},
+		{BoxingDay, 2020, d(2020, 12, 26), d(2020, 12, 28)},
+		{BoxingDay, 2021, d(2021, 12, 26), d(2021, 12, 28)},
 		{BoxingDay, 2022, d(2022, 12, 26), d(2022, 12, 27)},
 	}
 
