@@ -156,7 +156,8 @@ func (c *BusinessCalendar) HolidaysInRange(start, end time.Time) int {
 	result := 0
 	to := DayStart(end)
 	for i := DayStart(start); i.Before(to) || i.Equal(to); i = i.AddDate(0, 0, 1) {
-		if c.IsHoliday(i) {
+		_, holiday, _ := c.IsHoliday(i)
+		if holiday {
 			result++
 		}
 	}
