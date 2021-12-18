@@ -242,6 +242,43 @@ func TestWorkdaysInRange(t *testing.T) {
 	}
 }
 
+func TestHolidaysInRange(t *testing.T) {
+	c := NewBusinessCalendar()
+	hol := &Holiday{
+		Type:  ObservancePublic,
+		Month: time.July,
+		Day:   4,
+		Observed: []AltDay{
+			{Day: time.Saturday, Offset: -1},
+			{Day: time.Sunday, Offset: 1},
+		},
+		Func: CalcDayOfMonth,
+	}
+	c.AddHoliday(hol)
+
+	tests := []struct {
+		f    time.Time
+		t    time.Time
+		want int
+	}{
+		{d(2015, 4, 4), d(2015, 4, 5), 0},
+		{d(2015, 7, 1), d(2015, 7, 6), 1},
+	}
+
+	for _, test := range tests {
+		got := c.HolidaysInRange(test.f, test.t)
+		if got != test.want {
+			t.Errorf("got: %d; want: %d (%s-%s)", got, test.want, test.f, test.t)
+		}
+		if !test.f.Equal(test.t) {
+			got = c.HolidaysInRange(test.t, test.f)
+			if got != -test.want {
+				t.Errorf("got: %d; want: %d (%s-%s)", got, -test.want, test.t, test.f)
+			}
+		}
+	}
+}
+
 func TestWorkdayN(t *testing.T) {
 	c := NewBusinessCalendar()
 	hol := &Holiday{
