@@ -145,6 +145,25 @@ func (c *BusinessCalendar) WorkdaysInMonth(year int, month time.Month) int {
 	return c.WorkdaysRemain(t)
 }
 
+// HolidaysInRange reports the number of holidays between the start and end
+// times (inclusive).
+func (c *BusinessCalendar) HolidaysInRange(start, end time.Time) int {
+	factor := 1
+	if end.Before(start) {
+		factor = -1
+		start, end = end, start
+	}
+	result := 0
+	to := DayStart(end)
+	for i := DayStart(start); i.Before(to) || i.Equal(to); i = i.AddDate(0, 0, 1) {
+		_, holiday, _ := c.IsHoliday(i)
+		if holiday {
+			result++
+		}
+	}
+	return factor * result
+}
+
 // WorkdaysInRange reports the number of workdays between the start and end
 // times (inclusive).
 func (c *BusinessCalendar) WorkdaysInRange(start, end time.Time) int {
