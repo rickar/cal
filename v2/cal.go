@@ -105,6 +105,46 @@ func (c *Calendar) IsHoliday(date time.Time) (actual, observed bool, h *Holiday)
 			}
 			return actMatch, obsMatch, hol
 		}
+
+		// handle holidays that wrap around to the next or previous year
+		// e.g., New Year's Day on Saturday 1 Jan observed on Friday 31 Dec
+		if hol.Observed != nil {
+			actMonth := time.Month(0)
+			if !act.IsZero() {
+				actMonth = act.Month()
+			}
+			if actMonth == time.January {
+				_, obs = hol.Calc(year + 1)
+				obsMatch := !obs.IsZero()
+				if obsMatch {
+					obsYear, obsMonth, obsDay := obs.Date()
+					obsMatch = obsYear == year && obsMonth == month && obsDay == day
+				}
+				if obsMatch {
+					if c.Cacheable {
+						c.evict()
+						c.isHolCache[holCacheKey{year: year, month: month, day: day}] =
+							&holCacheEntry{act: false, obs: obsMatch, hol: hol}
+					}
+					return false, obsMatch, hol
+				}
+			} else if actMonth == time.December {
+				_, obs = hol.Calc(year - 1)
+				obsMatch := !obs.IsZero()
+				if obsMatch {
+					obsYear, obsMonth, obsDay := obs.Date()
+					obsMatch = obsYear == year && obsMonth == month && obsDay == day
+				}
+				if obsMatch {
+					if c.Cacheable {
+						c.evict()
+						c.isHolCache[holCacheKey{year: year, month: month, day: day}] =
+							&holCacheEntry{act: false, obs: obsMatch, hol: hol}
+					}
+					return false, obsMatch, hol
+				}
+			}
+		}
 	}
 
 	if c.Cacheable {
