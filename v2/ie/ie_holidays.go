@@ -14,6 +14,26 @@ var (
 	// NewYear represents New Year's Day on 1-Jan
 	NewYear = aa.NewYear.Clone(&cal.Holiday{})
 
+	// SaintBrigidDay represents Saint Patrick's Day on 17-Mar
+	SaintBrigidDay = &cal.Holiday{
+		Name:      "Saint Brigid’s Day",
+		Month:     time.February,
+		Weekday:   time.Monday,
+		Offset:    1,
+		Func:      CalcIfFirstFallsOnFriday,
+		StartYear: 2023,
+	}
+
+	// ExtraPublicHoliday2022 represents extra public holiday in 2022
+	ExtraPublicHoliday2022 = &cal.Holiday{
+		Name:      "Extra Public Holiday 2022",
+		Month:     time.March,
+		Day:       18,
+		StartYear: 2022,
+		EndYear:   2022,
+		Func:      cal.CalcDayOfMonth,
+	}
+
 	// SaintPatrickDay represents Saint Patrick's Day on 17-Mar
 	SaintPatrickDay = &cal.Holiday{
 		Name:  "Saint Patrick's Day",
@@ -71,6 +91,8 @@ var (
 	// Holidays provides a list of the standard national holidays
 	Holidays = []*cal.Holiday{
 		NewYear,
+		ExtraPublicHoliday2022,
+		SaintBrigidDay,
 		SaintPatrickDay,
 		EasterMonday,
 		FirstMondayMay,
@@ -81,3 +103,13 @@ var (
 		SaintStephenDay,
 	}
 )
+
+func CalcIfFirstFallsOnFriday(h *cal.Holiday, year int) time.Time {
+	fistFriday := cal.DayStart(cal.WeekdayN(year, h.Month, time.Friday, 1))
+	// if 1st falls on a Friday
+	if fistFriday.Day() == 1 {
+		return fistFriday
+	}
+
+	return cal.DayStart(cal.WeekdayN(year, h.Month, h.Weekday, h.Offset))
+}

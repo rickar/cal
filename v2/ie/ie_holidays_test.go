@@ -23,6 +23,12 @@ func TestHolidays(t *testing.T) {
 		{NewYear, 2021, d(2021, 1, 1)},
 		{NewYear, 2022, d(2022, 1, 1)},
 
+		{ExtraPublicHoliday2022, 2022, d(2022, 3, 18)},
+
+		{SaintBrigidDay, 2023, d(2023, 2, 6)},
+		{SaintBrigidDay, 2024, d(2024, 2, 5)},
+		{SaintBrigidDay, 2030, d(2030, 2, 1)},
+
 		{SaintPatrickDay, 2020, d(2020, 3, 17)},
 		{SaintPatrickDay, 2021, d(2021, 3, 17)},
 		{SaintPatrickDay, 2022, d(2022, 3, 17)},
