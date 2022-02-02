@@ -320,6 +320,19 @@ func (c *BusinessCalendar) NextWorkdayStart(date time.Time) time.Time {
 	return c.WorkdayStart(t)
 }
 
+// NextWorkdayEnd reports the end of the current or next work day from the given date.
+func (c *BusinessCalendar) NextWorkdayEnd(date time.Time) time.Time {
+	t := date
+	if date.After(c.WorkdayEnd(date)) {
+		t = t.Add(24 * time.Hour)
+	}
+
+	for !c.IsWorkday(t) {
+		t = t.Add(24 * time.Hour)
+	}
+	return c.WorkdayEnd(t)
+}
+
 // WorkHoursInRange reports the working hours between the given start and end
 // dates.
 func (c *BusinessCalendar) WorkHoursInRange(start, end time.Time) time.Duration {
