@@ -479,6 +479,39 @@ func TestNextWorkdayStart(t *testing.T) {
 	}
 }
 
+func TestNextWorkdayEnd(t *testing.T) {
+	cal1 := NewBusinessCalendar()
+	cal2 := NewBusinessCalendar()
+	cal2.WorkdayStartFunc = func(date time.Time) time.Time {
+		return time.Date(date.Year(), date.Month(), date.Day(), date.Day()%12, 30, 0, 0, time.UTC)
+	}
+	cal2.WorkdayEndFunc = func(date time.Time) time.Time {
+		return time.Date(date.Year(), date.Month(), date.Day(), date.Day()%12+6, 45, 0, 0, time.UTC)
+	}
+
+	tests := []struct {
+		c    *BusinessCalendar
+		d    time.Time
+		want time.Time
+	}{
+		{cal1, dt(2020, 4, 1, 6, 0), dt(2020, 4, 1, 17, 0)},
+		{cal1, dt(2020, 4, 1, 20, 0), dt(2020, 4, 2, 17, 0)},
+		{cal1, dt(2020, 4, 4, 12, 0), dt(2020, 4, 6, 17, 0)},
+		{cal1, dt(2020, 4, 5, 12, 0), dt(2020, 4, 6, 17, 0)},
+
+		{cal2, dt(2020, 4, 1, 3, 0), dt(2020, 4, 1, 7, 45)},
+		{cal2, dt(2020, 4, 6, 8, 0), dt(2020, 4, 6, 12, 45)},
+		{cal2, dt(2020, 4, 6, 22, 0), dt(2020, 4, 7, 13, 45)},
+	}
+
+	for i, test := range tests {
+		got := test.c.NextWorkdayEnd(test.d)
+		if got != test.want {
+			t.Errorf("got: %s; want: %s (%d)", got, test.want, i)
+		}
+	}
+}
+
 func TestWorkHoursInRange(t *testing.T) {
 	cal1 := NewBusinessCalendar()
 	cal2 := NewBusinessCalendar()
