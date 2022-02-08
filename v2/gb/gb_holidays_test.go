@@ -72,7 +72,16 @@ func TestHolidays(t *testing.T) {
 		{SpringHoliday, 2019, d(2019, 5, 27), d(2019, 5, 27)},
 		{SpringHoliday, 2020, d(2020, 5, 25), d(2020, 5, 25)},
 		{SpringHoliday, 2021, d(2021, 5, 31), d(2021, 5, 31)},
-		{SpringHoliday, 2022, d(2022, 5, 30), d(2022, 5, 30)},
+		{SpringHoliday, 2022, time.Time{}, time.Time{}},
+		{SpringHoliday, 2023, d(2023, 5, 29), d(2023, 5, 29)},
+
+		{SpringHoliday2022, 2021, time.Time{}, time.Time{}},
+		{SpringHoliday2022, 2022, d(2022, 6, 2), d(2022, 6, 2)},
+		{SpringHoliday2022, 2023, time.Time{}, time.Time{}},
+
+		{PlatinumJubilee, 2021, time.Time{}, time.Time{}},
+		{PlatinumJubilee, 2022, d(2022, 6, 3), d(2022, 6, 3)},
+		{PlatinumJubilee, 2023, time.Time{}, time.Time{}},
 
 		{SummerHolidayScotland, 2015, d(2015, 8, 3), d(2015, 8, 3)},
 		{SummerHolidayScotland, 2016, d(2016, 8, 1), d(2016, 8, 1)},

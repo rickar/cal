@@ -58,6 +58,29 @@ var (
 		Weekday: time.Monday,
 		Offset:  -1,
 		Func:    cal.CalcWeekdayOffset,
+		Except:  []int{2022},
+	}
+
+	// SpringHoliday2022 represents Spring Bank Holiday in 2022 only on 2-Jun
+	SpringHoliday2022 = &cal.Holiday{
+		Name:      "Spring Bank Holiday",
+		Type:      cal.ObservanceBank,
+		Month:     time.June,
+		Day:       2,
+		Func:      cal.CalcDayOfMonth,
+		StartYear: 2022,
+		EndYear:   2022,
+	}
+
+	// PlatinumJubilee represents Platinum Jubilee Bank Holiday in 2022 only on 3-Jun
+	PlatinumJubilee = &cal.Holiday{
+		Name:      "Platinum Jubilee Bank Holiday",
+		Type:      cal.ObservanceBank,
+		Month:     time.June,
+		Day:       3,
+		Func:      cal.CalcDayOfMonth,
+		StartYear: 2022,
+		EndYear:   2022,
 	}
 
 	// SummerHolidayScotland represents Summer Bank Holiday in Scotland on the first Monday of August
@@ -98,6 +121,8 @@ var (
 		EarlyMay,
 		VEDay,
 		SpringHoliday,
+		SpringHoliday2022,
+		PlatinumJubilee,
 		SummerHoliday,
 		ChristmasDay,
 		BoxingDay,
