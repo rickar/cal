@@ -44,3 +44,4 @@ jobs:
 
       - name: Coverage
         run: if [ "$(go tool cover -func=cover.out | grep -v 100.0 | wc -l)" -gt 0 ]; then exit 1; fi
+        working-directory: ./v2
