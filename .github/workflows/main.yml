@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go: ["1.13", "1.14"]
+        go: ["1.16", "1.17"]
     env:
       VERBOSE: 1
       GOFLAGS: -mod=readonly
@@ -33,11 +33,14 @@ jobs:
 
       - name: Format
         run: if [ "$(gofmt -s -l . | wc -l)" -gt 0 ]; then exit 1; fi
-        
+
       - name: Build
         run: go build ./...
         working-directory: ./v2
 
       - name: Test
-        run: go test -v ./...
+        run: go test -v -cover -coverprofile cover.out ./...
         working-directory: ./v2
+
+      - name: Coverage
+        run: if [ "$(go tool cover -func=cover.out | grep -v 100.0 | wc -l)" -gt 0 ]; then exit 1; fi
