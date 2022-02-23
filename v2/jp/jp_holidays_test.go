@@ -55,6 +55,11 @@ func TestHolidays(t *testing.T) {
 		{TheEmperorsBirthday, 2021, d(2021, 2, 23), d(2021, 2, 23)},
 		{TheEmperorsBirthday, 2022, d(2022, 2, 23), d(2022, 2, 23)},
 
+		{VernalEquinoxDay, 1851, d(1851, 3, 21), d(1851, 3, 21)},
+		{VernalEquinoxDay, 1899, d(1899, 3, 21), d(1899, 3, 21)},
+		{VernalEquinoxDay, 1900, d(1900, 3, 21), d(1900, 3, 21)},
+		{VernalEquinoxDay, 1979, d(1979, 3, 21), d(1979, 3, 21)},
+		{VernalEquinoxDay, 1980, d(1980, 3, 20), d(1980, 3, 20)},
 		{VernalEquinoxDay, 2015, d(2015, 3, 21), d(2015, 3, 21)},
 		{VernalEquinoxDay, 2016, d(2016, 3, 20), d(2016, 3, 21)},
 		{VernalEquinoxDay, 2017, d(2017, 3, 20), d(2017, 3, 20)},
@@ -71,6 +76,9 @@ func TestHolidays(t *testing.T) {
 		{VernalEquinoxDay, 2028, d(2028, 3, 20), d(2028, 3, 20)},
 		{VernalEquinoxDay, 2029, d(2029, 3, 20), d(2029, 3, 20)},
 		{VernalEquinoxDay, 2030, d(2030, 3, 20), d(2030, 3, 20)},
+		{VernalEquinoxDay, 2099, d(2099, 3, 20), d(2099, 3, 20)},
+		{VernalEquinoxDay, 2100, d(2100, 3, 20), d(2100, 3, 20)},
+		{VernalEquinoxDay, 2150, d(2150, 3, 21), d(2150, 3, 21)},
 
 		{ShowaDay, 2015, d(2015, 4, 29), d(2015, 4, 29)},
 		{ShowaDay, 2016, d(2016, 4, 29), d(2016, 4, 29)},
@@ -135,6 +143,11 @@ func TestHolidays(t *testing.T) {
 		{RespectForTheAgedDay, 2021, d(2021, 9, 20), d(2021, 9, 20)},
 		{RespectForTheAgedDay, 2022, d(2022, 9, 19), d(2022, 9, 19)},
 
+		{AutumnalEquinoxDay, 1851, d(1851, 9, 24), d(1851, 9, 24)},
+		{AutumnalEquinoxDay, 1899, d(1899, 9, 23), d(1899, 9, 23)},
+		{AutumnalEquinoxDay, 1900, d(1900, 9, 23), d(1900, 9, 24)},
+		{AutumnalEquinoxDay, 1979, d(1979, 9, 24), d(1979, 9, 24)},
+		{AutumnalEquinoxDay, 1980, d(1980, 9, 23), d(1980, 9, 23)},
 		{AutumnalEquinoxDay, 2015, d(2015, 9, 23), d(2015, 9, 23)},
 		{AutumnalEquinoxDay, 2016, d(2016, 9, 22), d(2016, 9, 22)},
 		{AutumnalEquinoxDay, 2017, d(2017, 9, 23), d(2017, 9, 23)},
@@ -151,6 +164,9 @@ func TestHolidays(t *testing.T) {
 		{AutumnalEquinoxDay, 2028, d(2028, 9, 22), d(2028, 9, 22)},
 		{AutumnalEquinoxDay, 2029, d(2029, 9, 23), d(2029, 9, 24)},
 		{AutumnalEquinoxDay, 2030, d(2030, 9, 23), d(2030, 9, 23)},
+		{AutumnalEquinoxDay, 2099, d(2099, 9, 23), d(2099, 9, 23)},
+		{AutumnalEquinoxDay, 2100, d(2100, 9, 23), d(2100, 9, 23)},
+		{AutumnalEquinoxDay, 2150, d(2150, 9, 23), d(2150, 9, 23)},
 
 		{SportsDay, 2015, d(2015, 10, 12), d(2015, 10, 12)},
 		{SportsDay, 2016, d(2016, 10, 10), d(2016, 10, 10)},
