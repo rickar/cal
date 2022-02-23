@@ -195,6 +195,20 @@ func TestHolidays(t *testing.T) {
 		{LaborThanksgivingDay, 2020, d(2020, 11, 23), d(2020, 11, 23)},
 		{LaborThanksgivingDay, 2021, d(2021, 11, 23), d(2021, 11, 23)},
 		{LaborThanksgivingDay, 2022, d(2022, 11, 23), d(2022, 11, 23)},
+
+		{NationalHolidayBetweenRespectForTheAgedDayAndAutumnalEquinoxDay, 2009, d(2009, 9, 22), d(2009, 9, 22)},
+		{NationalHolidayBetweenRespectForTheAgedDayAndAutumnalEquinoxDay, 2015, d(2015, 9, 22), d(2015, 9, 22)},
+		{NationalHolidayBetweenRespectForTheAgedDayAndAutumnalEquinoxDay, 2026, d(2026, 9, 22), d(2026, 9, 22)},
+		{NationalHolidayBetweenRespectForTheAgedDayAndAutumnalEquinoxDay, 2022, time.Time{}, time.Time{}},
+		{NationalHolidayBetweenRespectForTheAgedDayAndAutumnalEquinoxDay, 2032, d(2032, 9, 21), d(2032, 9, 21)},
+
+		{NationalHolidayBetweenShowaDayAndNewEmperorEnthronementDay, 2019, d(2019, 4, 30), d(2019, 4, 30)},
+
+		{TheNewEmperorEnthronementDay, 2019, d(2019, 5, 1), d(2019, 5, 1)},
+
+		{NationalHolidayBetweenTheNewEmperorEnthronementDayAndConstitutionMemorialDay, 2019, d(2019, 5, 2), d(2019, 5, 2)},
+
+		{TheNewEmperorEnthronementCeremony, 2019, d(2019, 10, 22), d(2019, 10, 22)},
 	}
 
 	for _, test := range tests {
