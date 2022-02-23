@@ -1,7 +1,7 @@
 // (c) Rick Arnold. Licensed under the BSD license (see LICENSE).
 
-// Package ja provides holiday definitions for Japan.
-package ja
+// Package jp provides holiday definitions for Japan.
+package jp
 
 import (
 	"github.com/rickar/cal/v2"

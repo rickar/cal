@@ -1,6 +1,6 @@
 // (c) Rick Arnold. Licensed under the BSD license (see LICENSE).
 
-package ja
+package jp
 
 import (
 	"github.com/rickar/cal/v2"
