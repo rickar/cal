@@ -585,3 +585,46 @@ func TestAddWorkHours(t *testing.T) {
 		}
 	}
 }
+
+func TestWorkDurationInRange(t *testing.T) {
+	c := NewBusinessCalendar()
+	hol := &Holiday{
+		Type:  ObservancePublic,
+		Month: time.July,
+		Day:   4,
+		Observed: []AltDay{
+			{Day: time.Saturday, Offset: -1},
+			{Day: time.Sunday, Offset: 1},
+		},
+		Func: CalcDayOfMonth,
+	}
+	c.AddHoliday(hol)
+	days := func(days time.Duration) time.Duration {
+		return days * 24 * time.Hour
+	}
+	tests := []struct {
+		f    time.Time
+		t    time.Time
+		want time.Duration
+	}{
+		{d(2015, 4, 1), d(2015, 4, 10), days(7)},
+		{d(2015, 4, 1), d(2015, 4, 30), days(21)},
+		{d(2015, 4, 1), d(2015, 5, 16), days(33)},
+		{d(2015, 4, 1), d(2015, 4, 1), days(1)},
+		{d(2015, 4, 4), d(2015, 4, 5), days(0)},
+		{d(2015, 7, 1), d(2015, 7, 6), days(2)},
+	}
+
+	for _, test := range tests {
+		got := c.WorkDurationInRange(test.f, test.t)
+		if got != test.want {
+			t.Errorf("got: %s; want: %s (%s-%s)", got, test.want, test.f, test.t)
+		}
+		if !test.f.Equal(test.t) {
+			got = c.WorkDurationInRange(test.t, test.f)
+			if got != -test.want {
+				t.Errorf("got: %s; want: %s (%s-%s)", got, -test.want, test.t, test.f)
+			}
+		}
+	}
+}

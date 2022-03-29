@@ -2,7 +2,9 @@
 
 package cal
 
-import "time"
+import (
+	"time"
+)
 
 // WorkdayFn reports whether the given date is a workday.
 // This is useful for situations where work days change throughout the year.
@@ -397,4 +399,30 @@ func (c *BusinessCalendar) AddWorkHours(date time.Time, worked time.Duration) ti
 		start = c.NextWorkdayStart(dayEnd)
 	}
 	return r
+}
+
+// WorkDurationInRange reports the Duration of workdays between the start and end
+func (c *BusinessCalendar) WorkDurationInRange(start, end time.Time) (result time.Duration) {
+	factor := 1
+	if end.Before(start) {
+		factor = -1
+		start, end = end, start
+	}
+	to := DayStart(end)
+	if c.IsWorkday(end) {
+		result = end.Sub(to)
+	}
+	firstDay := DayStart(start).AddDate(0, 0, 1)
+	if c.IsWorkday(start) {
+		result += firstDay.Sub(start)
+	}
+
+	days := 0
+	for i := firstDay; i.Before(to); i = i.AddDate(0, 0, 1) {
+		if c.IsWorkday(i) {
+			days++
+		}
+	}
+	result += time.Duration(days) * 24 * time.Hour
+	return time.Duration(factor) * result
 }
