@@ -133,6 +133,7 @@ var (
 		MlkDay,
 		PresidentsDay,
 		MemorialDay,
+		Juneteenth,
 		IndependenceDay,
 		LaborDay,
 		ColumbusDay,
