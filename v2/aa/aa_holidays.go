@@ -40,6 +40,13 @@ var (
 		Func:   cal.CalcEasterOffset,
 	}
 
+	// Easter represents the day of Easter (Sunday)
+	Easter = &cal.Holiday{
+		Name:   "Easter",
+		Offset: 0,
+		Func:   cal.CalcEasterOffset,
+	}
+
 	// EasterMonday represents Easter Monday - the day after Easter
 	EasterMonday = &cal.Holiday{
 		Name:   "Easter Monday",
@@ -59,6 +66,13 @@ var (
 	AscensionDay = &cal.Holiday{
 		Name:   "Ascension Day",
 		Offset: 39,
+		Func:   cal.CalcEasterOffset,
+	}
+
+	// Pentecost represents Pentecoast Sunday on the 49th day after Easter
+	Pentecost = &cal.Holiday{
+		Name:   "Pentecost",
+		Offset: 49,
 		Func:   cal.CalcEasterOffset,
 	}
 
