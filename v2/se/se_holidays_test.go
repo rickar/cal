@@ -28,6 +28,7 @@ func TestHolidays(t *testing.T) {
 		{Nyarsdagen, 2020, d(2020, 1, 1), d(2020, 1, 1)},
 		{Nyarsdagen, 2021, d(2021, 1, 1), d(2021, 1, 1)},
 		{Nyarsdagen, 2022, d(2022, 1, 1), d(2022, 1, 1)},
+		{Nyarsdagen, 2023, d(2023, 1, 1), d(2023, 1, 1)},
 
 		{TrettondedagJul, 2015, d(2015, 1, 6), d(2015, 1, 6)},
 		{TrettondedagJul, 2016, d(2016, 1, 6), d(2016, 1, 6)},
@@ -37,6 +38,7 @@ func TestHolidays(t *testing.T) {
 		{TrettondedagJul, 2020, d(2020, 1, 6), d(2020, 1, 6)},
 		{TrettondedagJul, 2021, d(2021, 1, 6), d(2021, 1, 6)},
 		{TrettondedagJul, 2022, d(2022, 1, 6), d(2022, 1, 6)},
+		{TrettondedagJul, 2023, d(2023, 1, 6), d(2023, 1, 6)},
 
 		{Langfredagen, 2015, d(2015, 4, 3), d(2015, 4, 3)},
 		{Langfredagen, 2016, d(2016, 3, 25), d(2016, 3, 25)},
@@ -46,6 +48,17 @@ func TestHolidays(t *testing.T) {
 		{Langfredagen, 2020, d(2020, 4, 10), d(2020, 4, 10)},
 		{Langfredagen, 2021, d(2021, 4, 2), d(2021, 4, 2)},
 		{Langfredagen, 2022, d(2022, 4, 15), d(2022, 4, 15)},
+		{Langfredagen, 2023, d(2023, 4, 7), d(2023, 4, 7)},
+
+		{Paskdagen, 2015, d(2015, 4, 5), d(2015, 4, 5)},
+		{Paskdagen, 2016, d(2016, 3, 27), d(2016, 3, 27)},
+		{Paskdagen, 2017, d(2017, 4, 16), d(2017, 4, 16)},
+		{Paskdagen, 2018, d(2018, 4, 1), d(2018, 4, 1)},
+		{Paskdagen, 2019, d(2019, 4, 21), d(2019, 4, 21)},
+		{Paskdagen, 2020, d(2020, 4, 12), d(2020, 4, 12)},
+		{Paskdagen, 2021, d(2021, 4, 4), d(2021, 4, 4)},
+		{Paskdagen, 2022, d(2022, 4, 17), d(2022, 4, 17)},
+		{Paskdagen, 2023, d(2023, 4, 9), d(2023, 4, 9)},
 
 		{AnnandagPask, 2015, d(2015, 4, 6), d(2015, 4, 6)},
 		{AnnandagPask, 2016, d(2016, 3, 28), d(2016, 3, 28)},
@@ -55,6 +68,7 @@ func TestHolidays(t *testing.T) {
 		{AnnandagPask, 2020, d(2020, 4, 13), d(2020, 4, 13)},
 		{AnnandagPask, 2021, d(2021, 4, 5), d(2021, 4, 5)},
 		{AnnandagPask, 2022, d(2022, 4, 18), d(2022, 4, 18)},
+		{AnnandagPask, 2023, d(2023, 4, 10), d(2023, 4, 10)},
 
 		{ForstaMaj, 2015, d(2015, 5, 1), d(2015, 5, 1)},
 		{ForstaMaj, 2016, d(2016, 5, 1), d(2016, 5, 1)},
@@ -64,6 +78,7 @@ func TestHolidays(t *testing.T) {
 		{ForstaMaj, 2020, d(2020, 5, 1), d(2020, 5, 1)},
 		{ForstaMaj, 2021, d(2021, 5, 1), d(2021, 5, 1)},
 		{ForstaMaj, 2022, d(2022, 5, 1), d(2022, 5, 1)},
+		{ForstaMaj, 2023, d(2023, 5, 1), d(2023, 5, 1)},
 
 		{KristiHimmelfardsdag, 2015, d(2015, 5, 14), d(2015, 5, 14)},
 		{KristiHimmelfardsdag, 2016, d(2016, 5, 5), d(2016, 5, 5)},
@@ -73,6 +88,17 @@ func TestHolidays(t *testing.T) {
 		{KristiHimmelfardsdag, 2020, d(2020, 5, 21), d(2020, 5, 21)},
 		{KristiHimmelfardsdag, 2021, d(2021, 5, 13), d(2021, 5, 13)},
 		{KristiHimmelfardsdag, 2022, d(2022, 5, 26), d(2022, 5, 26)},
+		{KristiHimmelfardsdag, 2023, d(2023, 5, 18), d(2023, 5, 18)},
+
+		{Pingstdagen, 2015, d(2015, 5, 24), d(2015, 5, 24)},
+		{Pingstdagen, 2016, d(2016, 5, 15), d(2016, 5, 15)},
+		{Pingstdagen, 2017, d(2017, 6, 4), d(2017, 6, 4)},
+		{Pingstdagen, 2018, d(2018, 5, 20), d(2018, 5, 20)},
+		{Pingstdagen, 2019, d(2019, 6, 9), d(2019, 6, 9)},
+		{Pingstdagen, 2020, d(2020, 5, 31), d(2020, 5, 31)},
+		{Pingstdagen, 2021, d(2021, 5, 23), d(2021, 5, 23)},
+		{Pingstdagen, 2022, d(2022, 6, 5), d(2022, 6, 5)},
+		{Pingstdagen, 2023, d(2023, 5, 28), d(2023, 5, 28)},
 
 		{Nationaldagen, 2015, d(2015, 6, 6), d(2015, 6, 6)},
 		{Nationaldagen, 2016, d(2016, 6, 6), d(2016, 6, 6)},
@@ -82,6 +108,7 @@ func TestHolidays(t *testing.T) {
 		{Nationaldagen, 2020, d(2020, 6, 6), d(2020, 6, 6)},
 		{Nationaldagen, 2021, d(2021, 6, 6), d(2021, 6, 6)},
 		{Nationaldagen, 2022, d(2022, 6, 6), d(2022, 6, 6)},
+		{Nationaldagen, 2023, d(2023, 6, 6), d(2023, 6, 6)},
 
 		{Midsommarafton, 2015, d(2015, 6, 19), d(2015, 6, 19)},
 		{Midsommarafton, 2016, d(2016, 6, 24), d(2016, 6, 24)},
@@ -91,6 +118,7 @@ func TestHolidays(t *testing.T) {
 		{Midsommarafton, 2020, d(2020, 6, 19), d(2020, 6, 19)},
 		{Midsommarafton, 2021, d(2021, 6, 25), d(2021, 6, 25)},
 		{Midsommarafton, 2022, d(2022, 6, 24), d(2022, 6, 24)},
+		{Midsommarafton, 2023, d(2023, 6, 23), d(2023, 6, 23)},
 
 		{Midsommardagen, 2015, d(2015, 6, 20), d(2015, 6, 20)},
 		{Midsommardagen, 2016, d(2016, 6, 25), d(2016, 6, 25)},
@@ -100,6 +128,7 @@ func TestHolidays(t *testing.T) {
 		{Midsommardagen, 2020, d(2020, 6, 20), d(2020, 6, 20)},
 		{Midsommardagen, 2021, d(2021, 6, 26), d(2021, 6, 26)},
 		{Midsommardagen, 2022, d(2022, 6, 25), d(2022, 6, 25)},
+		{Midsommardagen, 2023, d(2023, 6, 24), d(2023, 6, 24)},
 
 		{AllaHelgonsDag, 2015, d(2015, 10, 31), d(2015, 10, 31)},
 		{AllaHelgonsDag, 2016, d(2016, 11, 5), d(2016, 11, 5)},
@@ -109,6 +138,7 @@ func TestHolidays(t *testing.T) {
 		{AllaHelgonsDag, 2020, d(2020, 10, 31), d(2020, 10, 31)},
 		{AllaHelgonsDag, 2021, d(2021, 11, 6), d(2021, 11, 6)},
 		{AllaHelgonsDag, 2022, d(2022, 11, 5), d(2022, 11, 5)},
+		{AllaHelgonsDag, 2023, d(2023, 11, 4), d(2023, 11, 4)},
 
 		{Julafton, 2015, d(2015, 12, 24), d(2015, 12, 24)},
 		{Julafton, 2016, d(2016, 12, 24), d(2016, 12, 24)},
@@ -118,6 +148,7 @@ func TestHolidays(t *testing.T) {
 		{Julafton, 2020, d(2020, 12, 24), d(2020, 12, 24)},
 		{Julafton, 2021, d(2021, 12, 24), d(2021, 12, 24)},
 		{Julafton, 2022, d(2022, 12, 24), d(2022, 12, 24)},
+		{Julafton, 2023, d(2023, 12, 24), d(2023, 12, 24)},
 
 		{Juldagen, 2015, d(2015, 12, 25), d(2015, 12, 25)},
 		{Juldagen, 2016, d(2016, 12, 25), d(2016, 12, 25)},
@@ -127,6 +158,7 @@ func TestHolidays(t *testing.T) {
 		{Juldagen, 2020, d(2020, 12, 25), d(2020, 12, 25)},
 		{Juldagen, 2021, d(2021, 12, 25), d(2021, 12, 25)},
 		{Juldagen, 2022, d(2022, 12, 25), d(2022, 12, 25)},
+		{Juldagen, 2023, d(2023, 12, 25), d(2023, 12, 25)},
 
 		{AnnandagJul, 2015, d(2015, 12, 26), d(2015, 12, 26)},
 		{AnnandagJul, 2016, d(2016, 12, 26), d(2016, 12, 26)},
@@ -136,6 +168,7 @@ func TestHolidays(t *testing.T) {
 		{AnnandagJul, 2020, d(2020, 12, 26), d(2020, 12, 26)},
 		{AnnandagJul, 2021, d(2021, 12, 26), d(2021, 12, 26)},
 		{AnnandagJul, 2022, d(2022, 12, 26), d(2022, 12, 26)},
+		{AnnandagJul, 2023, d(2023, 12, 26), d(2023, 12, 26)},
 
 		{Nyarsafton, 2015, d(2015, 12, 31), d(2015, 12, 31)},
 		{Nyarsafton, 2016, d(2016, 12, 31), d(2016, 12, 31)},
@@ -145,6 +178,7 @@ func TestHolidays(t *testing.T) {
 		{Nyarsafton, 2020, d(2020, 12, 31), d(2020, 12, 31)},
 		{Nyarsafton, 2021, d(2021, 12, 31), d(2021, 12, 31)},
 		{Nyarsafton, 2022, d(2022, 12, 31), d(2022, 12, 31)},
+		{Nyarsafton, 2023, d(2023, 12, 31), d(2023, 12, 31)},
 	}
 
 	for _, test := range tests {
