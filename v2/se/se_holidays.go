@@ -20,6 +20,9 @@ var (
 	// Langfredagen represents Good Friday on the Friday before Easter
 	Langfredagen = aa.GoodFriday.Clone(&cal.Holiday{Name: "Långfredagen", Type: cal.ObservancePublic})
 
+	// Paskdagen represents the day of Easter
+	Paskdagen = aa.Easter.Clone(&cal.Holiday{Name: "Påskdagen", Type: cal.ObservancePublic})
+
 	// AnnandagPask represents Easter Monday on the day after Easter
 	AnnandagPask = aa.EasterMonday.Clone(&cal.Holiday{Name: "Annandag påsk", Type: cal.ObservancePublic})
 
@@ -28,6 +31,9 @@ var (
 
 	// KristiHimmelfardsdag represents Ascension Day on the 39th day after Easter
 	KristiHimmelfardsdag = aa.AscensionDay.Clone(&cal.Holiday{Name: "Kristi himmelsfärds dag", Type: cal.ObservancePublic})
+
+	// Pingstdagen represents Pentecost Sunday on the 49th day after Easter
+	Pingstdagen = aa.Pentecost.Clone(&cal.Holiday{Name: "Pingstdagen", Type: cal.ObservancePublic})
 
 	// Nationaldagen represents National Day of Sweden on 6-Jun
 	Nationaldagen = &cal.Holiday{
