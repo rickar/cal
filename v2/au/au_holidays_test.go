@@ -262,6 +262,8 @@ func TestHolidays(t *testing.T) {
 		{ProclamationDay, 2020, d(2020, 12, 26), d(2020, 12, 28)},
 		{ProclamationDay, 2021, d(2021, 12, 26), d(2021, 12, 28)},
 		{ProclamationDay, 2022, d(2022, 12, 26), d(2022, 12, 27)},
+
+		{MourningDay2022, 2022, d(2022, 9, 22), d(2022, 9, 22)},
 	}
 
 	for _, test := range tests {
