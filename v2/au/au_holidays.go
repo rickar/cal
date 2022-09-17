@@ -238,6 +238,17 @@ var (
 			{Day: time.Sunday, Offset: 2},
 			{Day: time.Monday, Offset: 1}}})
 
+	// MourningDay2022 represents the National Day of Mourning for Her Majesty the Queen.
+	MourningDay2022 = &cal.Holiday{
+		Name:      "National Day of Mourning for Her Majesty the Queen",
+		Type:      cal.ObservancePublic,
+		Month:     time.September,
+		Day:       22,
+		StartYear: 2022,
+		EndYear:   2022,
+		Func:      cal.CalcDayOfMonth,
+	}
+
 	// HolidaysACT provides a list of standard holidays in the Australian Capital Territory region.
 	HolidaysACT = []*cal.Holiday{
 		NewYear,
@@ -250,6 +261,7 @@ var (
 		AnzacDayActWa,
 		ReconciliationDay,
 		QueensBirthday,
+		MourningDay2022,
 		LabourDayActNswSa,
 		ChristmasDay,
 		BoxingDay,
@@ -265,6 +277,7 @@ var (
 		EasterMonday,
 		AnzacDay,
 		QueensBirthday,
+		MourningDay2022,
 		LabourDayActNswSa,
 		ChristmasDay,
 		BoxingDay,
@@ -281,6 +294,7 @@ var (
 		LabourDayNtQld,
 		QueensBirthday,
 		PicnicDay,
+		MourningDay2022,
 		ChristmasDay,
 		BoxingDay,
 	}
@@ -295,6 +309,7 @@ var (
 		EasterMonday,
 		AnzacDayNtQldSa,
 		LabourDayNtQld,
+		MourningDay2022,
 		QueensBirthdayQld,
 		ChristmasDay,
 		BoxingDay,
@@ -310,6 +325,7 @@ var (
 		EasterMonday,
 		AnzacDayNtQldSa,
 		QueensBirthday,
+		MourningDay2022,
 		LabourDayActNswSa,
 		ChristmasDay,
 		ProclamationDay,
@@ -324,6 +340,7 @@ var (
 		EasterMonday,
 		AnzacDay,
 		QueensBirthday,
+		MourningDay2022,
 		ChristmasDay,
 		BoxingDay,
 	}
@@ -339,6 +356,7 @@ var (
 		EasterMonday,
 		AnzacDay,
 		QueensBirthday,
+		MourningDay2022,
 		FridayBeforeAflFinal,
 		MelbourneCup,
 		ChristmasDay,
@@ -355,6 +373,7 @@ var (
 		AnzacDayActWa,
 		WesternAustraliaDay,
 		QueensBirthdayWa,
+		MourningDay2022,
 		ChristmasDay,
 		BoxingDay,
 	}
