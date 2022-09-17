@@ -37,7 +37,7 @@ var (
 
 	// EasterSaturday represents the day before Easter, which falls on a Saturday.
 	EasterSaturday = &cal.Holiday{
-		Name:   "Easter Sunday",
+		Name:   "Easter Saturday",
 		Offset: -1,
 		Func:   cal.CalcEasterOffset,
 	}
