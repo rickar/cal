@@ -16,7 +16,7 @@ var (
 
 	// Tiradentes represents Tiradentes' Day on 21-Apr
 	Tiradentes = &cal.Holiday{
-		Name:  "Dia de Tiradentes",
+		Name:  "Tiradentes",
 		Month: time.April,
 		Day:   21,
 		Func:  cal.CalcDayOfMonth,
@@ -27,7 +27,7 @@ var (
 
 	// Independencia represents Brazil Independence Day on 07-Sep
 	Independencia = &cal.Holiday{
-		Name:  "Dia da Independência",
+		Name:  "Independência do Brasil",
 		Month: time.September,
 		Day:   7,
 		Func:  cal.CalcDayOfMonth,
@@ -35,7 +35,7 @@ var (
 
 	// NossaSenhoraAparecida represents Our Lady of Aparecida Day - Patroness of Brazil on 12-Oct
 	NossaSenhoraAparecida = &cal.Holiday{
-		Name:  "Dia de Nossa Senhora Aparecida",
+		Name:  "Nossa Senhora Aparecida",
 		Month: time.October,
 		Day:   12,
 		Func:  cal.CalcDayOfMonth,
@@ -43,7 +43,7 @@ var (
 
 	// Finados represents Day of the Dead on 02-Nov
 	Finados = &cal.Holiday{
-		Name:  "Dia de Finados",
+		Name:  "Finados",
 		Month: time.November,
 		Day:   2,
 		Func:  cal.CalcDayOfMonth,
@@ -58,7 +58,7 @@ var (
 	}
 
 	// CorpusChristi represents Corpus Christi on the 60th day after Easter
-	CorpusChristi = aa.CorpusChristi.Clone(&cal.Holiday{})
+	CorpusChristi = aa.CorpusChristi.Clone(&cal.Holiday{Name: "Corpus Christi", Type: cal.ObservancePublic})
 
 	// SextaFeiraSanta represents Good Friday - two days before Easter
 	SextaFeiraSanta = aa.GoodFriday.Clone(&cal.Holiday{Name: "Sexta-feira Santa", Type: cal.ObservancePublic})
