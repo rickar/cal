@@ -180,13 +180,10 @@ var (
 	}
 
 	// FridayBeforeAflFinal represents the Friday before the AFL Grand Final;
-	// normally on the last Friday of September but subject to AFL schedules
+	// normally on the Friday before the last Saturday of September but subject to AFL schedules
 	FridayBeforeAflFinal = &cal.Holiday{
 		Name:      "Friday before the AFL Grand Final",
 		Type:      cal.ObservancePublic,
-		Month:     time.September,
-		Weekday:   time.Friday,
-		Offset:    -1,
 		Func:      calcFridayBeforeAflFinal,
 		StartYear: 2015,
 	}
@@ -379,13 +376,16 @@ var (
 	}
 )
 
-func calcFridayBeforeAflFinal(h *cal.Holiday, year int) time.Time {
+func calcFridayBeforeAflFinal(_ *cal.Holiday, year int) time.Time {
 	switch year {
 	case 2015:
 		return time.Date(year, time.October, 2, 0, 0, 0, 0, cal.DefaultLoc)
+	case 2016:
+		return time.Date(year, time.September, 30, 0, 0, 0, 0, cal.DefaultLoc)
 	case 2020:
 		return time.Date(year, time.October, 23, 0, 0, 0, 0, cal.DefaultLoc)
 	default:
-		return cal.CalcWeekdayOffset(h, year)
+		aflFinalDay := cal.DayStart(cal.WeekdayN(year, time.September, time.Saturday, -1))
+		return aflFinalDay.AddDate(0, 0, -1)
 	}
 }
