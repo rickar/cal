@@ -186,9 +186,10 @@ func (c *BusinessCalendar) WorkdaysInRange(start, end time.Time) int {
 // for the given year and month.
 //
 // The value of n affects the direction of counting:
-//   n > 0: counting begins at the first day of the month.
-//   n == 0: the result is always 0.
-//   n < 0: counting begins at the end of the month.
+//
+//	n > 0: counting begins at the first day of the month.
+//	n == 0: the result is always 0.
+//	n < 0: counting begins at the end of the month.
 func (c *BusinessCalendar) WorkdayN(year int, month time.Month, n int) int {
 	var date time.Time
 	var add int

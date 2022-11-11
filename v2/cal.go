@@ -94,8 +94,8 @@ func (c *Calendar) IsHoliday(date time.Time) (actual, observed bool, h *Holiday)
 		}
 		obsMatch := !obs.IsZero()
 		if obsMatch {
-			_, obsMonth, obsDay := obs.Date()
-			obsMatch = obsMonth == month && obsDay == day
+			obsYear, obsMonth, obsDay := obs.Date()
+			obsMatch = obsYear == year && obsMonth == month && obsDay == day
 		}
 		if actMatch || obsMatch {
 			if c.Cacheable {

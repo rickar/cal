@@ -16,11 +16,12 @@ func IsWeekend(t time.Time) bool {
 // given time.
 //
 // The value of n affects the direction of counting:
-//   n > 0: the result is the nth occurrence counting forwards from the
-//     given time.
-//   n == 0: the result is always the zero time.
-//   n < 0: the result is the nth occurrence counting backwards from the
-//     given time.
+//
+//	n > 0: the result is the nth occurrence counting forwards from the
+//	  given time.
+//	n == 0: the result is always the zero time.
+//	n < 0: the result is the nth occurrence counting backwards from the
+//	  given time.
 //
 // The given time is considered an occurrence of the weekday; if n == 1 or -1
 // and the given time matches the desired weekday, it will be returned
