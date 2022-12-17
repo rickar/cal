@@ -45,8 +45,8 @@ var (
 	// GoodFriday represents Good Friday
 	GoodFriday = aa.GoodFriday.Clone(&cal.Holiday{Name: "Good Friday", Type: cal.ObservancePublic})
 
-	// EasterMonday represents Easter Monday
-	EasterMonday = aa.EasterMonday.Clone(&cal.Holiday{Name: "Easter Monday", Type: cal.ObservancePublic})
+	// Easter represents Easter Monday
+	Easter = aa.EasterMonday.Clone(&cal.Holiday{Name: "Easter Monday", Type: cal.ObservancePublic})
 
 	// LabourDay represents Labour Day on the 1st of May
 	LabourDay = &cal.Holiday{
@@ -110,7 +110,7 @@ var (
 		KamuzuDay,
 		IndependenceDay,
 		LabourDay,
-		EasterMonday,
+		Easter,
 		GoodFriday,
 		BoxingDay,
 		ChristmasDay,
