@@ -65,6 +65,15 @@ func TestHolidays(t *testing.T) {
 		{VEDay, 2021, time.Time{}, time.Time{}},
 		{VEDay, 2022, time.Time{}, time.Time{}},
 
+		{CoronationDay, 2017, time.Time{}, time.Time{}},
+		{CoronationDay, 2018, time.Time{}, time.Time{}},
+		{CoronationDay, 2019, time.Time{}, time.Time{}},
+		{CoronationDay, 2020, time.Time{}, time.Time{}},
+		{CoronationDay, 2021, time.Time{}, time.Time{}},
+		{CoronationDay, 2022, time.Time{}, time.Time{}},
+		{CoronationDay, 2023, d(2023, 5, 8), d(2023, 5, 8)},
+		{CoronationDay, 2024, time.Time{}, time.Time{}},
+
 		{SpringHoliday, 2015, d(2015, 5, 25), d(2015, 5, 25)},
 		{SpringHoliday, 2016, d(2016, 5, 30), d(2016, 5, 30)},
 		{SpringHoliday, 2017, d(2017, 5, 29), d(2017, 5, 29)},

@@ -50,6 +50,17 @@ var (
 		EndYear:   2020,
 	}
 
+	// CoronationDay represents the Coroation Day for King Charles III on 8-May
+	CoronationDay = &cal.Holiday{
+		Name:      "Coronation of King Charles III",
+		Type:      cal.ObservanceBank,
+		Month:     time.May,
+		Day:       8,
+		Func:      cal.CalcDayOfMonth,
+		StartYear: 2023,
+		EndYear:   2023,
+	}
+
 	// SpringHoliday represents Spring Bank Holiday on the last Monday of May
 	SpringHoliday = &cal.Holiday{
 		Name:    "Spring Bank Holiday",
@@ -120,6 +131,7 @@ var (
 		EasterMonday,
 		EarlyMay,
 		VEDay,
+		CoronationDay,
 		SpringHoliday,
 		SpringHoliday2022,
 		PlatinumJubilee,
