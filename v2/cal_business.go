@@ -96,27 +96,33 @@ func (c *BusinessCalendar) IsWorkTime(date time.Time) bool {
 	var startMinute int
 	var endHour int
 	var endMinute int
+	var startSecond int
+	var endSecond int
 	if c.WorkdayStartFunc == nil {
 		startHour = int(c.workdayStart.Hours()) % 24
 		startMinute = int(c.workdayStart.Minutes()) % 60
+		startSecond = int(c.workdayStart.Seconds()) % 60
 	} else {
 		startTime := c.WorkdayStartFunc(date)
 		startHour = startTime.Hour()
 		startMinute = startTime.Minute()
+		startSecond = startTime.Second()
 	}
 	if c.WorkdayEndFunc == nil {
 		endHour = int(c.workdayEnd.Hours()) % 24
 		endMinute = int(c.workdayEnd.Minutes()) % 60
+		endSecond = int(c.workdayEnd.Seconds()) % 60
 	} else {
 		endTime := c.WorkdayEndFunc(date)
 		endHour = endTime.Hour()
 		endMinute = endTime.Minute()
+		endSecond = endTime.Second()
 	}
 
-	h, m, _ := date.Clock()
-	return (h == startHour && m >= startMinute) ||
+	h, m, s := date.Clock()
+	return (h == startHour && m >= startMinute && s >= startSecond) ||
 		(h > startHour && h < endHour) ||
-		(h == endHour && m <= endMinute)
+		(h == endHour && m <= endMinute && s <= endSecond)
 }
 
 // WorkdaysRemain reports the total number of remaining workdays in the month
