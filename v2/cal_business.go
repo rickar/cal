@@ -122,7 +122,8 @@ func (c *BusinessCalendar) IsWorkTime(date time.Time) bool {
 	h, m, s := date.Clock()
 	return (h == startHour && m >= startMinute && s >= startSecond) ||
 		(h > startHour && h < endHour) ||
-		(h == endHour && m <= endMinute && s <= endSecond)
+		(h == endHour && m < endMinute) ||
+		(h == endHour && m == endMinute && s <= endSecond)
 }
 
 // WorkdaysRemain reports the total number of remaining workdays in the month
