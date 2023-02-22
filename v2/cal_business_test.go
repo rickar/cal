@@ -15,6 +15,10 @@ func dt(y, m, d, h, min int) time.Time {
 	return time.Date(y, time.Month(m), d, h, min, 0, 0, time.UTC)
 }
 
+func dts(y, m, d, h, min, sec int) time.Time {
+	return time.Date(y, time.Month(m), d, h, min, sec, 0, time.UTC)
+}
+
 func TestNewBusinessCalendar(t *testing.T) {
 	b := NewBusinessCalendar()
 	if b.workday[time.Sunday] || !b.workday[time.Monday] || !b.workday[time.Tuesday] || !b.workday[time.Wednesday] ||
@@ -117,6 +121,42 @@ func TestIsWorkTime(t *testing.T) {
 		{cal2, dt(2020, 4, 1, 0, 00), false},
 		{cal2, dt(2020, 4, 1, 7, 00), true},
 		{cal2, dt(2020, 4, 1, 7, 50), false},
+	}
+
+	for i, test := range tests {
+		got := test.c.IsWorkTime(test.d)
+		if got != test.want {
+			t.Errorf("got: %t; want: %t (%d)", got, test.want, i)
+		}
+	}
+}
+
+func TestIsWorkTimeSeconds(t *testing.T) {
+	cal := NewBusinessCalendar()
+	cal.WorkdayStartFunc = func(date time.Time) time.Time {
+		return time.Date(date.Year(), date.Month(), date.Day(), date.Day()%12, 30, 30, 0, time.UTC)
+	}
+	cal.WorkdayEndFunc = func(date time.Time) time.Time {
+		return time.Date(date.Year(), date.Month(), date.Day(), date.Day()%12+6, 45, 30, 0, time.UTC)
+	}
+
+	tests := []struct {
+		c    *BusinessCalendar
+		d    time.Time
+		want bool
+	}{
+		//Start boundary
+		{cal, dts(2020, 4, 1, 1, 30, 29), false},
+		{cal, dts(2020, 4, 1, 1, 30, 30), true},
+		{cal, dts(2020, 4, 1, 1, 30, 31), true},
+
+		//During day
+		{cal, dts(2020, 4, 1, 5, 30, 31), true},
+
+		//End boundary
+		{cal, dts(2020, 4, 1, 7, 45, 29), true},
+		{cal, dts(2020, 4, 1, 7, 45, 30), true},
+		{cal, dts(2020, 4, 1, 7, 45, 31), false},
 	}
 
 	for i, test := range tests {
