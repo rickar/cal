@@ -25,10 +25,12 @@ var (
 
 	// StoreBededag represents General Prayer Day on the fourth Friday after Easter
 	StoreBededag = &cal.Holiday{
-		Name:   "Store bededag",
-		Type:   cal.ObservancePublic,
-		Offset: 26,
-		Func:   cal.CalcEasterOffset,
+		Name:      "Store bededag",
+		Type:      cal.ObservancePublic,
+		Offset:    26,
+		Func:      cal.CalcEasterOffset,
+		StartYear: 1686,
+		EndYear:   2023,
 	}
 
 	// KristiHimmelfartsdag represents Ascension Day on the 39th day after Easter
