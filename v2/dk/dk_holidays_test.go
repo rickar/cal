@@ -56,6 +56,8 @@ func TestHolidays(t *testing.T) {
 		{AndenPaaskedag, 2021, d(2021, 4, 5), d(2021, 4, 5)},
 		{AndenPaaskedag, 2022, d(2022, 4, 18), d(2022, 4, 18)},
 
+		{StoreBededag, 1685, time.Time{}, time.Time{}},
+		{StoreBededag, 1686, d(1686, 5, 10), d(1686, 5, 10)},
 		{StoreBededag, 2015, d(2015, 5, 1), d(2015, 5, 1)},
 		{StoreBededag, 2016, d(2016, 4, 22), d(2016, 4, 22)},
 		{StoreBededag, 2017, d(2017, 5, 12), d(2017, 5, 12)},
@@ -64,6 +66,9 @@ func TestHolidays(t *testing.T) {
 		{StoreBededag, 2020, d(2020, 5, 8), d(2020, 5, 8)},
 		{StoreBededag, 2021, d(2021, 4, 30), d(2021, 4, 30)},
 		{StoreBededag, 2022, d(2022, 5, 13), d(2022, 5, 13)},
+		{StoreBededag, 2023, d(2023, 5, 5), d(2023, 5, 5)},
+		{StoreBededag, 2024, time.Time{}, time.Time{}},
+		{StoreBededag, 2025, time.Time{}, time.Time{}},
 
 		{KristiHimmelfartsdag, 2015, d(2015, 5, 14), d(2015, 5, 14)},
 		{KristiHimmelfartsdag, 2016, d(2016, 5, 5), d(2016, 5, 5)},
