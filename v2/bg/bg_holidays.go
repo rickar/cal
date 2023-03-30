@@ -54,7 +54,7 @@ var (
 		Day:   1,
 		Func: func(h *cal.Holiday, year int) time.Time {
 			// May 1st is quite close to OrthodoxEaster so we need to make an extra check
-			// If LabourDay falls on a Saturday or Sunday and Easter is on the Friday before that,
+			// If LabourDay falls on a Saturday or Sunday and Good Friday is on the Friday before that,
 			// then LabourDay is observed on the Tuesday after Easter.
 			easter := cal.CalcEasterOffset(OrthodoxGoodFriday, year)
 			labourDay := cal.CalcDayOfMonth(h, year)
