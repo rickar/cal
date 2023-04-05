@@ -120,7 +120,8 @@ func (c *BusinessCalendar) IsWorkTime(date time.Time) bool {
 	}
 
 	h, m, s := date.Clock()
-	return (h == startHour && m >= startMinute && s >= startSecond) ||
+	return (h == startHour && m == startMinute && s >= startSecond) ||
+		(h == startHour && m > startMinute) ||
 		(h > startHour && h < endHour) ||
 		(h == endHour && m < endMinute) ||
 		(h == endHour && m == endMinute && s <= endSecond)
