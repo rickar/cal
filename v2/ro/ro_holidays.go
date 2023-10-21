@@ -26,6 +26,26 @@ var (
 		Func:  cal.CalcDayOfMonth,
 	}
 
+	// Boboteaza represents Epiphany on 6-Jan
+	Boboteaza = &cal.Holiday{
+		Name:      "Boboteaza",
+		Type:      cal.ObservancePublic,
+		Month:     time.January,
+		Day:       6,
+		StartYear: 2024,
+		Func:      cal.CalcDayOfMonth,
+	}
+
+	// SfantulIon represents the celebration of Saint John the Baptist
+	SfantulIon = &cal.Holiday{
+		Name:      "Sfântul Ion",
+		Type:      cal.ObservancePublic,
+		Month:     1,
+		Day:       7,
+		StartYear: 2024,
+		Func:      cal.CalcDayOfMonth,
+	}
+
 	// ZiuaUniriiPrincipatelorRomane represents the day when, in 1859,  the 2 Romanian principalities, Moldavia and Wallachia, united.
 	ZiuaUniriiPrincipatelorRomane = &cal.Holiday{
 		Name:  "Ziua Unirii Principatelor Române",
@@ -136,6 +156,8 @@ var (
 	Holidays = []*cal.Holiday{
 		AnulNou,
 		AnulNou2,
+		Boboteaza,
+		SfantulIon,
 		ZiuaUniriiPrincipatelorRomane,
 		VinereaMare,
 		Pastele,
