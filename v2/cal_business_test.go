@@ -100,11 +100,19 @@ func TestIsWorkday(t *testing.T) {
 func TestIsWorkTime(t *testing.T) {
 	cal1 := NewBusinessCalendar()
 	cal2 := NewBusinessCalendar()
+	cal3 := NewBusinessCalendar()
 	cal2.WorkdayStartFunc = func(date time.Time) time.Time {
 		return time.Date(date.Year(), date.Month(), date.Day(), date.Day()%12, 30, 0, 0, time.UTC)
 	}
 	cal2.WorkdayEndFunc = func(date time.Time) time.Time {
 		return time.Date(date.Year(), date.Month(), date.Day(), date.Day()%12+6, 45, 0, 0, time.UTC)
+	}
+
+	cal3.WorkdayStartFunc = func(date time.Time) time.Time {
+		return time.Date(date.Year(), date.Month(), date.Day(), date.Day()%12, 30, 0, 0, time.UTC)
+	}
+	cal3.WorkdayEndFunc = func(date time.Time) time.Time {
+		return time.Date(date.Year(), date.Month(), date.Day(), date.Day()%12, 45, 0, 0, time.UTC)
 	}
 
 	tests := []struct {
@@ -121,6 +129,12 @@ func TestIsWorkTime(t *testing.T) {
 		{cal2, dt(2020, 4, 1, 0, 00), false},
 		{cal2, dt(2020, 4, 1, 7, 00), true},
 		{cal2, dt(2020, 4, 1, 7, 50), false},
+
+		{cal3, dt(2020, 4, 1, 1, 30), true},
+		{cal3, dt(2020, 4, 1, 0, 00), false},
+		{cal3, dt(2020, 4, 1, 1, 35), true},
+		{cal3, dt(2020, 4, 1, 1, 45), true},
+		{cal3, dt(2020, 4, 1, 1, 46), false},
 	}
 
 	for i, test := range tests {
