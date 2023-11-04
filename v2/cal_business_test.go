@@ -40,11 +40,16 @@ func TestSetWorkday(t *testing.T) {
 	}
 }
 
-func TestSetWorkingHours(t *testing.T) {
+func TestSetWorkHours(t *testing.T) {
 	b := NewBusinessCalendar()
 	b.SetWorkHours(8*time.Hour+30*time.Minute, 18*time.Hour+15*time.Minute)
 	if b.workdayStart != 8*time.Hour+30*time.Minute || b.workdayEnd != 18*time.Hour+15*time.Minute {
 		t.Errorf("invalid work hours; want 9am-5pm; got: %d, %d", b.workdayStart, b.workdayEnd)
+	}
+
+	b.SetWorkHours(6*time.Hour, 24*time.Hour)
+	if b.workdayStart != 6*time.Hour || b.workdayEnd != 24*time.Hour {
+		t.Errorf("invalid work hours; want 6am to end of day; got: %d, %d", b.workdayStart, b.workdayEnd)
 	}
 }
 
@@ -100,12 +105,16 @@ func TestIsWorkday(t *testing.T) {
 func TestIsWorkTime(t *testing.T) {
 	cal1 := NewBusinessCalendar()
 	cal2 := NewBusinessCalendar()
+	cal3 := NewBusinessCalendar()
 	cal2.WorkdayStartFunc = func(date time.Time) time.Time {
 		return time.Date(date.Year(), date.Month(), date.Day(), date.Day()%12, 30, 0, 0, time.UTC)
 	}
 	cal2.WorkdayEndFunc = func(date time.Time) time.Time {
 		return time.Date(date.Year(), date.Month(), date.Day(), date.Day()%12+6, 45, 0, 0, time.UTC)
 	}
+	cal3.SetWorkday(time.Thursday, true)
+	cal3.SetWorkday(time.Friday, true)
+	cal3.SetWorkHours(6*time.Hour, 24*time.Hour)
 
 	tests := []struct {
 		c    *BusinessCalendar
@@ -121,6 +130,9 @@ func TestIsWorkTime(t *testing.T) {
 		{cal2, dt(2020, 4, 1, 0, 00), false},
 		{cal2, dt(2020, 4, 1, 7, 00), true},
 		{cal2, dt(2020, 4, 1, 7, 50), false},
+
+		{cal3, dt(2023, 10, 19, 23, 59), true},
+		{cal3, dt(2023, 10, 20, 0, 0), false},
 	}
 
 	for i, test := range tests {
