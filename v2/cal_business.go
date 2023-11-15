@@ -109,9 +109,17 @@ func (c *BusinessCalendar) IsWorkTime(date time.Time) bool {
 		startSecond = startTime.Second()
 	}
 	if c.WorkdayEndFunc == nil {
-		endHour = int(c.workdayEnd.Hours()) % 24
-		endMinute = int(c.workdayEnd.Minutes()) % 60
-		endSecond = int(c.workdayEnd.Seconds()) % 60
+		// Using 24h as "till the end of day" seems to be pretty common.
+		// By subtracting a second we get the desired behavior.
+		if c.workdayEnd == 24*time.Hour {
+			endHour = 23
+			endMinute = 59
+			endSecond = 59
+		} else {
+			endHour = int(c.workdayEnd.Hours()) % 24
+			endMinute = int(c.workdayEnd.Minutes()) % 60
+			endSecond = int(c.workdayEnd.Seconds()) % 60
+		}
 	} else {
 		endTime := c.WorkdayEndFunc(date)
 		endHour = endTime.Hour()
