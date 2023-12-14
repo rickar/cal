@@ -27,7 +27,7 @@ var (
 	AnnandagPask = aa.EasterMonday.Clone(&cal.Holiday{Name: "Annandag påsk", Type: cal.ObservancePublic})
 
 	// ForstaMaj represents Labour Day on 1-May
-	ForstaMaj = aa.WorkersDay.Clone(&cal.Holiday{Name: "Första Maj", Type: cal.ObservancePublic})
+	ForstaMaj = aa.WorkersDay.Clone(&cal.Holiday{Name: "Första maj", Type: cal.ObservancePublic})
 
 	// KristiHimmelfardsdag represents Ascension Day on the 39th day after Easter
 	KristiHimmelfardsdag = aa.AscensionDay.Clone(&cal.Holiday{Name: "Kristi himmelsfärds dag", Type: cal.ObservancePublic})
