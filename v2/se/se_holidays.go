@@ -29,8 +29,8 @@ var (
 	// ForstaMaj represents Labour Day on 1-May
 	ForstaMaj = aa.WorkersDay.Clone(&cal.Holiday{Name: "Första maj", Type: cal.ObservancePublic})
 
-	// KristiHimmelfardsdag represents Ascension Day on the 39th day after Easter
-	KristiHimmelfardsdag = aa.AscensionDay.Clone(&cal.Holiday{Name: "Kristi himmelsfärds dag", Type: cal.ObservancePublic})
+	// KristiHimmelsfardsdag represents Ascension Day on the 39th day after Easter
+	KristiHimmelsfardsdag = aa.AscensionDay.Clone(&cal.Holiday{Name: "Kristi himmelsfärdsdag", Type: cal.ObservancePublic})
 
 	// Pingstdagen represents Pentecost Sunday on the 49th day after Easter
 	Pingstdagen = aa.Pentecost.Clone(&cal.Holiday{Name: "Pingstdagen", Type: cal.ObservancePublic})
@@ -108,7 +108,7 @@ var (
 		Langfredagen,
 		AnnandagPask,
 		ForstaMaj,
-		KristiHimmelfardsdag,
+		KristiHimmelsfardsdag,
 		Nationaldagen,
 		Midsommarafton,
 		Midsommardagen,
