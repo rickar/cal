@@ -119,6 +119,17 @@ func TestHolidays(t *testing.T) {
 		{Natal, 2020, d(2020, 12, 25), d(2020, 12, 25)},
 		{Natal, 2021, d(2021, 12, 25), d(2021, 12, 25)},
 		{Natal, 2022, d(2022, 12, 25), d(2022, 12, 25)},
+
+		{ConscienciaNegra, 2015, d(2015, 11, 20), d(2015, 11, 20)},
+		{ConscienciaNegra, 2016, d(2016, 11, 20), d(2016, 11, 20)},
+		{ConscienciaNegra, 2017, d(2017, 11, 20), d(2017, 11, 20)},
+		{ConscienciaNegra, 2018, d(2018, 11, 20), d(2018, 11, 20)},
+		{ConscienciaNegra, 2019, d(2019, 11, 20), d(2019, 11, 20)},
+		{ConscienciaNegra, 2020, d(2020, 11, 20), d(2020, 11, 20)},
+		{ConscienciaNegra, 2021, d(2021, 11, 20), d(2021, 11, 20)},
+		{ConscienciaNegra, 2022, d(2022, 11, 20), d(2022, 11, 20)},
+		{ConscienciaNegra, 2023, d(2023, 11, 20), d(2023, 11, 20)},
+		{ConscienciaNegra, 2024, d(2024, 11, 20), d(2024, 11, 20)},
 	}
 
 	for _, test := range tests {

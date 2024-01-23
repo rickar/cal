@@ -74,6 +74,14 @@ var (
 	// Natal represents Christmas Day on 25-Dec
 	Natal = aa.ChristmasDay.Clone(&cal.Holiday{Name: "Natal", Type: cal.ObservancePublic})
 
+	// ConscienciaNegra represents Black Awareness Day on 20-Nov
+	ConscienciaNegra = &cal.Holiday{
+		Name:  "Dia da Consciência Negra",
+		Month: time.November,
+		Day:   20,
+		Func:  cal.CalcDayOfMonth,
+	}
+
 	// Holidays provides a list of the standard national holidays
 	Holidays = []*cal.Holiday{
 		AnoNovo,
@@ -87,5 +95,6 @@ var (
 		SextaFeiraSanta,
 		Carnaval,
 		Natal,
+		ConscienciaNegra,
 	}
 )
