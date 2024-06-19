@@ -2,7 +2,10 @@
 
 package cal
 
-import "time"
+import (
+	"sync"
+	"time"
+)
 
 // DefaultLoc is the default time.Location to use in functions that do not
 // require a full time.Time value.
@@ -23,6 +26,9 @@ type Calendar struct {
 	Cacheable   bool             // indicates that holiday calcs can be cached (don't change holiday defs while enabled)
 
 	isHolCache map[holCacheKey]*holCacheEntry // cached results for IsHoliday
+
+	isHolCacheInitOnce sync.Once
+	isHolCacheMutex    sync.RWMutex
 }
 
 type holCacheKey struct {
@@ -76,12 +82,16 @@ func (c *Calendar) IsHoliday(date time.Time) (actual, observed bool, h *Holiday)
 	year, month, day := date.Date()
 
 	if c.Cacheable {
-		if c.isHolCache == nil {
+		c.isHolCacheInitOnce.Do(func() {
 			c.isHolCache = make(map[holCacheKey]*holCacheEntry)
-		}
+		})
+
+		c.isHolCacheMutex.RLock()
 		if v, ok := c.isHolCache[holCacheKey{year: year, month: month, day: day}]; ok {
+			c.isHolCacheMutex.RUnlock()
 			return v.act, v.obs, v.hol
 		}
+		c.isHolCacheMutex.RUnlock()
 	}
 
 	for _, hol := range c.Holidays {
@@ -99,9 +109,11 @@ func (c *Calendar) IsHoliday(date time.Time) (actual, observed bool, h *Holiday)
 		}
 		if actMatch || obsMatch {
 			if c.Cacheable {
+				c.isHolCacheMutex.Lock()
 				c.evict()
 				c.isHolCache[holCacheKey{year: year, month: month, day: day}] =
 					&holCacheEntry{act: actMatch, obs: obsMatch, hol: hol}
+				c.isHolCacheMutex.Unlock()
 			}
 			return actMatch, obsMatch, hol
 		}
@@ -122,9 +134,11 @@ func (c *Calendar) IsHoliday(date time.Time) (actual, observed bool, h *Holiday)
 				}
 				if obsMatch {
 					if c.Cacheable {
+						c.isHolCacheMutex.Lock()
 						c.evict()
 						c.isHolCache[holCacheKey{year: year, month: month, day: day}] =
 							&holCacheEntry{act: false, obs: obsMatch, hol: hol}
+						c.isHolCacheMutex.Unlock()
 					}
 					return false, obsMatch, hol
 				}
@@ -137,9 +151,11 @@ func (c *Calendar) IsHoliday(date time.Time) (actual, observed bool, h *Holiday)
 				}
 				if obsMatch {
 					if c.Cacheable {
+						c.isHolCacheMutex.Lock()
 						c.evict()
 						c.isHolCache[holCacheKey{year: year, month: month, day: day}] =
 							&holCacheEntry{act: false, obs: obsMatch, hol: hol}
+						c.isHolCacheMutex.Unlock()
 					}
 					return false, obsMatch, hol
 				}
@@ -148,8 +164,10 @@ func (c *Calendar) IsHoliday(date time.Time) (actual, observed bool, h *Holiday)
 	}
 
 	if c.Cacheable {
+		c.isHolCacheMutex.Lock()
 		c.evict()
 		c.isHolCache[holCacheKey{year: year, month: month, day: day}] = holFalseEntry
+		c.isHolCacheMutex.Unlock()
 	}
 	return false, false, nil
 }
