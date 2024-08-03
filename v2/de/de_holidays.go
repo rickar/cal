@@ -44,6 +44,16 @@ var (
 	// Fronleichnam represents Corpus Christi on the 60th day after Easter
 	Fronleichnam = aa.CorpusChristi.Clone(&cal.Holiday{Name: "Fronleichnam", Type: cal.ObservancePublic})
 
+	// Friedensfest represents the Augsburger Hohes Friedensfest on 8-Aug
+	Friedensfest = &cal.Holiday{
+		Name:      "Friedensfest",
+		Type:      cal.ObservancePublic,
+		Month:     time.August,
+		Day:       8,
+		Func:      cal.CalcDayOfMonth,
+		StartYear: 1950,
+	}
+
 	// MariaHimmelfahrt represents Assumption of Mary on 15-Aug
 	MariaHimmelfahrt = aa.AssumptionOfMary.Clone(&cal.Holiday{Name: "Mariä Himmelfahrt", Type: cal.ObservancePublic})
 
