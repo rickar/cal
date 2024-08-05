@@ -1,6 +1,6 @@
 // (c) Rick Arnold. Licensed under the BSD license (see LICENSE).
 
-package be
+package lu
 
 import (
 	"testing"

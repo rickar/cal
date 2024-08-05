@@ -1,7 +1,7 @@
 // (c) Rick Arnold. Licensed under the BSD license (see LICENSE).
 
 // Package be provides holiday definitions for Luxembourg.
-package be
+package lu
 
 import (
 	"time"
