@@ -177,6 +177,16 @@ var (
 		Weekday: time.Monday,
 		Offset:  -1,
 		Func:    cal.CalcWeekdayOffset,
+		EndYear: 2021,
+	}
+
+	// KingsBirthdayWa represents King's Birthday in WA previously known as the Queen’s Birthday;
+	// there is no firm rule to determine this date, though it is usually the last Monday of September
+	KingsBirthdayWa = &cal.Holiday{
+		Name:      "King's Birthday",
+		Type:      cal.ObservancePublic,
+		Func:      calcKingsBirthdayWa,
+		StartYear: 2022,
 	}
 
 	// FridayBeforeAflFinal represents the Friday before the AFL Grand Final;
@@ -370,6 +380,7 @@ var (
 		AnzacDayActWa,
 		WesternAustraliaDay,
 		QueensBirthdayWa,
+		KingsBirthdayWa,
 		MourningDay2022,
 		ChristmasDay,
 		BoxingDay,
@@ -387,5 +398,14 @@ func calcFridayBeforeAflFinal(_ *cal.Holiday, year int) time.Time {
 	default:
 		aflFinalDay := cal.DayStart(cal.WeekdayN(year, time.September, time.Saturday, -1))
 		return aflFinalDay.AddDate(0, 0, -1)
+	}
+}
+
+func calcKingsBirthdayWa(_ *cal.Holiday, year int) time.Time {
+	switch year {
+	case 2024:
+		return time.Date(year, time.September, 23, 0, 0, 0, 0, cal.DefaultLoc)
+	default:
+		return cal.DayStart(cal.WeekdayN(year, time.September, time.Monday, -1))
 	}
 }
