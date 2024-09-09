@@ -198,7 +198,9 @@ func TestHolidays(t *testing.T) {
 		{QueensBirthdayWa, 2019, d(2019, 9, 30), d(2019, 9, 30)},
 		{QueensBirthdayWa, 2020, d(2020, 9, 28), d(2020, 9, 28)},
 		{QueensBirthdayWa, 2021, d(2021, 9, 27), d(2021, 9, 27)},
-		{QueensBirthdayWa, 2022, d(2022, 9, 26), d(2022, 9, 26)},
+
+		{KingsBirthdayWa, 2022, d(2022, 9, 26), d(2022, 9, 26)},
+		{KingsBirthdayWa, 2024, d(2024, 9, 23), d(2024, 9, 23)},
 
 		{FridayBeforeAflFinal, 2015, d(2015, 10, 2), d(2015, 10, 2)},
 		{FridayBeforeAflFinal, 2016, d(2016, 9, 30), d(2016, 9, 30)},
