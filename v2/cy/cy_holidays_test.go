@@ -9,17 +9,6 @@ import (
 	"github.com/rickar/cal/v2"
 )
 
-/*
- Μεγάλη Παρασκευή 2024: got actual: 2024-03-29 00:00:00 +0100 CET, want: 2024-05-03 00:00:00 +0200 CEST
-    cy_holidays_test.go:86: Μεγάλη Παρασκευή 2024: got observed: 2024-03-29 00:00:00 +0100 CET, want: 2024-05-03 00:00:00 +0200 CEST
-    cy_holidays_test.go:83: Μεγάλη Παρασκευή 2026: got actual: 2026-04-03 00:00:00 +0200 CEST, want: 2026-04-10 00:00:00 +0200 CEST
-    cy_holidays_test.go:86: Μεγάλη Παρασκευή 2026: got observed: 2026-04-03 00:00:00 +0200 CEST, want: 2026-04-10 00:00:00 +0200 CEST
-    cy_holidays_test.go:83: Δευτέρα του Πάσχα 2024: got actual: 2024-04-01 00:00:00 +0200 CEST, want: 2024-05-06 00:00:00 +0200 CEST
-    cy_holidays_test.go:86: Δευτέρα του Πάσχα 2024: got observed: 2024-04-01 00:00:00 +0200 CEST, want: 2024-05-06 00:00:00 +0200 CEST
-    cy_holidays_test.go:83: Δευτέρα του Πάσχα 2026: got actual: 2026-04-06 00:00:00 +0200 CEST, want: 2026-04-13 00:00:00 +0200 CEST
-    cy_holidays_test.go:86: Δευτέρα του Πάσχα 2026
-*/
-
 func d(y, m, d int) time.Time {
 	return time.Date(y, time.Month(m), d, 0, 0, 0, 0, cal.DefaultLoc)
 }
