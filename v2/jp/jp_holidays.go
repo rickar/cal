@@ -4,10 +4,11 @@
 package jp
 
 import (
-	"github.com/rickar/cal/v2"
-	"github.com/rickar/cal/v2/aa"
 	"math"
 	"time"
+
+	"github.com/rickar/cal/v2"
+	"github.com/rickar/cal/v2/aa"
 )
 
 var (
@@ -47,16 +48,19 @@ var (
 		Day:      23,
 		Observed: weekendAlt,
 		Func: func(h *cal.Holiday, year int) time.Time {
-			if year <= 2019 {
+			switch {
+			case year <= 2018:
 				// Emperor Akihito abdicated in 2019.
 				holiday := *h
 				holiday.Month = time.December
 				holiday.Day = 23
-
 				return cal.CalcDayOfMonth(&holiday, year)
+			case year == 2019:
+				// There is no official Emperor's Birthday holiday in 2019 due to the transition
+				return time.Time{}
+			default:
+				return cal.CalcDayOfMonth(h, year)
 			}
-
-			return cal.CalcDayOfMonth(h, year)
 		},
 	}
 
