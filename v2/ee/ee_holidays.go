@@ -1,6 +1,6 @@
 // (c) Rick Arnold. Licensed under the BSD license (see LICENSE).
 
-// Package et provides holiday definitions for Estonia.
+// Package ee provides holiday definitions for Estonia.
 package ee
 
 import (
