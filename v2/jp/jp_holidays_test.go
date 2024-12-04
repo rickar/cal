@@ -3,9 +3,10 @@
 package jp
 
 import (
-	"github.com/rickar/cal/v2"
 	"testing"
 	"time"
+
+	"github.com/rickar/cal/v2"
 )
 
 func d(y, m, d int) time.Time {
@@ -130,9 +131,11 @@ func TestHolidays(t *testing.T) {
 		{MountainDay, 2017, d(2017, 8, 11), d(2017, 8, 11)},
 		{MountainDay, 2018, d(2018, 8, 11), d(2018, 8, 11)},
 		{MountainDay, 2019, d(2019, 8, 11), d(2019, 8, 12)},
-		{MountainDay, 2020, d(2020, 8, 11), d(2020, 8, 11)},
-		{MountainDay, 2021, d(2021, 8, 11), d(2021, 8, 11)},
+		{MountainDay, 2020, d(2020, 8, 10), d(2020, 8, 10)},
+		{MountainDay, 2021, d(2021, 8, 8), d(2021, 8, 9)},
 		{MountainDay, 2022, d(2022, 8, 11), d(2022, 8, 11)},
+		{MountainDay, 2023, d(2023, 8, 11), d(2023, 8, 11)},
+		{MountainDay, 2024, d(2024, 8, 11), d(2024, 8, 12)},
 
 		{RespectForTheAgedDay, 2015, d(2015, 9, 21), d(2015, 9, 21)},
 		{RespectForTheAgedDay, 2016, d(2016, 9, 19), d(2016, 9, 19)},
