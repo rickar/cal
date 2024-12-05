@@ -145,12 +145,24 @@ var (
 
 	// MountainDay represents Mountain Day on 11-August
 	MountainDay = &cal.Holiday{
-		Name:      "Mountain Day",
-		Type:      cal.ObservancePublic,
-		Month:     time.August,
-		Day:       11,
-		Observed:  weekendAlt,
-		Func:      cal.CalcDayOfMonth,
+		Name:     "Mountain Day",
+		Type:     cal.ObservancePublic,
+		Month:    time.August,
+		Day:      11,
+		Observed: weekendAlt,
+		Func: func(h *cal.Holiday, year int) time.Time {
+			switch year {
+			case 2020:
+				// Mountain Day is observed on August 10 in 2020
+				return time.Date(year, time.August, 10, 0, 0, 0, 0, time.Local)
+			case 2021:
+				// Mountain Day is observed on August 8 from 2021
+				return time.Date(year, time.August, 8, 0, 0, 0, 0, time.Local)
+			default:
+				// For all other years, Mountain Day is observed on August 11
+				return time.Date(year, time.August, 11, 0, 0, 0, 0, time.Local)
+			}
+		},
 		StartYear: 2016,
 	}
 
