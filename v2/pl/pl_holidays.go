@@ -44,6 +44,9 @@ var (
 	// NationalIndependenceDay represents National Independence Day on 11-Nov
 	NationalIndependenceDay = aa.ArmisticeDay.Clone(&cal.Holiday{Name: "Narodowe Święto Niepodległości", Type: cal.ObservancePublic})
 
+	// ChristmasEve represents Christmas Eve on 24-Dec
+	ChristmasEve = aa.ChristmasEve.Clone(&cal.Holiday{Name: "Wigilia Bożego Narodzenia", Type: cal.ObservancePublic})
+
 	// ChristmasDayOne represents Christmas Day on 25-Dec
 	ChristmasDayOne = aa.ChristmasDay.Clone(&cal.Holiday{Name: "pierwszy dzień Bożego Narodzenia", Type: cal.ObservancePublic})
 
@@ -61,6 +64,7 @@ var (
 		AssumptionBlessedVirginMary,
 		AllSaints,
 		NationalIndependenceDay,
+		ChristmasEve,
 		ChristmasDayOne,
 		ChristmasDayTwo,
 	}
