@@ -122,15 +122,6 @@ var (
 		Func:  cal.CalcDayOfMonth,
 	}
 
-	// ChristmasEve represents Christmas Eve on 24-Dec
-	ChristmasEve = &cal.Holiday{
-		Name:      "Christmas Eve",
-		Month:     time.December,
-		Day:       24,
-		StartYear: 2025,
-		Func:      cal.CalcDayOfMonth,
-	}
-
 	// ChristmasDay represents Christmas Day on 25-Dec
 	ChristmasDay = &cal.Holiday{
 		Name:  "Christmas Day",

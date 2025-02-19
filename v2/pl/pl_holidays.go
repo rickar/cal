@@ -45,7 +45,13 @@ var (
 	NationalIndependenceDay = aa.ArmisticeDay.Clone(&cal.Holiday{Name: "Narodowe Święto Niepodległości", Type: cal.ObservancePublic})
 
 	// ChristmasEve represents Christmas Eve on 24-Dec
-	ChristmasEve = aa.ChristmasEve.Clone(&cal.Holiday{Name: "Wigilia Bożego Narodzenia", Type: cal.ObservancePublic})
+	ChristmasEve = &cal.Holiday{
+		Name:      "Wigilia Bożego Narodzenia",
+		Month:     time.December,
+		Day:       24,
+		StartYear: 2025,
+		Func:      cal.CalcDayOfMonth,
+	}
 
 	// ChristmasDayOne represents Christmas Day on 25-Dec
 	ChristmasDayOne = aa.ChristmasDay.Clone(&cal.Holiday{Name: "pierwszy dzień Bożego Narodzenia", Type: cal.ObservancePublic})

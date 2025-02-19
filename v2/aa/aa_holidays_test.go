@@ -170,16 +170,6 @@ func TestHolidays(t *testing.T) {
 		{ImmaculateConception, 2022, d(2022, 12, 8), d(2022, 12, 8)},
 		{ImmaculateConception, 2023, d(2023, 12, 8), d(2023, 12, 8)},
 
-		{ChristmasEve, 2025, d(2025, 12, 24), d(2025, 12, 24)},
-		{ChristmasEve, 2026, d(2026, 12, 24), d(2026, 12, 24)},
-		{ChristmasEve, 2027, d(2027, 12, 24), d(2027, 12, 24)},
-		{ChristmasEve, 2028, d(2028, 12, 24), d(2028, 12, 24)},
-		{ChristmasEve, 2029, d(2029, 12, 24), d(2029, 12, 24)},
-		{ChristmasEve, 2030, d(2030, 12, 24), d(2030, 12, 24)},
-		{ChristmasEve, 2031, d(2031, 12, 24), d(2031, 12, 24)},
-		{ChristmasEve, 2032, d(2032, 12, 24), d(2032, 12, 24)},
-		{ChristmasEve, 2033, d(2033, 12, 24), d(2033, 12, 24)},
-
 		{ChristmasDay, 2015, d(2015, 12, 25), d(2015, 12, 25)},
 		{ChristmasDay, 2016, d(2016, 12, 25), d(2016, 12, 25)},
 		{ChristmasDay, 2017, d(2017, 12, 25), d(2017, 12, 25)},
