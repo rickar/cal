@@ -101,7 +101,7 @@ func TestHolidays(t *testing.T) {
 		{NationalIndependenceDay, 2021, d(2021, 11, 11), d(2021, 11, 11)},
 		{NationalIndependenceDay, 2022, d(2022, 11, 11), d(2022, 11, 11)},
 
-		{ChristmasEve, 2024, d(2025, 12, 24), d(2025, 12, 24)},
+		{ChristmasEve, 2024, time.Time{}, time.Time{}},
 		{ChristmasEve, 2025, d(2025, 12, 24), d(2025, 12, 24)},
 		{ChristmasEve, 2026, d(2026, 12, 24), d(2026, 12, 24)},
 		{ChristmasEve, 2027, d(2027, 12, 24), d(2027, 12, 24)},
