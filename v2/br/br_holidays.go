@@ -22,7 +22,7 @@ var (
 		Func:  cal.CalcDayOfMonth,
 	}
 
-	// Trabalhador represents Labor Day on 21-Apr
+	// Trabalhador represents Labor Day on 1-May
 	Trabalhador = aa.WorkersDay.Clone(&cal.Holiday{Name: "Dia do Trabalhador", Type: cal.ObservancePublic})
 
 	// Independencia represents Brazil Independence Day on 07-Sep
