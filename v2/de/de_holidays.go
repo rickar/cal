@@ -99,11 +99,29 @@ var (
 		Func:    cal.CalcWeekdayFrom,
 	}
 
+	// Heiligabend represents Christmas Eve on 24-Dec
+	Heiligabend = &cal.Holiday{
+		Name:  "Heiligabend",
+		Type:  cal.ObservancePublic,
+		Month: time.December,
+		Day:   24,
+		Func:  cal.CalcDayOfMonth,
+	}
+
 	// Weihnachtstag represents Christmas Day on 25-Dec
 	Weihnachtstag = aa.ChristmasDay.Clone(&cal.Holiday{Name: "Weihnachtstag", Type: cal.ObservancePublic})
 
 	// ZweiterWeihnachtsfeiertag represents Boxing Day on 26-Dec
 	ZweiterWeihnachtsfeiertag = aa.ChristmasDay2.Clone(&cal.Holiday{Name: "Zweiter Weihnachtsfeiertag", Type: cal.ObservancePublic})
+
+	// Silvester represents NewYear Eve on 31 Dec
+	Silvester = &cal.Holiday{
+		Name:  "Silvester",
+		Type:  cal.ObservancePublic,
+		Month: time.December,
+		Day:   31,
+		Func:  cal.CalcDayOfMonth,
+	}
 
 	// Holidays provides a list of the standard national holidays
 	Holidays = []*cal.Holiday{
