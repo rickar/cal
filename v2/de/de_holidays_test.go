@@ -155,6 +155,15 @@ func TestHolidays(t *testing.T) {
 		{BussUndBettag, 2021, d(2021, 11, 17), d(2021, 11, 17)},
 		{BussUndBettag, 2022, d(2022, 11, 16), d(2022, 11, 16)},
 
+		{Heiligabend, 2015, d(2015, 12, 24), d(2015, 12, 24)},
+		{Heiligabend, 2016, d(2016, 12, 24), d(2016, 12, 24)},
+		{Heiligabend, 2017, d(2017, 12, 24), d(2017, 12, 24)},
+		{Heiligabend, 2018, d(2018, 12, 24), d(2018, 12, 24)},
+		{Heiligabend, 2019, d(2019, 12, 24), d(2019, 12, 24)},
+		{Heiligabend, 2020, d(2020, 12, 24), d(2020, 12, 24)},
+		{Heiligabend, 2021, d(2021, 12, 24), d(2021, 12, 24)},
+		{Heiligabend, 2022, d(2022, 12, 24), d(2022, 12, 24)},
+
 		{Weihnachtstag, 2015, d(2015, 12, 25), d(2015, 12, 25)},
 		{Weihnachtstag, 2016, d(2016, 12, 25), d(2016, 12, 25)},
 		{Weihnachtstag, 2017, d(2017, 12, 25), d(2017, 12, 25)},
@@ -174,6 +183,15 @@ func TestHolidays(t *testing.T) {
 		{ZweiterWeihnachtsfeiertag, 2022, d(2022, 12, 26), d(2022, 12, 26)},
 
 		{Friedensfest, 2024, d(2024, 8, 8), d(2024, 8, 8)},
+
+		{Silvester, 2015, d(2015, 12, 31), d(2015, 12, 31)},
+		{Silvester, 2016, d(2016, 12, 31), d(2016, 12, 31)},
+		{Silvester, 2017, d(2017, 12, 31), d(2017, 12, 31)},
+		{Silvester, 2018, d(2018, 12, 31), d(2018, 12, 31)},
+		{Silvester, 2019, d(2019, 12, 31), d(2019, 12, 31)},
+		{Silvester, 2020, d(2020, 12, 31), d(2020, 12, 31)},
+		{Silvester, 2021, d(2021, 12, 31), d(2021, 12, 31)},
+		{Silvester, 2022, d(2022, 12, 31), d(2022, 12, 31)},
 	}
 
 	for _, test := range tests {
