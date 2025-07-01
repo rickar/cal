@@ -17,6 +17,9 @@ var (
 	// GoedeVrijdag represents Good Friday on the Friday before Easter
 	GoedeVrijdag = aa.GoodFriday.Clone(&cal.Holiday{Name: "Goede Vrijdag", Type: cal.ObservancePublic})
 
+	// EerstePaasdag represents Easter Sunday
+	EerstePaasdag = aa.Easter.Clone(&cal.Holiday{Name: "Eerste Paasdag", Type: cal.ObservancePublic})
+
 	// TweedePaasdag represents Easter Monday on the day after Easter
 	TweedePaasdag = aa.EasterMonday.Clone(&cal.Holiday{Name: "Tweede Paasdag", Type: cal.ObservancePublic})
 
@@ -39,6 +42,9 @@ var (
 
 	// Hemelvaart represents Ascension Day on the 39th day after Easter
 	Hemelvaart = aa.AscensionDay.Clone(&cal.Holiday{Name: "Hemelvaartsdag", Type: cal.ObservancePublic})
+
+	// EerstePinksterDag represents Pentecost on the 49th day after Easter
+	EerstePinksterDag = aa.Pentecost.Clone(&cal.Holiday{Name: "Eerste Pinksterdag", Type: cal.ObservancePublic})
 
 	// TweedePinksterDag represents Pentecost Monday on the day after Pentecost (50 days after Easter)
 	TweedePinksterDag = aa.PentecostMonday.Clone(&cal.Holiday{Name: "Tweede Pinksterdag", Type: cal.ObservancePublic})
