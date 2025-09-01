@@ -56,11 +56,12 @@ var (
 
 	// Constitution represents Constitution Day on 1-Sep
 	Constitution = &cal.Holiday{
-		Name:  "Deň Ústavy Slovenskej republiky",
-		Type:  cal.ObservancePublic,
-		Month: time.September,
-		Day:   1,
-		Func:  cal.CalcDayOfMonth,
+		Name:    "Deň Ústavy Slovenskej republiky",
+		Type:    cal.ObservancePublic,
+		Month:   time.September,
+		Day:     1,
+		Func:    cal.CalcDayOfMonth,
+		EndYear: 2024,
 	}
 
 	// LadyOfSorrows represents Day of Our Lady of the Seven Sorrows on 15-Sep
