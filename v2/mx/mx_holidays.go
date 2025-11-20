@@ -62,7 +62,7 @@ var (
 		Func:     cal.CalcDayOfMonth,
 	}
 
-	// RevolutionDay represents Revolution Day on 20-Nov
+	// RevolutionDay represents Revolution Day on the 3rd Monday in November
 	RevolutionDay = &cal.Holiday{
 		Name:    "Revolution Day",
 		Type:    cal.ObservancePublic,
