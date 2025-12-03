@@ -62,14 +62,14 @@ var (
 		Func:     cal.CalcDayOfMonth,
 	}
 
-	// RevolutionDay represents Revolution Day on 20-Nov
+	// RevolutionDay represents Revolution Day on the 3rd Monday in November
 	RevolutionDay = &cal.Holiday{
-		Name:     "Revolution Day",
-		Type:     cal.ObservancePublic,
-		Month:    time.November,
-		Day:      20,
-		Observed: weekendAlt,
-		Func:     cal.CalcDayOfMonth,
+		Name:    "Revolution Day",
+		Type:    cal.ObservancePublic,
+		Month:   time.November,
+		Offset:  3,
+		Weekday: time.Monday,
+		Func:    cal.CalcWeekdayOffset,
 	}
 
 	// ChristmasDay represents Christmas Day on 25-Dec
