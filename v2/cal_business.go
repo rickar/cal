@@ -128,11 +128,16 @@ func (c *BusinessCalendar) IsWorkTime(date time.Time) bool {
 	}
 
 	h, m, s := date.Clock()
-	return (h == startHour && m == startMinute && s >= startSecond) ||
-		(h == startHour && m > startMinute) ||
-		(h > startHour && h < endHour) ||
-		(h == endHour && m < endMinute) ||
-		(h == endHour && m == endMinute && s <= endSecond)
+
+	timeOfDateCalculator := func(hour, minute, second int) time.Duration {
+		return time.Duration(hour)*time.Hour + time.Duration(minute)*time.Minute + time.Duration(second)*time.Second
+	}
+
+	timeOfDate := timeOfDateCalculator(h, m, s)
+	startTimeOfDate := timeOfDateCalculator(startHour, startMinute, startSecond)
+	endTimeOfDate := timeOfDateCalculator(endHour, endMinute, endSecond)
+
+	return timeOfDate >= startTimeOfDate && timeOfDate <= endTimeOfDate
 }
 
 // WorkdaysRemain reports the total number of remaining workdays in the month

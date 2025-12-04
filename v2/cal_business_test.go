@@ -116,6 +116,13 @@ func TestIsWorkTime(t *testing.T) {
 	cal3.SetWorkday(time.Friday, true)
 	cal3.SetWorkHours(6*time.Hour, 24*time.Hour)
 
+	cal3.WorkdayStartFunc = func(date time.Time) time.Time {
+		return time.Date(date.Year(), date.Month(), date.Day(), date.Day()%12, 30, 0, 0, time.UTC)
+	}
+	cal3.WorkdayEndFunc = func(date time.Time) time.Time {
+		return time.Date(date.Year(), date.Month(), date.Day(), date.Day()%12, 45, 0, 0, time.UTC)
+	}
+
 	tests := []struct {
 		c    *BusinessCalendar
 		d    time.Time
@@ -131,6 +138,11 @@ func TestIsWorkTime(t *testing.T) {
 		{cal2, dt(2020, 4, 1, 7, 00), true},
 		{cal2, dt(2020, 4, 1, 7, 50), false},
 
+		{cal3, dt(2020, 4, 1, 1, 30), true},
+		{cal3, dt(2020, 4, 1, 0, 00), false},
+		{cal3, dt(2020, 4, 1, 1, 35), true},
+		{cal3, dt(2020, 4, 1, 1, 45), true},
+		{cal3, dt(2020, 4, 1, 1, 46), false},
 		{cal3, dt(2023, 10, 19, 23, 59), true},
 		{cal3, dt(2023, 10, 20, 0, 0), false},
 	}
