@@ -61,14 +61,24 @@ var (
 		Func:     cal.CalcDayOfMonth,
 	}
 
-	// QueensBirthday represents Queen's Birthday on the first Monday in June
-	QueensBirthday = &cal.Holiday{
+	// KingsBirthday represents King's Birthday on the first Monday in June
+	KingsBirthday = &cal.Holiday{
 		Name:    "Queen's Birthday",
 		Type:    cal.ObservancePublic,
 		Month:   time.June,
 		Weekday: time.Monday,
 		Offset:  1,
 		Func:    cal.CalcWeekdayOffset,
+	}
+
+	// QueensBirthday was the name of King's Birthday holiday during the reign of Queen Elizabeth II
+	QueensBirthday = KingsBirthday
+
+	// Matariki represents the Matariki public holiday, on the Friday closest to the Māori New Year
+	Matariki = &cal.Holiday{
+		Name: "Matariki",
+		Type: cal.ObservancePublic,
+		Func: CalcMatarikiOffset,
 	}
 
 	// LabourDay represents Labour Day on the fourth Monday in October
