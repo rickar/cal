@@ -26,11 +26,11 @@ var (
 	// Pengschtméindeg represents Pentecost Monday on the day after Pentecost (50 days after Easter)
 	Pengschtméindeg = aa.PentecostMonday.Clone(&cal.Holiday{Name: "Péngschtméindeg", Type: cal.ObservancePublic})
 
-	// Nationalfeierdag represents Luxembourg National Day on 23-Jul
+	// Nationalfeierdag represents Luxembourg National Day on 23-Jun
 	Nationalfeierdag = &cal.Holiday{
 		Name:  "Nationalfeierdag",
 		Type:  cal.ObservancePublic,
-		Month: time.July,
+		Month: time.June,
 		Day:   23,
 		Func:  cal.CalcDayOfMonth,
 	}
