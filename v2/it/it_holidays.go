@@ -44,6 +44,16 @@ var (
 	// Assunzione represents Assumption of Mary on 15-Aug
 	Assunzione = aa.AssumptionOfMary.Clone(&cal.Holiday{Name: "Assunzione", Type: cal.ObservancePublic})
 
+	// San Francesco d’Assisi represents Saint Francis of Assisi's Day on 4-Oct
+	SanFrancescoDAssisi = &cal.Holiday{
+		Name:      "San Francesco d'Assisi",
+		Type:      cal.ObservancePublic,
+		Month:     time.October,
+		Day:       4,
+		Func:      cal.CalcDayOfMonth,
+		StartYear: 2026,
+	}
+
 	// TuttiISanti represents All Saints' Day on 1-Nov
 	TuttiISanti = aa.AllSaintsDay.Clone(&cal.Holiday{Name: "Tutti i santi", Type: cal.ObservancePublic})
 
@@ -65,6 +75,7 @@ var (
 		FestaDelLavoro,
 		FestaDellaRepubblica,
 		Assunzione,
+		SanFrancescoDAssisi,
 		TuttiISanti,
 		Immacolata,
 		Natale,
