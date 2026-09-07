@@ -3,6 +3,7 @@
 package cal
 
 import (
+	"math"
 	"time"
 )
 
@@ -151,7 +152,7 @@ func ModifiedJulianDayNumber(t time.Time) int {
 	// algorithm from http://www.tondering.dk/claus/cal/julperiod.php#formula
 	mjd := JulianDate(t)
 	mjd -= 2400000.5
-	return int(mjd)
+	return int(math.Floor(mjd))
 }
 
 // JulianDate reports the Julian Date (which includes time as a fraction) for t.
