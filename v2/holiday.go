@@ -50,6 +50,7 @@ type Holiday struct {
 	Julian     bool         // the holiday is based on a Julian calendar
 	Observed   []AltDay     // the substitution days for the holiday
 	Func       HolidayFn    // logic used to determine occurrences
+	Lunar      bool         // the holiday is based on a Lunar calendar
 }
 
 // Clone returns a copy of the Holiday. If overrides is non-nil, then the
@@ -71,6 +72,7 @@ func (h *Holiday) Clone(overrides *Holiday) *Holiday {
 		Offset:      h.Offset,
 		CalcOffset:  h.CalcOffset,
 		Julian:      h.Julian,
+		Lunar:       h.Lunar,
 		Observed:    h.Observed,
 		Func:        h.Func,
 	}
