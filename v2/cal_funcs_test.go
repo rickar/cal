@@ -243,6 +243,10 @@ func TestModifiedJulianDayNumber(t *testing.T) {
 		t    time.Time
 		want int
 	}{
+		{time.Date(1600, 1, 1, 12, 0, 0, 0, time.UTC), -94553},
+		{time.Date(1858, 11, 16, 0, 0, 0, 0, time.UTC), -1},
+		{time.Date(1858, 11, 16, 12, 0, 0, 0, time.UTC), -1},
+		{time.Date(1858, 11, 17, 0, 0, 0, 0, time.UTC), 0},
 		{time.Date(1980, 1, 1, 0, 0, 0, 0, time.UTC), 44239},
 		{time.Date(1980, 1, 1, 12, 0, 0, 0, time.UTC), 44239},
 		{time.Date(2000, 1, 1, 15, 0, 0, 0, time.UTC), 51544},
