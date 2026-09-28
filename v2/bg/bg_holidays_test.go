@@ -53,6 +53,8 @@ func TestHolidays(t *testing.T) {
 		{LabourDay, 2021, d(2021, 5, 4), d(2021, 5, 4)},
 		{LabourDay, 2022, d(2022, 5, 1), d(2022, 5, 2)},
 		{LabourDay, 2023, d(2023, 5, 1), d(2023, 5, 1)},
+		// Orthodox Good Friday falls after Labour Day
+		{LabourDay, 2024, d(2024, 5, 1), d(2024, 5, 1)},
 
 		{StGeorgesDay, 2018, d(2018, 5, 6), d(2018, 5, 7)},
 		{StGeorgesDay, 2019, d(2019, 5, 6), d(2019, 5, 6)},
