@@ -499,6 +499,68 @@ func TestWorkdayEnd(t *testing.T) {
 	}
 }
 
+func TestWorkdayBoundariesDaylightSaving(t *testing.T) {
+	tests := []struct {
+		name string
+		zone string
+		date time.Time
+	}{
+		{"New York spring", "America/New_York", d(2024, 3, 10)},
+		{"New York autumn", "America/New_York", d(2024, 11, 3)},
+		{"Berlin spring", "Europe/Berlin", d(2024, 3, 31)},
+		{"Berlin autumn", "Europe/Berlin", d(2024, 10, 27)},
+		{"Lord Howe spring", "Australia/Lord_Howe", d(2024, 10, 6)},
+		{"Lord Howe autumn", "Australia/Lord_Howe", d(2024, 4, 7)},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			loc, err := time.LoadLocation(test.zone)
+			if err != nil {
+				t.Fatal(err)
+			}
+			year, month, day := test.date.Date()
+			date := time.Date(year, month, day, 12, 0, 0, 0, loc)
+			c := NewBusinessCalendar()
+			c.SetWorkday(time.Sunday, true)
+			c.SetWorkHours(9*time.Hour+30*time.Minute+15*time.Second+123*time.Nanosecond,
+				17*time.Hour+45*time.Minute+20*time.Second+456*time.Nanosecond)
+			wantStart := time.Date(year, month, day, 9, 30, 15, 123, loc)
+			if got := c.WorkdayStart(date); got != wantStart {
+				t.Errorf("WorkdayStart: got %s, want %s", got, wantStart)
+			}
+			wantEnd := time.Date(year, month, day, 17, 45, 20, 456, loc)
+			if got := c.WorkdayEnd(date); got != wantEnd {
+				t.Errorf("WorkdayEnd: got %s, want %s", got, wantEnd)
+			}
+			c.SetWorkHours(0, 24*time.Hour)
+			wantEnd = time.Date(year, month, day+1, 0, 0, 0, 0, loc)
+			if got := c.WorkdayEnd(date); got != wantEnd {
+				t.Errorf("midnight WorkdayEnd: got %s, want %s", got, wantEnd)
+			}
+		})
+	}
+}
+
+func TestNextWorkdayDaylightSaving(t *testing.T) {
+	loc, err := time.LoadLocation("America/New_York")
+	if err != nil {
+		t.Fatal(err)
+	}
+	c := NewBusinessCalendar()
+	c.SetWorkday(time.Sunday, true)
+	for _, day := range []int{8, 9} {
+		date := time.Date(2024, 3, day, 23, 30, 0, 0, loc)
+		wantStart := time.Date(2024, 3, 10, 9, 0, 0, 0, loc)
+		if got := c.NextWorkdayStart(date); got != wantStart {
+			t.Errorf("NextWorkdayStart(%s): got %s, want %s", date, got, wantStart)
+		}
+		wantEnd := time.Date(2024, 3, 10, 17, 0, 0, 0, loc)
+		if got := c.NextWorkdayEnd(date); got != wantEnd {
+			t.Errorf("NextWorkdayEnd(%s): got %s, want %s", date, got, wantEnd)
+		}
+	}
+}
+
 func TestNextWorkdayStart(t *testing.T) {
 	cal1 := NewBusinessCalendar()
 	cal2 := NewBusinessCalendar()
