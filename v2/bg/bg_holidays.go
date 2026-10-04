@@ -59,7 +59,7 @@ var (
 			easter := cal.CalcEasterOffset(OrthodoxGoodFriday, year)
 			labourDay := cal.CalcDayOfMonth(h, year)
 			daysDiff := labourDay.Sub(easter).Hours() / 24
-			if daysDiff <= 2 {
+			if daysDiff >= 0 && daysDiff <= 2 {
 				holiday := *h
 				holiday.Offset = 2
 				holiday.Julian = true
