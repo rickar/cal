@@ -304,8 +304,7 @@ func (c *BusinessCalendar) WorkdayStart(date time.Time) time.Time {
 	}
 
 	if c.WorkdayStartFunc == nil {
-		year, month, day := date.Date()
-		return time.Date(year, month, day, 0, 0, 0, 0, date.Location()).Add(c.workdayStart)
+		return workdayTime(date, c.workdayStart)
 	}
 	return c.WorkdayStartFunc(date)
 }
@@ -318,21 +317,29 @@ func (c *BusinessCalendar) WorkdayEnd(date time.Time) time.Time {
 	}
 
 	if c.WorkdayEndFunc == nil {
-		year, month, day := date.Date()
-		return time.Date(year, month, day, 0, 0, 0, 0, date.Location()).Add(c.workdayEnd)
+		return workdayTime(date, c.workdayEnd)
 	}
 	return c.WorkdayEndFunc(date)
+}
+
+func workdayTime(date time.Time, clock time.Duration) time.Time {
+	year, month, day := date.Date()
+	hour := int(clock / time.Hour)
+	minute := int(clock % time.Hour / time.Minute)
+	second := int(clock % time.Minute / time.Second)
+	nanosecond := int(clock % time.Second)
+	return time.Date(year, month, day, hour, minute, second, nanosecond, date.Location())
 }
 
 // NextWorkdayStart reports the start of the next work day from the given date.
 func (c *BusinessCalendar) NextWorkdayStart(date time.Time) time.Time {
 	t := date
 	if date.After(c.WorkdayStart(date)) {
-		t = t.Add(24 * time.Hour)
+		t = t.AddDate(0, 0, 1)
 	}
 
 	for !c.IsWorkday(t) {
-		t = t.Add(24 * time.Hour)
+		t = t.AddDate(0, 0, 1)
 	}
 	return c.WorkdayStart(t)
 }
@@ -341,11 +348,11 @@ func (c *BusinessCalendar) NextWorkdayStart(date time.Time) time.Time {
 func (c *BusinessCalendar) NextWorkdayEnd(date time.Time) time.Time {
 	t := date
 	if date.After(c.WorkdayEnd(date)) {
-		t = t.Add(24 * time.Hour)
+		t = t.AddDate(0, 0, 1)
 	}
 
 	for !c.IsWorkday(t) {
-		t = t.Add(24 * time.Hour)
+		t = t.AddDate(0, 0, 1)
 	}
 	return c.WorkdayEnd(t)
 }
