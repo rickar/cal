@@ -181,6 +181,13 @@ func TestHolidays(t *testing.T) {
 		{QueensBirthday, 2020, d(2020, 6, 8), d(2020, 6, 8)},
 		{QueensBirthday, 2021, d(2021, 6, 14), d(2021, 6, 14)},
 		{QueensBirthday, 2022, d(2022, 6, 13), d(2022, 6, 13)},
+		{QueensBirthday, 2023, time.Time{}, time.Time{}},
+
+		{KingsBirthday, 2022, time.Time{}, time.Time{}},
+		{KingsBirthday, 2023, d(2023, 6, 12), d(2023, 6, 12)},
+		{KingsBirthday, 2024, d(2024, 6, 10), d(2024, 6, 10)},
+		{KingsBirthday, 2025, d(2025, 6, 9), d(2025, 6, 9)},
+		{KingsBirthday, 2026, d(2026, 6, 8), d(2026, 6, 8)},
 
 		{PicnicDay, 2015, d(2015, 8, 3), d(2015, 8, 3)},
 		{PicnicDay, 2016, d(2016, 8, 1), d(2016, 8, 1)},
@@ -219,6 +226,13 @@ func TestHolidays(t *testing.T) {
 		{QueensBirthdayQld, 2020, d(2020, 10, 5), d(2020, 10, 5)},
 		{QueensBirthdayQld, 2021, d(2021, 10, 4), d(2021, 10, 4)},
 		{QueensBirthdayQld, 2022, d(2022, 10, 3), d(2022, 10, 3)},
+		{QueensBirthdayQld, 2023, time.Time{}, time.Time{}},
+
+		{KingsBirthdayQld, 2022, time.Time{}, time.Time{}},
+		{KingsBirthdayQld, 2023, d(2023, 10, 2), d(2023, 10, 2)},
+		{KingsBirthdayQld, 2024, d(2024, 10, 7), d(2024, 10, 7)},
+		{KingsBirthdayQld, 2025, d(2025, 10, 6), d(2025, 10, 6)},
+		{KingsBirthdayQld, 2026, d(2026, 10, 5), d(2026, 10, 5)},
 
 		{LabourDayActNswSa, 2015, d(2015, 10, 5), d(2015, 10, 5)},
 		{LabourDayActNswSa, 2016, d(2016, 10, 3), d(2016, 10, 3)},
