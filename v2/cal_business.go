@@ -284,7 +284,7 @@ func (c *BusinessCalendar) WorkHours(date time.Time) time.Duration {
 		startMinute = startTime.Minute()
 	}
 	if c.WorkdayEndFunc == nil {
-		endHour = int(c.workdayEnd.Hours()) % 24
+		endHour = int(c.workdayEnd.Hours())
 		endMinute = int(c.workdayEnd.Minutes()) % 60
 	} else {
 		endTime := c.WorkdayEndFunc(date)
