@@ -157,6 +157,19 @@ var (
 		Weekday: time.Monday,
 		Offset:  2,
 		Func:    cal.CalcWeekdayOffset,
+		EndYear: 2022,
+	}
+
+	// KingsBirthday represents King's Birthday on the second Monday in June,
+	// previously known as the Queen's Birthday
+	KingsBirthday = &cal.Holiday{
+		Name:      "King's Birthday",
+		Type:      cal.ObservancePublic,
+		Month:     time.June,
+		Weekday:   time.Monday,
+		Offset:    2,
+		Func:      cal.CalcWeekdayOffset,
+		StartYear: 2023,
 	}
 
 	// PicnicDay represents Picnic Day in NT on the first Monday in August
@@ -206,6 +219,19 @@ var (
 		Weekday: time.Monday,
 		Offset:  1,
 		Func:    cal.CalcWeekdayOffset,
+		EndYear: 2022,
+	}
+
+	// KingsBirthdayQld represents King's Birthday in QLD on the first Monday in October,
+	// previously known as the Queen's Birthday
+	KingsBirthdayQld = &cal.Holiday{
+		Name:      "King's Birthday",
+		Type:      cal.ObservancePublic,
+		Month:     time.October,
+		Weekday:   time.Monday,
+		Offset:    1,
+		Func:      cal.CalcWeekdayOffset,
+		StartYear: 2023,
 	}
 
 	// LabourDayActNswSa represents Labour Day in ACT, NSW, and SA on the first Monday in October
@@ -268,6 +294,7 @@ var (
 		AnzacDayActWa,
 		ReconciliationDay,
 		QueensBirthday,
+		KingsBirthday,
 		MourningDay2022,
 		LabourDayActNswSa,
 		ChristmasDay,
@@ -284,6 +311,7 @@ var (
 		EasterMonday,
 		AnzacDay,
 		QueensBirthday,
+		KingsBirthday,
 		MourningDay2022,
 		LabourDayActNswSa,
 		ChristmasDay,
@@ -300,6 +328,7 @@ var (
 		AnzacDayNtQldSa,
 		LabourDayNtQld,
 		QueensBirthday,
+		KingsBirthday,
 		PicnicDay,
 		MourningDay2022,
 		ChristmasDay,
@@ -318,6 +347,7 @@ var (
 		LabourDayNtQld,
 		MourningDay2022,
 		QueensBirthdayQld,
+		KingsBirthdayQld,
 		ChristmasDay,
 		BoxingDay,
 	}
@@ -332,6 +362,7 @@ var (
 		EasterMonday,
 		AnzacDayNtQldSa,
 		QueensBirthday,
+		KingsBirthday,
 		MourningDay2022,
 		LabourDayActNswSa,
 		ChristmasDay,
@@ -347,6 +378,7 @@ var (
 		EasterMonday,
 		AnzacDay,
 		QueensBirthday,
+		KingsBirthday,
 		MourningDay2022,
 		ChristmasDay,
 		BoxingDay,
@@ -363,6 +395,7 @@ var (
 		EasterMonday,
 		AnzacDay,
 		QueensBirthday,
+		KingsBirthday,
 		MourningDay2022,
 		FridayBeforeAflFinal,
 		MelbourneCup,
