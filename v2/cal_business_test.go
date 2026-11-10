@@ -707,6 +707,7 @@ func TestWorkHoursEndOfDay(t *testing.T) {
 		start, end, want time.Duration
 	}{
 		{"full day", 0, 24 * time.Hour, 24 * time.Hour},
+		{"out of bounds", 25 * time.Hour, 36 * time.Hour, 0 * time.Hour},
 		{"afternoon", 9 * time.Hour, 24 * time.Hour, 15 * time.Hour},
 		{"partial hour", 9*time.Hour + 30*time.Minute, 24 * time.Hour, 14*time.Hour + 30*time.Minute},
 		{"standard", 9 * time.Hour, 17 * time.Hour, 8 * time.Hour},
