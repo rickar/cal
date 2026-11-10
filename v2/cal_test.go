@@ -12,14 +12,14 @@ func TestIsApplicable(t *testing.T) {
 	zone2 := time.FixedZone("test2", 3)
 
 	tests := []struct {
-		c    Calendar
+		c    *Calendar
 		loc  *time.Location
 		want bool
 	}{
-		{Calendar{}, time.UTC, true},
-		{Calendar{Locations: []*time.Location{time.UTC}}, time.UTC, true},
-		{Calendar{Locations: []*time.Location{zone1}}, time.UTC, false},
-		{Calendar{Locations: []*time.Location{zone1, zone2}}, zone2, true},
+		{&Calendar{}, time.UTC, true},
+		{&Calendar{Locations: []*time.Location{time.UTC}}, time.UTC, true},
+		{&Calendar{Locations: []*time.Location{zone1}}, time.UTC, false},
+		{&Calendar{Locations: []*time.Location{zone1, zone2}}, zone2, true},
 	}
 
 	for _, test := range tests {

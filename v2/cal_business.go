@@ -54,6 +54,49 @@ func NewBusinessCalendar() *BusinessCalendar {
 	return c
 }
 
+// start calculates the hour, minute, and second of the beginning of the
+// workday.
+func (c *BusinessCalendar) start(date time.Time) (h, m, s int) {
+	if c.WorkdayStartFunc == nil {
+		if c.workdayStart >= 24*time.Hour {
+			h = 24
+			m = 0
+			s = 0
+		} else {
+			h = int(c.workdayStart.Hours()) % 24
+			m = int(c.workdayStart.Minutes()) % 60
+			s = int(c.workdayStart.Seconds()) % 60
+		}
+	} else {
+		startTime := c.WorkdayStartFunc(date)
+		h = startTime.Hour()
+		m = startTime.Minute()
+		s = startTime.Second()
+	}
+	return
+}
+
+// end calculates the hour, minute, and second of the end of the workday.
+func (c *BusinessCalendar) end(date time.Time) (h, m, s int) {
+	if c.WorkdayEndFunc == nil {
+		if c.workdayEnd >= 24*time.Hour {
+			h = 24
+			m = 0
+			s = 0
+		} else {
+			h = int(c.workdayEnd.Hours()) % 24
+			m = int(c.workdayEnd.Minutes()) % 60
+			s = int(c.workdayEnd.Seconds()) % 60
+		}
+	} else {
+		endTime := c.WorkdayEndFunc(date)
+		h = endTime.Hour()
+		m = endTime.Minute()
+		s = endTime.Second()
+	}
+	return
+}
+
 // SetWorkday changes the given day's status as a standard working day
 func (c *BusinessCalendar) SetWorkday(day time.Weekday, workday bool) {
 	c.workday[day] = workday
@@ -92,41 +135,8 @@ func (c *BusinessCalendar) IsWorkTime(date time.Time) bool {
 		return false
 	}
 
-	var startHour int
-	var startMinute int
-	var endHour int
-	var endMinute int
-	var startSecond int
-	var endSecond int
-	if c.WorkdayStartFunc == nil {
-		startHour = int(c.workdayStart.Hours()) % 24
-		startMinute = int(c.workdayStart.Minutes()) % 60
-		startSecond = int(c.workdayStart.Seconds()) % 60
-	} else {
-		startTime := c.WorkdayStartFunc(date)
-		startHour = startTime.Hour()
-		startMinute = startTime.Minute()
-		startSecond = startTime.Second()
-	}
-	if c.WorkdayEndFunc == nil {
-		// Using 24h as "till the end of day" seems to be pretty common.
-		// By subtracting a second we get the desired behavior.
-		if c.workdayEnd == 24*time.Hour {
-			endHour = 23
-			endMinute = 59
-			endSecond = 59
-		} else {
-			endHour = int(c.workdayEnd.Hours()) % 24
-			endMinute = int(c.workdayEnd.Minutes()) % 60
-			endSecond = int(c.workdayEnd.Seconds()) % 60
-		}
-	} else {
-		endTime := c.WorkdayEndFunc(date)
-		endHour = endTime.Hour()
-		endMinute = endTime.Minute()
-		endSecond = endTime.Second()
-	}
-
+	startHour, startMinute, startSecond := c.start(date)
+	endHour, endMinute, endSecond := c.end(date)
 	h, m, s := date.Clock()
 	return (h == startHour && m == startMinute && s >= startSecond) ||
 		(h == startHour && m > startMinute) ||
@@ -271,27 +281,8 @@ func (c *BusinessCalendar) WorkHours(date time.Time) time.Duration {
 		return 0
 	}
 
-	var startHour int
-	var startMinute int
-	var endHour int
-	var endMinute int
-	if c.WorkdayStartFunc == nil {
-		startHour = int(c.workdayStart.Hours()) % 24
-		startMinute = int(c.workdayStart.Minutes()) % 60
-	} else {
-		startTime := c.WorkdayStartFunc(date)
-		startHour = startTime.Hour()
-		startMinute = startTime.Minute()
-	}
-	if c.WorkdayEndFunc == nil {
-		endHour = int(c.workdayEnd.Hours())
-		endMinute = int(c.workdayEnd.Minutes()) % 60
-	} else {
-		endTime := c.WorkdayEndFunc(date)
-		endHour = endTime.Hour()
-		endMinute = endTime.Minute()
-	}
-
+	startHour, startMinute, _ := c.start(date)
+	endHour, endMinute, _ := c.end(date)
 	return (time.Duration(endHour)*time.Hour + time.Duration(endMinute)*time.Minute) -
 		(time.Duration(startHour)*time.Hour + time.Duration(startMinute)*time.Minute)
 }
