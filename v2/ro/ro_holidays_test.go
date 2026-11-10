@@ -48,8 +48,8 @@ func TestHolidays(t *testing.T) {
 
 		{SfantulIon, 2024, d(2024, 1, 7), d(2024, 1, 7)},
 
-		{ZiuaUniriiPrincipatelorRomane, 2015, d(2015, 1, 24), d(2015, 1, 24)},
-		{ZiuaUniriiPrincipatelorRomane, 2016, d(2016, 1, 24), d(2016, 1, 24)},
+		{ZiuaUniriiPrincipatelorRomane, 2015, time.Time{}, time.Time{}},
+		{ZiuaUniriiPrincipatelorRomane, 2016, time.Time{}, time.Time{}},
 		{ZiuaUniriiPrincipatelorRomane, 2017, d(2017, 1, 24), d(2017, 1, 24)},
 		{ZiuaUniriiPrincipatelorRomane, 2018, d(2018, 1, 24), d(2018, 1, 24)},
 		{ZiuaUniriiPrincipatelorRomane, 2019, d(2019, 1, 24), d(2019, 1, 24)},
@@ -148,6 +148,8 @@ func TestHolidays(t *testing.T) {
 		{AdormireaMaiciiDomnului, 2023, d(2023, 8, 15), d(2023, 8, 15)},
 		{AdormireaMaiciiDomnului, 2024, d(2024, 8, 15), d(2024, 8, 15)},
 
+		{SfantulAndrei, 2011, time.Time{}, time.Time{}},
+		{SfantulAndrei, 2012, d(2012, 11, 30), d(2012, 11, 30)},
 		{SfantulAndrei, 2015, d(2015, 11, 30), d(2015, 11, 30)},
 		{SfantulAndrei, 2016, d(2016, 11, 30), d(2016, 11, 30)},
 		{SfantulAndrei, 2017, d(2017, 11, 30), d(2017, 11, 30)},

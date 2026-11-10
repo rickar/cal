@@ -48,11 +48,12 @@ var (
 
 	// ZiuaUniriiPrincipatelorRomane represents the day when, in 1859,  the 2 Romanian principalities, Moldavia and Wallachia, united.
 	ZiuaUniriiPrincipatelorRomane = &cal.Holiday{
-		Name:  "Ziua Unirii Principatelor Române",
-		Type:  cal.ObservancePublic,
-		Month: time.January,
-		Day:   24,
-		Func:  cal.CalcDayOfMonth,
+		Name:      "Ziua Unirii Principatelor Române",
+		Type:      cal.ObservancePublic,
+		Month:     time.January,
+		Day:       24,
+		StartYear: 2017,
+		Func:      cal.CalcDayOfMonth,
 	}
 
 	// VinereaMare represents Good Friday - two days before Easter
@@ -124,11 +125,12 @@ var (
 
 	// SfantulAndrei represents Saint Andrew's Day on 30-Nov
 	SfantulAndrei = &cal.Holiday{
-		Name:  "Sfântul Andrei",
-		Type:  cal.ObservancePublic,
-		Month: time.November,
-		Day:   30,
-		Func:  cal.CalcDayOfMonth,
+		Name:      "Sfântul Andrei",
+		Type:      cal.ObservancePublic,
+		Month:     time.November,
+		Day:       30,
+		StartYear: 2012,
+		Func:      cal.CalcDayOfMonth,
 	}
 
 	// ZiuaNationala represents Great Union Day on 1-Dec
