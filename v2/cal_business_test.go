@@ -724,3 +724,55 @@ func TestWorkHoursEndOfDay(t *testing.T) {
 		})
 	}
 }
+
+func TestRangeCountsMidnightDaylightSaving(t *testing.T) {
+	// In these zones clocks jump from 00:00 to 01:00, so midnight does not
+	// exist on the first day of daylight saving time.
+	tests := []struct {
+		name     string
+		zone     string
+		from     time.Time
+		to       time.Time
+		holiday  time.Time
+		workdays int
+	}{
+		{"Santiago", "America/Santiago", d(2022, 9, 9), d(2022, 9, 12), d(2022, 9, 12), 2},
+		{"Santiago one week", "America/Santiago", d(2022, 9, 5), d(2022, 9, 16), d(2022, 9, 16), 10},
+		{"Beirut", "Asia/Beirut", d(2022, 3, 25), d(2022, 3, 28), d(2022, 3, 28), 2},
+		{"Asuncion", "America/Asuncion", d(2023, 9, 29), d(2023, 10, 2), d(2023, 10, 2), 2},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			loc, err := time.LoadLocation(test.zone)
+			if err != nil {
+				t.Fatal(err)
+			}
+			at := func(date time.Time) time.Time {
+				year, month, day := date.Date()
+				return time.Date(year, month, day, 12, 0, 0, 0, loc)
+			}
+			from, to := at(test.from), at(test.to)
+
+			c := NewBusinessCalendar()
+			if got := c.WorkdaysInRange(from, to); got != test.workdays {
+				t.Errorf("WorkdaysInRange: got %d, want %d", got, test.workdays)
+			}
+			if got := c.WorkdaysInRange(to, from); got != -test.workdays {
+				t.Errorf("reverse WorkdaysInRange: got %d, want %d", got, -test.workdays)
+			}
+
+			c.AddHoliday(&Holiday{
+				Type:  ObservancePublic,
+				Month: test.holiday.Month(),
+				Day:   test.holiday.Day(),
+				Func:  CalcDayOfMonth,
+			})
+			if got := c.HolidaysInRange(from, to); got != 1 {
+				t.Errorf("HolidaysInRange: got %d, want 1", got)
+			}
+			if got := c.HolidaysInRange(to, from); got != -1 {
+				t.Errorf("reverse HolidaysInRange: got %d, want -1", got)
+			}
+		})
+	}
+}
