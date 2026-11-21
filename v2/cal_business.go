@@ -174,34 +174,36 @@ func (c *BusinessCalendar) WorkdaysInMonth(year int, month time.Month) int {
 // HolidaysInRange reports the number of holidays between the start and end
 // times (inclusive).
 func (c *BusinessCalendar) HolidaysInRange(start, end time.Time) int {
-	factor := 1
-	if end.Before(start) {
-		factor = -1
-		start, end = end, start
-	}
-	result := 0
-	to := DayStart(end)
-	for i := DayStart(start); i.Before(to) || i.Equal(to); i = i.AddDate(0, 0, 1) {
-		_, holiday, _ := c.IsHoliday(i)
-		if holiday {
-			result++
-		}
-	}
-	return factor * result
+	return countDays(start, end, func(date time.Time) bool {
+		_, holiday, _ := c.IsHoliday(date)
+		return holiday
+	})
 }
 
 // WorkdaysInRange reports the number of workdays between the start and end
 // times (inclusive).
 func (c *BusinessCalendar) WorkdaysInRange(start, end time.Time) int {
+	return countDays(start, end, c.IsWorkday)
+}
+
+// countDays reports the number of calendar days between the start and end
+// times (inclusive) for which match returns true. The result is negative if
+// end is before start.
+//
+// Days are stepped at noon so that a daylight saving change at midnight (when
+// 00:00 does not exist or happens twice) cannot skip or repeat a date.
+func countDays(start, end time.Time, match func(time.Time) bool) int {
 	factor := 1
 	if end.Before(start) {
 		factor = -1
 		start, end = end, start
 	}
+	year, month, day := start.Date()
+	endYear, endMonth, endDay := end.Date()
+	last := time.Date(endYear, endMonth, endDay, 0, 0, 0, 0, time.UTC)
 	result := 0
-	to := DayStart(end)
-	for i := DayStart(start); i.Before(to) || i.Equal(to); i = i.AddDate(0, 0, 1) {
-		if c.IsWorkday(i) {
+	for i := time.Date(year, month, day, 0, 0, 0, 0, time.UTC); !i.After(last); i = i.AddDate(0, 0, 1) {
+		if match(time.Date(i.Year(), i.Month(), i.Day(), 12, 0, 0, 0, start.Location())) {
 			result++
 		}
 	}
