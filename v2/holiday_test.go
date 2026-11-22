@@ -218,6 +218,15 @@ func TestCalcEasterOffset(t *testing.T) {
 		{2015, 0, true, time.Date(2015, 4, 12, 0, 0, 0, 0, DefaultLoc)},
 		{2016, 10, true, time.Date(2016, 5, 11, 0, 0, 0, 0, DefaultLoc)},
 		{2017, -10, true, time.Date(2017, 4, 6, 0, 0, 0, 0, DefaultLoc)},
+		// The Julian calendar runs 12 days behind before 1900, 13 days in
+		// 1900-2099 and 14 days from 2100.
+		{1890, 0, true, time.Date(1890, 4, 13, 0, 0, 0, 0, DefaultLoc)},
+		{1899, 0, true, time.Date(1899, 4, 30, 0, 0, 0, 0, DefaultLoc)},
+		{1900, 0, true, time.Date(1900, 4, 22, 0, 0, 0, 0, DefaultLoc)},
+		{2099, 0, true, time.Date(2099, 4, 12, 0, 0, 0, 0, DefaultLoc)},
+		{2100, 0, true, time.Date(2100, 5, 2, 0, 0, 0, 0, DefaultLoc)},
+		{2101, 0, true, time.Date(2101, 4, 24, 0, 0, 0, 0, DefaultLoc)},
+		{2200, 0, true, time.Date(2200, 4, 6, 0, 0, 0, 0, DefaultLoc)},
 	}
 
 	h := &Holiday{}
@@ -227,7 +236,7 @@ func TestCalcEasterOffset(t *testing.T) {
 		h.Julian = test.jul
 		got := CalcEasterOffset(h, test.y)
 		if !got.Equal(test.want) {
-			t.Errorf("%d: got: %s, want: %s", test.off, got, test.want)
+			t.Errorf("%d%+d: got: %s, want: %s", test.y, test.off, got, test.want)
 		}
 	}
 }

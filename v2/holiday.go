@@ -168,7 +168,10 @@ func CalcEasterOffset(h *Holiday, year int) time.Time {
 
 		month = int(d+e+114) / 31
 		day = ((d + e + 114) % 31) + 1
-		day += 13
+		// Convert the Julian date to Gregorian. The gap between the calendars
+		// grows by one day in each century year that is not a leap year in the
+		// Gregorian calendar: 12 days before 1900, 13 in 1900-2099, 14 from 2100.
+		day += year/100 - year/400 - 2
 	} else {
 		// Meeus/Jones/Butcher algorithm
 		y := year
